@@ -23,7 +23,7 @@ VitalCoreFit soluciona el problema de tener que utilizar múltiples aplicaciones
 - **Entorno:** Qt Creator 11.
 - **Gestión de Memoria:** Implementación estricta de punteros y memoria dinámica (Heap), validada mediante Valgrind para asegurar la ausencia de memory leaks.
 - **Persistencia:** Archivos locales estructurados en formato JSON.
-- 
+
 ## Equipo
 | Nombre | Módulo principal |
 |--------|-----------------|
