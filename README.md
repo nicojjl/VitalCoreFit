@@ -15,7 +15,7 @@ VitalCoreFit soluciona el problema de tener que utilizar múltiples aplicaciones
 - [ ] **Dashboard Principal:** Balance energético neto interactivo utilizando `QtCharts` para la visualización de datos.
 
 ## Arquitectura
-![Diagrama de Navegación de VitalCoreFit](docs/DiagramaModeloNavegacionDefinitivo.drawio.png)
+![Diagrama de Navegación de VitalCoreFit](DiagramaModeloNavegacionDefinitivo.drawio.png)
 
 ## Detalles Técnicos y Requisitos
 - **Lenguaje:** C++17 (Estándar moderno).
