@@ -16,7 +16,7 @@ struct Usuario {
     double macroProteinas;
     double macroCarbos;
     double macroGrasas;
-    Genero generoUsuario;
-    Objetivo objetivoUsuario;
-    NivelActividad nivelActividadUsuario;
+    Genero GeneroUsuario;
+    Objetivo ObjetivoUsuario;
+    NivelActividad NivelActividadUsuario;
 };
