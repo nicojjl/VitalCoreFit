@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-
 enum class Genero {Masculino, Femenino};
 enum class Objetivo {Bajar, Mantener, Subir};
 enum class NivelActividad {Sedentario, Ligero, Moderado, Activo, MuyActivo};
