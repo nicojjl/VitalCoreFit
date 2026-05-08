@@ -1,0 +1,18 @@
+{
+  "alimentos": [
+    {
+      "nombre": "Arroz cocido",
+      "calorias": 130.0,
+      "proteina": 2.7,
+      "carbohidratos": 28.2,
+      "grasa": 0.3
+    },
+    {
+      "nombre": ,
+      "calorias": ,
+      "proteina":,
+      "carbohidratos": ,
+      "grasa": 
+    },
+  ]
+}
