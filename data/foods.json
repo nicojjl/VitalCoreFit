@@ -1,18 +1,46 @@
 {
   "alimentos": [
     {
-      "nombre": "Arroz cocido",
-      "calorias": 130.0,
-      "proteina": 2.7,
-      "carbohidratos": 28.2,
-      "grasa": 0.3
+      "nombre": "Arroz Blanco Cocido",
+      "calorias": 129,
+      "proteina": 2.5,
+      "carbohidratos": 28.18,
+      "grasa": 0.30
     },
     {
-      "nombre": ,
-      "calorias": ,
-      "proteina":,
-      "carbohidratos": ,
-      "grasa": 
+      "nombre":"Palta",
+      "calorias":160 ,
+      "proteina":2.0,
+      "carbohidratos":8.53 ,
+      "grasa":14.66 
     },
+    {
+      "nombre":"Arandanos",
+      "calorias":57.00 ,
+      "proteina":0.74,
+      "carbohidratos":14.49 ,
+      "grasa":0.33 
+    },
+    {
+      "nombre":"Platano",
+      "calorias":105.00 ,
+      "proteina":1.29,
+      "carbohidratos":26.95 ,
+      "grasa":0.39 
+    },
+    {
+      "nombre":"Cerezas",
+      "calorias":74.00 ,
+      "proteina":1.24,
+      "carbohidratos":18.73 ,
+      "grasa":0.23 
+    },
+    {
+      "nombre":"Coco",
+      "calorias":354.00 ,
+      "proteina":3.33,
+      "carbohidratos":15.23 ,
+      "grasa":33.48 
+    }
   ]
 }

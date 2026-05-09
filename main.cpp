@@ -1,6 +1,8 @@
 #include <iostream>
+#include <vector>
 #include "include/models/Usuario.h"
-
+#include "include/models/Nutricion.h"
+#include "include/models/Alimento.h"
 using namespace std;
 
 int main(){
@@ -22,5 +24,9 @@ int main(){
     cout << "Carbo: " << prueba.macroCarbos << endl;
     cout << "Grasas: " << prueba.macroGrasas << endl;
     cout << "Proteina: " << prueba.macroProteinas << endl;
+    vector<Alimento> lista = cargarAlimentos("data/foods.json");
+    for (const auto& alimento : lista) {
+        cout << alimento.nombre << " - " << alimento.calorias << " kcal " << " - " << alimento.carbohidratos << " gramos " << " - " << alimento.proteina << " gramos " << " - " << alimento.grasa << " gramos" << endl;
+    }
     return 0;
 }
