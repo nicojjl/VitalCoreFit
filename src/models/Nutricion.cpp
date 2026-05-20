@@ -24,3 +24,20 @@ vector<Alimento> cargarAlimentos(const string& rutaArchivo) {
     }
     return lista;
 }
+vector<Alimento> buscarAlimento(const vector<Alimento>& catalogo, const string& textoBusqueda) {
+    vector<Alimento> resultados;
+    string textoMinusculo = textoBusqueda;
+    for (int i = 0; i < textoMinusculo.size(); i++){
+        textoMinusculo[i] = tolower(textoMinusculo[i]);
+    }
+    for (int i = 0; i < catalogo.size(); i++){
+        string nombreMin = catalogo[i].nombre;
+        for (int z = 0; z<nombreMin.size(); z++){
+            nombreMin[z]= tolower(nombreMin[z]);
+        }
+        if (nombreMin.find(textoMinusculo) != string::npos) {
+            resultados.push_back(catalogo[i]); 
+        }
+    }
+    return resultados;
+}

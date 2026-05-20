@@ -28,5 +28,9 @@ int main(){
     for (const auto& alimento : lista) {
         cout << alimento.nombre << " - " << alimento.calorias << " kcal " << " - " << alimento.carbohidratos << " gramos " << " - " << alimento.proteina << " gramos " << " - " << alimento.grasa << " gramos" << endl;
     }
+    vector<Alimento> encontrados = buscarAlimento(lista, "ar");
+    for (int i = 0; i < encontrados.size(); i++) {
+        cout << encontrados[i].nombre << endl;
+    }
     return 0;
 }
