@@ -3,6 +3,7 @@
 #include "include/models/Usuario.h"
 #include "include/models/Nutricion.h"
 #include "include/models/Alimento.h"
+#include "include/models/ListaComidas.h"
 using namespace std;
 
 int main(){
@@ -32,5 +33,18 @@ int main(){
     for (int i = 0; i < encontrados.size(); i++) {
         cout << encontrados[i].nombre << endl;
     }
+    
+    ListaComidas diaDeHoy;
+    diaDeHoy.cabeza = nullptr;
+    diaDeHoy.cantidad = 0;
+
+    agregarComida(diaDeHoy, lista[0], 200.0); // 200g de Arroz
+    agregarComida(diaDeHoy, lista[1], 100.0); // 100g de Palta
+
+
+    double caloriasHoy = calcularCaloriasDelDia(diaDeHoy);
+    cout << "Calorias del dia: " << caloriasHoy << " kcal" << endl;
+
+    liberarLista(diaDeHoy);
     return 0;
 }
