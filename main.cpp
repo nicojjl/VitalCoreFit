@@ -4,6 +4,7 @@
 #include "include/models/Nutricion.h"
 #include "include/models/Alimento.h"
 #include "include/models/ListaComidas.h"
+#include "include/models/Entrenamiento.h"
 using namespace std;
 
 int main(){
@@ -46,5 +47,28 @@ int main(){
     cout << "Calorias del dia: " << caloriasHoy << " kcal" << endl;
 
     liberarLista(diaDeHoy);
+    ListaEjercicio EjercicioDeHoy;
+    EjercicioDeHoy.cabeza = nullptr;
+    EjercicioDeHoy.cantidad = 0;
+
+    Ejercicio pressBanca;
+    pressBanca.nombre = "Press de banca";
+    pressBanca.series = 3;
+    pressBanca.repeticiones = 10;
+    pressBanca.peso = 60.0;
+    pressBanca.volumen = calcularVolumen(3, 10, 60.0);
+    pressBanca.caloriasQuemadas = calcularCaloriasQuemadas(3.5, 70.0, 45.0);
+    agregarEjercicio(EjercicioDeHoy, pressBanca);
+
+    double volumen = calcularVolumen(3, 10, 60.0);
+    double CaloriasQuemadas = calcularCaloriasQuemadas(3.5,70,45);
+    double FCMax = calcularFCMax(19);
+    int ZonaCardiaca = calcularZonaCardiaca(150, FCMax);
+
+    cout << "Volumen: " << volumen << endl;
+    cout << "Calorias Quemadas: " << CaloriasQuemadas << endl;
+    cout << "FCMax: " << FCMax << endl;
+    cout << "ZonaCardiaca: " << ZonaCardiaca << endl;
+    liberarListaEjercicios(EjercicioDeHoy);
     return 0;
 }
