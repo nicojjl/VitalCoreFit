@@ -43,7 +43,6 @@ int main(){
     agregarComida(diaDeHoy, lista[0], 200.0); // 200g de Arroz
     agregarComida(diaDeHoy, lista[1], 100.0); // 100g de Palta
 
-
     double caloriasHoy = calcularCaloriasDelDia(diaDeHoy);
     cout << "Calorias del dia: " << caloriasHoy << " kcal" << endl;
 

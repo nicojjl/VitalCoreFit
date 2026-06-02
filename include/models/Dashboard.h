@@ -2,7 +2,6 @@
 #include <iostream>
 #include "Entrenamiento.h"
 
-
 struct ResultadoDash {
     double caloriasConsumidas;
     double caloriasQuemadas;
