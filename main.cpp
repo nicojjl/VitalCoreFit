@@ -5,6 +5,7 @@
 #include "include/models/Alimento.h"
 #include "include/models/ListaComidas.h"
 #include "include/models/Entrenamiento.h"
+#include "include/models/Dashboard.h"
 using namespace std;
 
 int main(){
@@ -69,6 +70,11 @@ int main(){
     cout << "Calorias Quemadas: " << CaloriasQuemadas << endl;
     cout << "FCMax: " << FCMax << endl;
     cout << "ZonaCardiaca: " << ZonaCardiaca << endl;
+   
+    double totalQuemado = calcularTotalQuemado(EjercicioDeHoy);
+    ResultadoDash dash  = calcularDashboard(caloriasHoy, totalQuemado, prueba.metaCalorica);
+    imprimirEstadoDash(dash);
+
     liberarListaEjercicios(EjercicioDeHoy);
     return 0;
 }
