@@ -10,8 +10,8 @@ VitalCoreFit soluciona el problema de tener que utilizar múltiples aplicaciones
 ## Funcionalidades
 - [X] **Perfil de usuario:** Cálculo automático de TMB y TDEE utilizando la ecuación de Mifflin-St Jeor.
 - [X] **Módulo de Nutrición:** Registro diario de alimentos gestionado mediante listas enlazadas en memoria dinámica y persistencia en una base de datos `JSON` local.
-- [ ] **Módulo de Entrenamiento (Pesas):** Generación de rutinas y cálculo de fuerza máxima (1RM) con la fórmula de Brzycki.
-- [ ] **Módulo de Entrenamiento (Cardio):** Seguimiento de la eficiencia cardíaca con la fórmula de Tanaka.
+- [X] **Módulo de Entrenamiento (Pesas):** Generación de rutinas y cálculo de fuerza máxima (1RM) con la fórmula de Brzycki.
+- [X] **Módulo de Entrenamiento (Cardio):** Seguimiento de la eficiencia cardíaca con la fórmula de Tanaka.
 - [ ] **Dashboard Principal:** Balance energético neto interactivo utilizando `QtCharts` para la visualización de datos.
 
 ## Arquitectura
