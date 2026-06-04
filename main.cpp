@@ -6,47 +6,68 @@
 #include "include/models/ListaComidas.h"
 #include "include/models/Entrenamiento.h"
 #include "include/models/Dashboard.h"
+#include "include/models/PersistenciaUsuario.h" 
+
 using namespace std;
 
 int main(){
-    Usuario prueba;
-    prueba.nombre = "Nicoals";
-    prueba.peso = 70.0;
-    prueba.edad = 19;
-    prueba.altura = 175.0;
-    prueba.GeneroUsuario = Genero::Masculino;
-    prueba.NivelActividadUsuario = NivelActividad::Moderado;
-    prueba.ObjetivoUsuario = Objetivo::Mantener;
+    Usuario u; 
 
-    double tmbusuario = calcularTMB(prueba);
-    double tdeeusuario = calcularTDEE(prueba,tmbusuario);
-    calcularMetas(prueba,tdeeusuario);
+    if (cargarPerfil(u)) {
+        cout << "--- Perfil cargado exitosamente ---" << endl;
+        cout << "Bienvenido de vuelta, " << u.nombre << "!" << endl;
+    } else {
+        cout << "--- No hay perfil guardado. Creando perfil de prueba... ---" << endl;
+        
+        u.nombre = "Nicolas"; 
+        u.peso = 70.0;
+        u.edad = 19;
+        u.altura = 175.0;
+        u.GeneroUsuario = Genero::Masculino;
+        u.NivelActividadUsuario = NivelActividad::Moderado;
+        u.ObjetivoUsuario = Objetivo::Mantener;
 
-    cout << "TMB: " << tmbusuario << endl;
-    cout << "TDEE: " << tdeeusuario << endl;
-    cout << "Carbo: " << prueba.macroCarbos << endl;
-    cout << "Grasas: " << prueba.macroGrasas << endl;
-    cout << "Proteina: " << prueba.macroProteinas << endl;
+  
+        u.tmb = calcularTMB(u);
+        u.tdee = calcularTDEE(u, u.tmb);
+        calcularMetas(u, u.tdee);
+
+        guardarPerfil(u); 
+    }
+
+
+    cout << "\n--- Tus Metas Nutricionales ---" << endl;
+    cout << "TMB: " << u.tmb << " kcal" << endl;
+    cout << "TDEE: " << u.tdee << " kcal" << endl;
+    cout << "Carbo: " << u.macroCarbos << " g" << endl;
+    cout << "Grasas: " << u.macroGrasas << " g" << endl;
+    cout << "Proteina: " << u.macroProteinas << " g" << endl;
+
+    cout << "\n--- Base de Datos de Alimentos ---" << endl;
     vector<Alimento> lista = cargarAlimentos("data/foods.json");
     for (const auto& alimento : lista) {
-        cout << alimento.nombre << " - " << alimento.calorias << " kcal " << " - " << alimento.carbohidratos << " gramos " << " - " << alimento.proteina << " gramos " << " - " << alimento.grasa << " gramos" << endl;
+        cout << alimento.nombre << " - " << alimento.calorias << " kcal " 
+             << " - " << alimento.carbohidratos << " g - " 
+             << alimento.proteina << " g - " << alimento.grasa << " g" << endl;
     }
+    
+    cout << "\nBuscando 'ar':" << endl;
     vector<Alimento> encontrados = buscarAlimento(lista, "ar");
-    for (int i = 0; i < encontrados.size(); i++) {
+    for (size_t i = 0; i < encontrados.size(); i++) {
         cout << encontrados[i].nombre << endl;
     }
     
+
     ListaComidas diaDeHoy;
     diaDeHoy.cabeza = nullptr;
     diaDeHoy.cantidad = 0;
 
-    agregarComida(diaDeHoy, lista[0], 200.0); // 200g de Arroz
-    agregarComida(diaDeHoy, lista[1], 100.0); // 100g de Palta
+    agregarComida(diaDeHoy, lista[0], 200.0); 
+    agregarComida(diaDeHoy, lista[1], 100.0); 
 
     double caloriasHoy = calcularCaloriasDelDia(diaDeHoy);
-    cout << "Calorias del dia: " << caloriasHoy << " kcal" << endl;
-
-    liberarLista(diaDeHoy);
+    cout << "\nCalorias consumidas hoy: " << caloriasHoy << " kcal" << endl;
+    
     ListaEjercicio EjercicioDeHoy;
     EjercicioDeHoy.cabeza = nullptr;
     EjercicioDeHoy.cantidad = 0;
@@ -57,23 +78,32 @@ int main(){
     pressBanca.repeticiones = 10;
     pressBanca.peso = 60.0;
     pressBanca.volumen = calcularVolumen(3, 10, 60.0);
-    pressBanca.caloriasQuemadas = calcularCaloriasQuemadas(3.5, 70.0, 45.0);
+    pressBanca.caloriasQuemadas = calcularCaloriasQuemadas(3.5, u.peso, 45.0); 
     agregarEjercicio(EjercicioDeHoy, pressBanca);
 
+
     double volumen = calcularVolumen(3, 10, 60.0);
-    double CaloriasQuemadas = calcularCaloriasQuemadas(3.5,70,45);
-    double FCMax = calcularFCMax(19);
+    double CaloriasQuemadas = calcularCaloriasQuemadas(3.5, u.peso, 45.0); 
+    double FCMax = calcularFCMax(u.edad); 
     int ZonaCardiaca = calcularZonaCardiaca(150, FCMax);
 
-    cout << "Volumen: " << volumen << endl;
-    cout << "Calorias Quemadas: " << CaloriasQuemadas << endl;
-    cout << "FCMax: " << FCMax << endl;
-    cout << "ZonaCardiaca: " << ZonaCardiaca << endl;
-   
+    cout << "\n--- Resumen de Entrenamiento ---" << endl;
+    cout << "Volumen: " << volumen << " kg" << endl;
+    cout << "Calorias Quemadas: " << CaloriasQuemadas << " kcal" << endl;
+    cout << "FCMax: " << FCMax << " bpm" << endl;
+    cout << "Zona Cardiaca: " << ZonaCardiaca << endl;
+
     double totalQuemado = calcularTotalQuemado(EjercicioDeHoy);
-    ResultadoDash dash  = calcularDashboard(caloriasHoy, totalQuemado, prueba.metaCalorica);
+    ResultadoDash dash = calcularDashboard(caloriasHoy, totalQuemado, u.metaCalorica);
+    
+    cout << "\n--- Dashboard ---" << endl;
     imprimirEstadoDash(dash);
 
+    liberarLista(diaDeHoy);
     liberarListaEjercicios(EjercicioDeHoy);
+    
+    guardarPerfil(u);
+    cout << "\nProgreso guardado correctamente. ¡Hasta luego!" << endl;
+
     return 0;
 }
