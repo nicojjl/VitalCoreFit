@@ -7,11 +7,13 @@
 #include "include/models/Entrenamiento.h"
 #include "include/models/Dashboard.h"
 #include "include/models/PersistenciaUsuario.h" 
-
+#include "include/models/Validacion.h" 
 using namespace std;
 
-int main(){
+int main() {
+
     Usuario u; 
+    string error;
 
     if (cargarPerfil(u)) {
         cout << "--- Perfil cargado exitosamente ---" << endl;
@@ -27,14 +29,16 @@ int main(){
         u.NivelActividadUsuario = NivelActividad::Moderado;
         u.ObjetivoUsuario = Objetivo::Mantener;
 
-  
         u.tmb = calcularTMB(u);
         u.tdee = calcularTDEE(u, u.tmb);
         calcularMetas(u, u.tdee);
 
+        if (!validarUsuario(u, error)) {
+            cout << "Error en el perfil: " << error << endl;
+            return 1; 
+        }
         guardarPerfil(u); 
     }
-
 
     cout << "\n--- Tus Metas Nutricionales ---" << endl;
     cout << "TMB: " << u.tmb << " kcal" << endl;
@@ -57,7 +61,6 @@ int main(){
         cout << encontrados[i].nombre << endl;
     }
     
-
     ListaComidas diaDeHoy;
     diaDeHoy.cabeza = nullptr;
     diaDeHoy.cantidad = 0;
@@ -77,15 +80,38 @@ int main(){
     pressBanca.series = 3;
     pressBanca.repeticiones = 10;
     pressBanca.peso = 60.0;
-    pressBanca.volumen = calcularVolumen(3, 10, 60.0);
-    pressBanca.caloriasQuemadas = calcularCaloriasQuemadas(3.5, u.peso, 45.0); 
+    
+    if (!validarBrzycki(pressBanca.peso, pressBanca.repeticiones, error)) {
+        cout << "Error al calcular 1RM: " << error << endl;
+    } else {
+        double rm = calcular1RM(pressBanca.peso, pressBanca.repeticiones);
+        cout << "1RM estimado: " << rm << " kg" << endl;
+    }
+
+    pressBanca.volumen = calcularVolumen(pressBanca.series, pressBanca.repeticiones, pressBanca.peso);
+    
+    double metActual = 3.5;
+    double minutosActuales = 45.0;
+    
+    if (!validarMET(metActual, error)) {
+        cout << "Error en MET: " << error << endl;
+    } else {
+        pressBanca.caloriasQuemadas = calcularCaloriasQuemadas(metActual, u.peso, minutosActuales); 
+    }
+    
     agregarEjercicio(EjercicioDeHoy, pressBanca);
 
-
-    double volumen = calcularVolumen(3, 10, 60.0);
-    double CaloriasQuemadas = calcularCaloriasQuemadas(3.5, u.peso, 45.0); 
+    double volumen = pressBanca.volumen;
+    double CaloriasQuemadas = pressBanca.caloriasQuemadas; 
     double FCMax = calcularFCMax(u.edad); 
-    int ZonaCardiaca = calcularZonaCardiaca(150, FCMax);
+    
+    int ZonaCardiaca = 0;
+    double bpmEntrenamiento = 150.0;
+    if (!validarCardio(bpmEntrenamiento, minutosActuales, error)) {
+        cout << "Error en cardio: " << error << endl;
+    } else {
+        ZonaCardiaca = calcularZonaCardiaca(bpmEntrenamiento, FCMax);
+    }
 
     cout << "\n--- Resumen de Entrenamiento ---" << endl;
     cout << "Volumen: " << volumen << " kg" << endl;
@@ -101,9 +127,13 @@ int main(){
 
     liberarLista(diaDeHoy);
     liberarListaEjercicios(EjercicioDeHoy);
-    
-    guardarPerfil(u);
-    cout << "\nProgreso guardado correctamente. ¡Hasta luego!" << endl;
+
+    if (!validarUsuario(u, error)) {
+        cout << "No se pudo guardar el progreso por error en el perfil: " << error << endl;
+    } else {
+        guardarPerfil(u);
+        cout << "\nProgreso guardado correctamente. ¡Hasta luego!" << endl;
+    }
 
     return 0;
 }
