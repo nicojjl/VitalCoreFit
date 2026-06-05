@@ -8,6 +8,7 @@
 #include "include/models/Dashboard.h"
 #include "include/models/PersistenciaUsuario.h" 
 #include "include/models/Validacion.h" 
+#include "include/models/Rutinas.h"
 using namespace std;
 
 int main() {
@@ -134,6 +135,24 @@ int main() {
         guardarPerfil(u);
         cout << "\nProgreso guardado correctamente. ¡Hasta luego!" << endl;
     }
+
+    cout << "Bienvenido al modulo de Rutinas de Entrenamiento\n";
+    cout << "¿Cuantos dias a la semana puedes entrenar? (2 a 5): ";
+    
+    int dias;
+    cin >> dias;
+
+    if (dias < 2) dias = 2;
+    if (dias > 5) dias = 5;
+
+
+    Rutina miRutina = generarRutina(dias);
+
+    imprimirRutina(miRutina);
+
+    double pesoSugerido = calcularPesoSugerido(200.0, miRutina.dias[0].ejercicios[0].porcentaje1RM);
+    cout << "TIP: Para tu primer ejercicio (" << miRutina.dias[0].ejercicios[0].nombre 
+         << "), te sugerimos levantar " << pesoSugerido << " lbs basandonos en tu 1RM.\n";
 
     return 0;
 }
