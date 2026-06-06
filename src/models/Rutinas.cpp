@@ -89,7 +89,7 @@ Rutina crearRutinaTorsoPierna() {
     r.dias[0].ejercicios[1] = {"Remo con Barra", "Espalda", 4, 8, 0.75};
     r.dias[0].ejercicios[2] = {"Press Militar", "Hombros", 3, 10, 0.70};
     r.dias[0].ejercicios[3] = {"Jalones al Pecho", "Espalda", 3, 12, 0.65};
-    r.dias[0].ejercicios[4] = {"Fondos", "Pecho/Triceps", 3, 10, 0.0}; // Peso corporal
+    r.dias[0].ejercicios[4] = {"Fondos", "Pecho/Triceps", 3, 10, 0.0}; 
 
     r.dias[1].nombreDia = "Martes";
     r.dias[1].enfoque = "Pierna";

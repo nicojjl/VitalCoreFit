@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <windows.h>
 #include "include/models/Usuario.h"
 #include "include/models/Nutricion.h"
 #include "include/models/Alimento.h"
@@ -7,11 +8,13 @@
 #include "include/models/Entrenamiento.h"
 #include "include/models/Dashboard.h"
 #include "include/models/PersistenciaUsuario.h" 
-#include "include/models/Validacion.h" 
-#include "include/models/Rutinas.h"
+#include "include/models/Validacion.h"
+#include "include/models/Historial.h"
+
 using namespace std;
 
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
 
     Usuario u; 
     string error;
@@ -21,7 +24,6 @@ int main() {
         cout << "Bienvenido de vuelta, " << u.nombre << "!" << endl;
     } else {
         cout << "--- No hay perfil guardado. Creando perfil de prueba... ---" << endl;
-        
         u.nombre = "Nicolas"; 
         u.peso = 70.0;
         u.edad = 19;
@@ -36,10 +38,12 @@ int main() {
 
         if (!validarUsuario(u, error)) {
             cout << "Error en el perfil: " << error << endl;
-            return 1; 
+            return 1;
         }
         guardarPerfil(u); 
     }
+
+    mostrarHistorial();
 
     cout << "\n--- Tus Metas Nutricionales ---" << endl;
     cout << "TMB: " << u.tmb << " kcal" << endl;
@@ -48,19 +52,7 @@ int main() {
     cout << "Grasas: " << u.macroGrasas << " g" << endl;
     cout << "Proteina: " << u.macroProteinas << " g" << endl;
 
-    cout << "\n--- Base de Datos de Alimentos ---" << endl;
     vector<Alimento> lista = cargarAlimentos("data/foods.json");
-    for (const auto& alimento : lista) {
-        cout << alimento.nombre << " - " << alimento.calorias << " kcal " 
-             << " - " << alimento.carbohidratos << " g - " 
-             << alimento.proteina << " g - " << alimento.grasa << " g" << endl;
-    }
-    
-    cout << "\nBuscando 'ar':" << endl;
-    vector<Alimento> encontrados = buscarAlimento(lista, "ar");
-    for (size_t i = 0; i < encontrados.size(); i++) {
-        cout << encontrados[i].nombre << endl;
-    }
     
     ListaComidas diaDeHoy;
     diaDeHoy.cabeza = nullptr;
@@ -84,9 +76,6 @@ int main() {
     
     if (!validarBrzycki(pressBanca.peso, pressBanca.repeticiones, error)) {
         cout << "Error al calcular 1RM: " << error << endl;
-    } else {
-        double rm = calcular1RM(pressBanca.peso, pressBanca.repeticiones);
-        cout << "1RM estimado: " << rm << " kg" << endl;
     }
 
     pressBanca.volumen = calcularVolumen(pressBanca.series, pressBanca.repeticiones, pressBanca.peso);
@@ -102,57 +91,25 @@ int main() {
     
     agregarEjercicio(EjercicioDeHoy, pressBanca);
 
-    double volumen = pressBanca.volumen;
-    double CaloriasQuemadas = pressBanca.caloriasQuemadas; 
-    double FCMax = calcularFCMax(u.edad); 
-    
-    int ZonaCardiaca = 0;
-    double bpmEntrenamiento = 150.0;
-    if (!validarCardio(bpmEntrenamiento, minutosActuales, error)) {
-        cout << "Error en cardio: " << error << endl;
-    } else {
-        ZonaCardiaca = calcularZonaCardiaca(bpmEntrenamiento, FCMax);
-    }
-
-    cout << "\n--- Resumen de Entrenamiento ---" << endl;
-    cout << "Volumen: " << volumen << " kg" << endl;
-    cout << "Calorias Quemadas: " << CaloriasQuemadas << " kcal" << endl;
-    cout << "FCMax: " << FCMax << " bpm" << endl;
-    cout << "Zona Cardiaca: " << ZonaCardiaca << endl;
-
     double totalQuemado = calcularTotalQuemado(EjercicioDeHoy);
     ResultadoDash dash = calcularDashboard(caloriasHoy, totalQuemado, u.metaCalorica);
     
     cout << "\n--- Dashboard ---" << endl;
     imprimirEstadoDash(dash);
 
+    double balanceNeto = caloriasHoy - totalQuemado;
+
+    guardarDiaEnHistorial(diaDeHoy, EjercicioDeHoy, caloriasHoy, totalQuemado, balanceNeto);
+
     liberarLista(diaDeHoy);
     liberarListaEjercicios(EjercicioDeHoy);
-
+    
     if (!validarUsuario(u, error)) {
         cout << "No se pudo guardar el progreso por error en el perfil: " << error << endl;
     } else {
         guardarPerfil(u);
         cout << "\nProgreso guardado correctamente. ¡Hasta luego!" << endl;
     }
-
-    cout << "Bienvenido al modulo de Rutinas de Entrenamiento\n";
-    cout << "¿Cuantos dias a la semana puedes entrenar? (2 a 5): ";
-    
-    int dias;
-    cin >> dias;
-
-    if (dias < 2) dias = 2;
-    if (dias > 5) dias = 5;
-
-
-    Rutina miRutina = generarRutina(dias);
-
-    imprimirRutina(miRutina);
-
-    double pesoSugerido = calcularPesoSugerido(200.0, miRutina.dias[0].ejercicios[0].porcentaje1RM);
-    cout << "TIP: Para tu primer ejercicio (" << miRutina.dias[0].ejercicios[0].nombre 
-         << "), te sugerimos levantar " << pesoSugerido << " lbs basandonos en tu 1RM.\n";
 
     return 0;
 }
