@@ -55,7 +55,18 @@ void guardarDiaEnHistorial(const ListaComidas& listaDia, const ListaEjercicio& l
     }
     registroHoy["ejercicios"] = arregloEjercicios;
 
-    historial["registros"].push_back(registroHoy);
+    bool diaEncontrado = false;
+    for (auto& registro : historial["registros"]) {
+        if (registro["fecha"] == registroHoy["fecha"]) {
+            registro = registroHoy; // Sobrescribe el registro si la fecha ya existe
+            diaEncontrado = true;
+            break;
+        }
+    }
+
+    if (!diaEncontrado) {
+        historial["registros"].push_back(registroHoy);
+    }
 
     std::ofstream salida("data/historial.json");
     salida << historial.dump(4);

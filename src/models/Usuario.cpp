@@ -1,5 +1,10 @@
 #include "../../include/models/Usuario.h"
-    
+
+double calcularIMC(const Usuario& datousuario) {
+    if (datousuario.altura <= 0) return 0.0;
+    double alturaEnMetros = datousuario.altura / 100.0;
+    return datousuario.peso / (alturaEnMetros * alturaEnMetros);
+}
 double calcularTMB(const Usuario& datousuario) {
     if (datousuario.GeneroUsuario == Genero::Masculino){
         double TMB = 10*(datousuario.peso) + 6.25*(datousuario.altura)-5*(datousuario.edad)+5;

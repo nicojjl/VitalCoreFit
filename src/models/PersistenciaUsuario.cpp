@@ -14,7 +14,9 @@ void guardarPerfil(const Usuario& u) {
     json["objetivo"] = static_cast<int>(u.ObjetivoUsuario);
     json["actividad"]= static_cast<int>(u.NivelActividadUsuario);
     json["tmb"]      = u.tmb;
+    json["imc"]     = u.imc;
     json["tdee"]     = u.tdee;
+    
     json["metaCalorica"]   = u.metaCalorica;
     json["macroProteinas"] = u.macroProteinas;
     json["macroCarbos"]    = u.macroCarbos;
@@ -46,6 +48,7 @@ bool cargarPerfil(Usuario& u) {
     u.NivelActividadUsuario  = static_cast<NivelActividad>(json["actividad"].get<int>());
     u.tmb            = json["tmb"].get<double>();
     u.tdee           = json["tdee"].get<double>();
+    u.imc           = json["imc"].get<double>();
     u.metaCalorica   = json["metaCalorica"].get<double>();
     u.macroProteinas = json["macroProteinas"].get<double>();
     u.macroCarbos    = json["macroCarbos"].get<double>();

@@ -34,6 +34,7 @@ int main() {
 
         u.tmb = calcularTMB(u);
         u.tdee = calcularTDEE(u, u.tmb);
+        u.imc = calcularIMC(u);
         calcularMetas(u, u.tdee);
 
         if (!validarUsuario(u, error)) {
@@ -47,12 +48,18 @@ int main() {
 
     cout << "\n--- Tus Metas Nutricionales ---" << endl;
     cout << "TMB: " << u.tmb << " kcal" << endl;
+    cout << "IMC: " << u.imc << " %" << endl;
     cout << "TDEE: " << u.tdee << " kcal" << endl;
     cout << "Carbo: " << u.macroCarbos << " g" << endl;
     cout << "Grasas: " << u.macroGrasas << " g" << endl;
     cout << "Proteina: " << u.macroProteinas << " g" << endl;
 
     vector<Alimento> lista = cargarAlimentos("data/foods.json");
+
+    if (lista.empty()) {
+        cout << "Saliendo del programa para evitar errores de memoria." << endl;
+        return 1;
+    }
     
     ListaComidas diaDeHoy;
     diaDeHoy.cabeza = nullptr;

@@ -3,7 +3,7 @@
 using namespace std;
 
 double calcular1RM(double peso, int repeticiones){
-    return peso*(36/(37-repeticiones));
+    return peso * (36.0 / (37.0 - repeticiones));
 }
 double calcularVolumen(int series, int repeticiones, double peso){
     return series*repeticiones*peso;
