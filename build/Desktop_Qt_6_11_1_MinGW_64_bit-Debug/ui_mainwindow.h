@@ -22,6 +22,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QProgressBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
@@ -62,13 +63,31 @@ public:
     QTableWidget *tableWidget;
     QWidget *Cardio;
     QComboBox *comboDiasRutina;
+    QWidget *page_2;
+    QVBoxLayout *verticalLayout_5;
+    QGridLayout *gridLayout_2;
+    QLabel *Peso_2;
+    QLineEdit *inputPeso;
+    QLabel *Peso;
+    QLabel *label_6;
+    QLabel *label_8;
+    QComboBox *comboBox;
+    QLabel *nombre;
+    QLineEdit *inputEdad;
+    QLabel *label_7;
+    QLabel *Edad;
+    QLineEdit *lineEdit_3;
+    QLineEdit *inputNombre;
+    QComboBox *comboGenero;
+    QComboBox *comboObjetivo;
+    QPushButton *btnGuardarPerfil;
     QMenuBar *menubar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(665, 440);
+        MainWindow->resize(655, 440);
         MainWindow->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
         MainWindow->setStyleSheet(QString::fromUtf8("/* Color de fondo de toda la ventana principal */\n"
 "QMainWindow {\n"
@@ -262,6 +281,37 @@ public:
 "QTableCornerButton::section {\n"
 "    background-color: #0F1722;\n"
 "    border: none;\n"
+"}\n"
+"/*M\303\223DULO DE PERFIL Y BOTONES */\n"
+"\n"
+"\n"
+"/* ESTILO DEL BOT\303\223N PRINCIPAL */\n"
+"QPushButton#btnGuardarPerfil {\n"
+"    background-color: #00E5FF; /* El cian caracter\303\255stico de la app */\n"
+"    color: #000000; /* Texto negro para contraste */\n"
+"    border: none;\n"
+"    border-radius: 8px;\n"
+"    padding: 12px;\n"
+"    font-weight: bold;\n"
+"    font-size: 14px;\n"
+"    font-family: \"Segoe UI\", Arial;\n"
+"}\n"
+"\n"
+"/* EFECTO HOVER (Al pasar el mouse) */\n"
+"QPushButton#btnGuardarPerfil:hover {\n"
+"    background-color: #33EEFF; /* Un cian un poco m\303\241s claro */\n"
+"}\n"
+"\n"
+"/* EFECTO PRESSED (Al hacer clic) */\n"
+"QPushButton#btnGuardarPerfil:pressed {\n"
+"    background-color: #00B8CC;"
+                        " /* Un cian m\303\241s oscuro */\n"
+"}\n"
+"\n"
+"/* Ajuste de color para las etiquetas del formulario */\n"
+"QStackedWidget QLabel {\n"
+"    color: #A0AAB5;\n"
+"    font-weight: bold;\n"
 "}"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
@@ -396,19 +446,114 @@ public:
         gridLayout->addWidget(comboDiasRutina, 0, 0, 1, 1);
 
         stackedWidget->addWidget(page);
+        page_2 = new QWidget();
+        page_2->setObjectName("page_2");
+        verticalLayout_5 = new QVBoxLayout(page_2);
+        verticalLayout_5->setObjectName("verticalLayout_5");
+        gridLayout_2 = new QGridLayout();
+        gridLayout_2->setObjectName("gridLayout_2");
+        Peso_2 = new QLabel(page_2);
+        Peso_2->setObjectName("Peso_2");
+
+        gridLayout_2->addWidget(Peso_2, 6, 1, 1, 1);
+
+        inputPeso = new QLineEdit(page_2);
+        inputPeso->setObjectName("inputPeso");
+
+        gridLayout_2->addWidget(inputPeso, 3, 1, 1, 1);
+
+        Peso = new QLabel(page_2);
+        Peso->setObjectName("Peso");
+
+        gridLayout_2->addWidget(Peso, 2, 1, 1, 1);
+
+        label_6 = new QLabel(page_2);
+        label_6->setObjectName("label_6");
+
+        gridLayout_2->addWidget(label_6, 2, 0, 1, 1);
+
+        label_8 = new QLabel(page_2);
+        label_8->setObjectName("label_8");
+
+        gridLayout_2->addWidget(label_8, 0, 2, 1, 1);
+
+        comboBox = new QComboBox(page_2);
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->setObjectName("comboBox");
+
+        gridLayout_2->addWidget(comboBox, 1, 2, 1, 1);
+
+        nombre = new QLabel(page_2);
+        nombre->setObjectName("nombre");
+
+        gridLayout_2->addWidget(nombre, 0, 0, 1, 1);
+
+        inputEdad = new QLineEdit(page_2);
+        inputEdad->setObjectName("inputEdad");
+
+        gridLayout_2->addWidget(inputEdad, 1, 1, 1, 1);
+
+        label_7 = new QLabel(page_2);
+        label_7->setObjectName("label_7");
+
+        gridLayout_2->addWidget(label_7, 2, 2, 1, 1);
+
+        Edad = new QLabel(page_2);
+        Edad->setObjectName("Edad");
+
+        gridLayout_2->addWidget(Edad, 0, 1, 1, 1);
+
+        lineEdit_3 = new QLineEdit(page_2);
+        lineEdit_3->setObjectName("lineEdit_3");
+
+        gridLayout_2->addWidget(lineEdit_3, 3, 0, 1, 1);
+
+        inputNombre = new QLineEdit(page_2);
+        inputNombre->setObjectName("inputNombre");
+
+        gridLayout_2->addWidget(inputNombre, 1, 0, 1, 1);
+
+        comboGenero = new QComboBox(page_2);
+        comboGenero->addItem(QString());
+        comboGenero->addItem(QString());
+        comboGenero->setObjectName("comboGenero");
+
+        gridLayout_2->addWidget(comboGenero, 3, 2, 1, 1);
+
+        comboObjetivo = new QComboBox(page_2);
+        comboObjetivo->addItem(QString());
+        comboObjetivo->addItem(QString());
+        comboObjetivo->addItem(QString());
+        comboObjetivo->setObjectName("comboObjetivo");
+
+        gridLayout_2->addWidget(comboObjetivo, 7, 1, 1, 1);
+
+
+        verticalLayout_5->addLayout(gridLayout_2);
+
+        btnGuardarPerfil = new QPushButton(page_2);
+        btnGuardarPerfil->setObjectName("btnGuardarPerfil");
+
+        verticalLayout_5->addWidget(btnGuardarPerfil);
+
+        stackedWidget->addWidget(page_2);
 
         horizontalLayout->addWidget(stackedWidget);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 665, 22));
+        menubar->setGeometry(QRect(0, 0, 655, 22));
         MainWindow->setMenuBar(menubar);
 
         retranslateUi(MainWindow);
         QObject::connect(listWidget, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(3);
         TABLA->setCurrentIndex(0);
 
 
@@ -452,6 +597,27 @@ public:
         comboDiasRutina->setItemText(2, QCoreApplication::translate("MainWindow", "4 D\303\255as", nullptr));
         comboDiasRutina->setItemText(3, QCoreApplication::translate("MainWindow", "5 D\303\255as", nullptr));
 
+        Peso_2->setText(QCoreApplication::translate("MainWindow", "Objetivo:", nullptr));
+        Peso->setText(QCoreApplication::translate("MainWindow", "Peso (kg):", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "Altura (cm):", nullptr));
+        label_8->setText(QCoreApplication::translate("MainWindow", "Nivel de Actividad:", nullptr));
+        comboBox->setItemText(0, QCoreApplication::translate("MainWindow", "Sedentario", nullptr));
+        comboBox->setItemText(1, QCoreApplication::translate("MainWindow", "Ligero", nullptr));
+        comboBox->setItemText(2, QCoreApplication::translate("MainWindow", "Moderado", nullptr));
+        comboBox->setItemText(3, QCoreApplication::translate("MainWindow", "Activo", nullptr));
+        comboBox->setItemText(4, QCoreApplication::translate("MainWindow", "Muy Activo", nullptr));
+
+        nombre->setText(QCoreApplication::translate("MainWindow", "Nombre:", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "G\303\251nero:", nullptr));
+        Edad->setText(QCoreApplication::translate("MainWindow", "Edad:", nullptr));
+        comboGenero->setItemText(0, QCoreApplication::translate("MainWindow", "Masculino", nullptr));
+        comboGenero->setItemText(1, QCoreApplication::translate("MainWindow", "Femenino", nullptr));
+
+        comboObjetivo->setItemText(0, QCoreApplication::translate("MainWindow", "Bajar", nullptr));
+        comboObjetivo->setItemText(1, QCoreApplication::translate("MainWindow", "Mantener", nullptr));
+        comboObjetivo->setItemText(2, QCoreApplication::translate("MainWindow", "Subir", nullptr));
+
+        btnGuardarPerfil->setText(QCoreApplication::translate("MainWindow", "Guardar Perfil", nullptr));
     } // retranslateUi
 
 };
