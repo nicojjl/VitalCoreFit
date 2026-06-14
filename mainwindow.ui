@@ -58,9 +58,8 @@ QStackedWidget {
     background-color: #0F1722;
 }
 
-/* ------------------------------------------- */
 /* NUEVO: ESTILO PARA LAS TARJETAS (CARDS) */
-/* ------------------------------------------- */
+
 QFrame#tarjetaCalorias {
     background-color: #1E2736;
     border-radius: 12px;
@@ -103,6 +102,108 @@ QFrame#tarjetaMacros QLabel {
     color: #FFFFFF;
     font-size: 11px;
     font-weight: bold;
+}
+
+/* MÓDULO DE NUTRICIÓN */
+
+/* ESTILO DEL BUSCADOR DE ALIMENTOS */
+QLineEdit#buscadorAlimentos {
+    background-color: #1E2736;
+    color: #FFFFFF;
+    border: 2px solid #2A3648; /* Borde gris oscuro por defecto */
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-family: &quot;Segoe UI&quot;, Arial;
+}
+
+/* EFECTO CUANDO EL USUARIO HACE CLIC PARA ESCRIBIR */
+QLineEdit#buscadorAlimentos:focus {
+    border: 2px solid #00E5FF; /* El borde se ilumina en Cian */
+    background-color: #151D29; /* Se oscurece un poco el fondo */
+}
+
+/* ESTILO DE LA LISTA DE COMIDAS DEL DÍA */
+QListWidget#listaComidasHoy {
+    background-color: #1E2736;
+    border-radius: 12px;
+    border: 1px solid #2A3648;
+    padding: 10px;
+    outline: none;
+}
+
+/* Elementos dentro de la lista de comidas */
+QListWidget#listaComidasHoy::item {
+    background-color: #0F1722; /* Fondo más oscuro para cada comida */
+    border-radius: 6px;
+    border-left: 4px solid #00E676; /* Una rayita verde a la izquierda como tu prototipo */
+    color: white;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+/*MÓDULO DE ENTRENAMIENTO */
+
+/* PESTAÑAS INTERNAS (Pesas / Cardio) */
+QTabWidget::pane {
+    border: none;
+    background-color: #0F1722;
+}
+QTabBar::tab {
+    background-color: #1E2736;
+    color: #A0AAB5;
+    padding: 8px 20px;
+    margin-right: 2px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+QTabBar::tab:selected {
+    background-color: #2A3648;
+    color: #00E5FF;
+    font-weight: bold;
+    border-bottom: 2px solid #00E5FF;
+}
+
+/* COMBO BOX (Selector de días) */
+QComboBox#comboDiasRutina {
+    background-color: #1E2736;
+    color: white;
+    border: 2px solid #2A3648;
+    border-radius: 6px;
+    padding: 5px 15px;
+    font-weight: bold;
+    font-size: 14px;
+}
+QComboBox#comboDiasRutina::drop-down {
+    border: none;
+}
+
+/* LA TABLA DE RUTINAS */
+QTableWidget#tablaRutina {
+    background-color: #1E2736;
+    color: #FFFFFF;
+    border: 1px solid #2A3648;
+    border-radius: 8px;
+    gridline-color: #2A3648; /* Color de las líneas de la cuadrícula */
+    selection-background-color: #00E5FF; /* Celda seleccionada en cian */
+    selection-color: #000000;
+    font-size: 13px;
+    outline: none;
+}
+
+/* ENCABEZADOS DE LA TABLA */
+QHeaderView::section {
+    background-color: #0F1722;
+    color: #A0AAB5;
+    padding: 6px;
+    border: none;
+    font-weight: bold;
+    border-bottom: 1px solid #2A3648;
+    border-right: 1px solid #2A3648;
+}
+QTableCornerButton::section {
+    background-color: #0F1722;
+    border: none;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -140,7 +241,7 @@ QFrame#tarjetaMacros QLabel {
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_3">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -236,7 +337,91 @@ QFrame#tarjetaMacros QLabel {
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_4"/>
+      <widget class="QWidget" name="page_4">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLineEdit" name="buscadorAlimentos">
+          <property name="placeholderText">
+           <string>Buscar alimento en catálogo...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="listaComidasHoy"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="1" column="0">
+         <widget class="QTabWidget" name="TABLA">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="Pesas">
+           <attribute name="title">
+            <string>Pesas</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QTableWidget" name="tableWidget">
+              <column>
+               <property name="text">
+                <string>Ejercicio</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Músculo</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Series x Reps</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Peso</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="Cardio">
+           <attribute name="title">
+            <string>Cardio</string>
+           </attribute>
+          </widget>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QComboBox" name="comboDiasRutina">
+          <item>
+           <property name="text">
+            <string>2 Días</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>3 Días</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>4 Días</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5 Días</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
