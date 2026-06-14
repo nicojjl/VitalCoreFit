@@ -1,0 +1,58 @@
+{
+    "registros": [
+        {
+            "balanceNeto": 234.25,
+            "caloriasConsumidas": 418.0,
+            "caloriasQuemadas": 183.75,
+            "comidas": [
+                {
+                    "calorias": 258.0,
+                    "cantidad": 200.0,
+                    "nombre": "Arroz Blanco Cocido"
+                },
+                {
+                    "calorias": 160.0,
+                    "cantidad": 100.0,
+                    "nombre": "Palta"
+                }
+            ],
+            "ejercicios": [
+                {
+                    "nombre": "Press de banca",
+                    "peso": 60.0,
+                    "repeticiones": 10,
+                    "series": 3,
+                    "volumen": 1800.0
+                }
+            ],
+            "fecha": "2026-06-11"
+        },
+        {
+            "balanceNeto": 234.25,
+            "caloriasConsumidas": 418.0,
+            "caloriasQuemadas": 183.75,
+            "comidas": [
+                {
+                    "calorias": 258.0,
+                    "cantidad": 200.0,
+                    "nombre": "Arroz Blanco Cocido"
+                },
+                {
+                    "calorias": 160.0,
+                    "cantidad": 100.0,
+                    "nombre": "Palta"
+                }
+            ],
+            "ejercicios": [
+                {
+                    "nombre": "Press de banca",
+                    "peso": 60.0,
+                    "repeticiones": 10,
+                    "series": 3,
+                    "volumen": 1800.0
+                }
+            ],
+            "fecha": "2026-06-12"
+        }
+    ]
+}

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>665</width>
+    <height>440</height>
+   </rect>
+  </property>
+  <property name="cursor">
+   <cursorShape>PointingHandCursor</cursorShape>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Color de fondo de toda la ventana principal */
+QMainWindow {
+    background-color: #0F1722;
+}
+
+/* LA BARRA LATERAL (List Widget) */
+QListWidget {
+    background-color: #1E2736;
+    border: none;
+    outline: none; /* Quita el borde punteado feo al hacer clic */
+    padding-top: 20px;
+}
+
+/* LOS BOTONES DE LA BARRA LATERAL */
+QListWidget::item {
+    color: #A0AAB5;
+    min-height: 40px;
+    padding-left: 15px;
+    border-radius: 8px;
+    margin: 5px 10px 5px 10px; /* Margen para que no toque los bordes */
+    font-family: &quot;Segoe UI&quot;, Arial;
+    font-size: 14px;
+}
+
+QListWidget::item:hover {
+    background-color: #2A3648;
+    color: white;
+}
+
+/* EL BOTÓN SELECCIONADO (Efecto Cian) */
+QListWidget::item:selected {
+    background-color: #00E5FF;
+    color: #000000;
+    font-weight: bold;
+}
+
+/* FONDO DEL ÁREA DE CONTENIDO (Stacked Widget) */
+QStackedWidget {
+    background-color: #0F1722;
+}
+
+/* ------------------------------------------- */
+/* NUEVO: ESTILO PARA LAS TARJETAS (CARDS) */
+/* ------------------------------------------- */
+QFrame#tarjetaCalorias {
+    background-color: #1E2736;
+    border-radius: 12px;
+}
+/* El fondo de la nueva tarjeta */
+QFrame#tarjetaMacros {
+    background-color: #1E2736;
+    border-radius: 12px;
+}
+
+/* ESTILO GENERAL DE LAS BARRAS DE PROGRESO */
+QProgressBar {
+    background-color: #2A3648; /* El color del &quot;camino&quot; vacío (Gris oscuro) */
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    height: 8px; /* Hace la barra bien delgada y moderna */
+    color: transparent; /* Oculta el porcentaje numérico del centro */
+}
+
+/* EL RELLENO DE LAS BARRAS */
+QProgressBar::chunk {
+    border-radius: 5px;
+}
+
+/* COLORES ESPECÍFICOS SEGÚN EL MACRONUTRIENTE */
+QProgressBar#barProteinas::chunk {
+    background-color: #00E676; /* Verde neón */
+}
+
+QProgressBar#barCarbos::chunk {
+    background-color: #FF9100; /* Naranja */
+}
+
+QProgressBar#barGrasas::chunk {
+    background-color: #FF1744; /* Rojo */
+}
+
+/* Color para los textos de los labels de esta tarjeta */
+QFrame#tarjetaMacros QLabel {
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: bold;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QListWidget" name="listWidget">
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>Dashboard</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Nutricion</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Rutinas</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Perfil</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page_3">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QFrame" name="tarjetaCalorias">
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>101</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Calorias Consumidas</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_2">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>35</y>
+             <width>21</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>kcal</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame">
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Proteínas</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="barProteinas">
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Carbohidratos</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="barCarbos">
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Grasas</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="progressBar_3">
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_4"/>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>665</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>listWidget</sender>
+   <signal>currentRowChanged(int)</signal>
+   <receiver>stackedWidget</receiver>
+   <slot>setCurrentIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>142</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>314</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
