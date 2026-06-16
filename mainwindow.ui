@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>655</width>
-    <height>440</height>
+    <height>487</height>
    </rect>
   </property>
   <property name="cursor">
@@ -17,26 +17,34 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/* Color de fondo de toda la ventana principal */
+   <string notr="true">
+/* 1FONDOS GENERALES  */
+
 QMainWindow {
     background-color: #0F1722;
 }
 
-/* LA BARRA LATERAL (List Widget) */
+/* Forzar el fondo oscuro en las páginas internas */
+QStackedWidget, QStackedWidget &gt; QWidget {
+    background-color: #0F1722;
+}
+
+
+/* BARRA DE NAVEGACIÓN LATERAL */
+
 QListWidget {
     background-color: #1E2736;
     border: none;
-    outline: none; /* Quita el borde punteado feo al hacer clic */
+    outline: none;
     padding-top: 20px;
 }
 
-/* LOS BOTONES DE LA BARRA LATERAL */
 QListWidget::item {
     color: #A0AAB5;
     min-height: 40px;
     padding-left: 15px;
     border-radius: 8px;
-    margin: 5px 10px 5px 10px; /* Margen para que no toque los bordes */
+    margin: 5px 10px 5px 10px;
     font-family: &quot;Segoe UI&quot;, Arial;
     font-size: 14px;
 }
@@ -46,84 +54,72 @@ QListWidget::item:hover {
     color: white;
 }
 
-/* EL BOTÓN SELECCIONADO (Efecto Cian) */
 QListWidget::item:selected {
     background-color: #00E5FF;
     color: #000000;
     font-weight: bold;
 }
 
-/* FONDO DEL ÁREA DE CONTENIDO (Stacked Widget) */
-QStackedWidget {
-    background-color: #0F1722;
-}
+/* DASHBOARD (TARJETAS Y MACROS)*/
 
-/* NUEVO: ESTILO PARA LAS TARJETAS (CARDS) */
-
-QFrame#tarjetaCalorias {
-    background-color: #1E2736;
-    border-radius: 12px;
-}
-/* El fondo de la nueva tarjeta */
+QFrame#tarjetaConsumidas, 
+QFrame#tarjetaQuemadas, 
+QFrame#tarjetaBalance, 
 QFrame#tarjetaMacros {
     background-color: #1E2736;
     border-radius: 12px;
 }
 
-/* ESTILO GENERAL DE LAS BARRAS DE PROGRESO */
-QProgressBar {
-    background-color: #2A3648; /* El color del &quot;camino&quot; vacío (Gris oscuro) */
-    border: none;
-    border-radius: 5px; /* Bordes redondeados */
-    height: 8px; /* Hace la barra bien delgada y moderna */
-    color: transparent; /* Oculta el porcentaje numérico del centro */
+/* Letras blancas para los títulos de las tarjetas */
+QFrame#tarjetaConsumidas QLabel, 
+QFrame#tarjetaQuemadas QLabel, 
+QFrame#tarjetaBalance QLabel,
+QFrame#tarjetaMacros QLabel {
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 12px;
 }
 
-/* EL RELLENO DE LAS BARRAS */
+/* Destacar los números grandes de las tarjetas en Cian */
+QLabel#lblCaloriasConsumidas, 
+QLabel#lblCaloriasQuemadas, 
+QLabel#lblBalanceNeto {
+    color: #00E5FF;
+    font-size: 18px;
+}
+
+/* Barras de Progreso */
+QProgressBar {
+    background-color: #2A3648;
+    border: none;
+    border-radius: 5px;
+    height: 8px;
+    color: transparent;
+}
 QProgressBar::chunk {
     border-radius: 5px;
 }
+QProgressBar#barProteinas::chunk { background-color: #00E676; }
+QProgressBar#barCarbos::chunk { background-color: #FF9100; }
+QProgressBar#barGrasas::chunk { background-color: #FF1744; }
 
-/* COLORES ESPECÍFICOS SEGÚN EL MACRONUTRIENTE */
-QProgressBar#barProteinas::chunk {
-    background-color: #00E676; /* Verde neón */
-}
 
-QProgressBar#barCarbos::chunk {
-    background-color: #FF9100; /* Naranja */
-}
+/* MÓDULO DE NUTRICIÓN*/
 
-QProgressBar#barGrasas::chunk {
-    background-color: #FF1744; /* Rojo */
-}
-
-/* Color para los textos de los labels de esta tarjeta */
-QFrame#tarjetaMacros QLabel {
-    color: #FFFFFF;
-    font-size: 11px;
-    font-weight: bold;
-}
-
-/* MÓDULO DE NUTRICIÓN */
-
-/* ESTILO DEL BUSCADOR DE ALIMENTOS */
 QLineEdit#buscadorAlimentos {
     background-color: #1E2736;
     color: #FFFFFF;
-    border: 2px solid #2A3648; /* Borde gris oscuro por defecto */
+    border: 2px solid #2A3648;
     border-radius: 8px;
     padding: 10px;
     font-size: 14px;
     font-family: &quot;Segoe UI&quot;, Arial;
 }
-
-/* EFECTO CUANDO EL USUARIO HACE CLIC PARA ESCRIBIR */
 QLineEdit#buscadorAlimentos:focus {
-    border: 2px solid #00E5FF; /* El borde se ilumina en Cian */
-    background-color: #151D29; /* Se oscurece un poco el fondo */
+    border: 2px solid #00E5FF;
+    background-color: #151D29;
 }
 
-/* ESTILO DE LA LISTA DE COMIDAS DEL DÍA */
 QListWidget#listaComidasHoy {
     background-color: #1E2736;
     border-radius: 12px;
@@ -131,20 +127,17 @@ QListWidget#listaComidasHoy {
     padding: 10px;
     outline: none;
 }
-
-/* Elementos dentro de la lista de comidas */
 QListWidget#listaComidasHoy::item {
-    background-color: #0F1722; /* Fondo más oscuro para cada comida */
+    background-color: #0F1722;
     border-radius: 6px;
-    border-left: 4px solid #00E676; /* Una rayita verde a la izquierda como tu prototipo */
+    border-left: 4px solid #00E676;
     color: white;
     padding: 10px;
     margin-bottom: 5px;
 }
 
-/*MÓDULO DE ENTRENAMIENTO */
+/* MÓDULO DE ENTRENAMIENTO*/
 
-/* PESTAÑAS INTERNAS (Pesas / Cardio) */
 QTabWidget::pane {
     border: none;
     background-color: #0F1722;
@@ -164,7 +157,6 @@ QTabBar::tab:selected {
     border-bottom: 2px solid #00E5FF;
 }
 
-/* COMBO BOX (Selector de días) */
 QComboBox#comboDiasRutina {
     background-color: #1E2736;
     color: white;
@@ -178,20 +170,17 @@ QComboBox#comboDiasRutina::drop-down {
     border: none;
 }
 
-/* LA TABLA DE RUTINAS */
 QTableWidget#tablaRutina {
     background-color: #1E2736;
     color: #FFFFFF;
     border: 1px solid #2A3648;
     border-radius: 8px;
-    gridline-color: #2A3648; /* Color de las líneas de la cuadrícula */
-    selection-background-color: #00E5FF; /* Celda seleccionada en cian */
+    gridline-color: #2A3648;
+    selection-background-color: #00E5FF;
     selection-color: #000000;
     font-size: 13px;
     outline: none;
 }
-
-/* ENCABEZADOS DE LA TABLA */
 QHeaderView::section {
     background-color: #0F1722;
     color: #A0AAB5;
@@ -205,13 +194,12 @@ QTableCornerButton::section {
     background-color: #0F1722;
     border: none;
 }
-/*MÓDULO DE PERFIL Y BOTONES */
 
+/* MÓDULO DE PERFIL Y BOTONES  */
 
-/* ESTILO DEL BOTÓN PRINCIPAL */
 QPushButton#btnGuardarPerfil {
-    background-color: #00E5FF; /* El cian característico de la app */
-    color: #000000; /* Texto negro para contraste */
+    background-color: #00E5FF;
+    color: #000000;
     border: none;
     border-radius: 8px;
     padding: 12px;
@@ -219,25 +207,21 @@ QPushButton#btnGuardarPerfil {
     font-size: 14px;
     font-family: &quot;Segoe UI&quot;, Arial;
 }
-
-/* EFECTO HOVER (Al pasar el mouse) */
 QPushButton#btnGuardarPerfil:hover {
-    background-color: #33EEFF; /* Un cian un poco más claro */
+    background-color: #33EEFF;
 }
-
-/* EFECTO PRESSED (Al hacer clic) */
 QPushButton#btnGuardarPerfil:pressed {
-    background-color: #00B8CC; /* Un cian más oscuro */
+    background-color: #00B8CC;
 }
 
-/* Ajuste de color para las etiquetas del formulario */
-QStackedWidget QLabel {
+/* Ajuste sutil para las etiquetas del formulario de perfil */
+QWidget#perfil QLabel {
     color: #A0AAB5;
     font-weight: bold;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QListWidget" name="listWidget">
       <property name="maximumSize">
@@ -271,48 +255,117 @@ QStackedWidget QLabel {
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
-      <widget class="QWidget" name="page_3">
+      <widget class="QWidget" name="dashboard">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QFrame" name="tarjetaCalorias">
+         <widget class="QFrame" name="tarjetaConsumidas">
           <property name="frameShape">
            <enum>QFrame::Shape::StyledPanel</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Shadow::Raised</enum>
           </property>
-          <widget class="QLabel" name="label">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>20</y>
-             <width>101</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Calorias Consumidas</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_2">
-           <property name="geometry">
-            <rect>
-             <x>80</x>
-             <y>35</y>
-             <width>21</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>kcal</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Calorias Consumidas</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblMetaCalorica">
+             <property name="text">
+              <string>Meta: 0 kcal</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblCaloriasConsumidas">
+             <property name="text">
+              <string>kcal</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="tarjetaBalance">
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Raised</enum>
+             </property>
+             <widget class="QLabel" name="label_10">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>20</y>
+                <width>101</width>
+                <height>16</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Calorías Quemadas</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="lblBalanceNeto">
+              <property name="geometry">
+               <rect>
+                <x>80</x>
+                <y>35</y>
+                <width>21</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>kcal</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="tarjetaQuemadas">
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Raised</enum>
+             </property>
+             <widget class="QLabel" name="label_9">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>20</y>
+                <width>101</width>
+                <height>16</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Calorías Quemadas</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="lblCaloriasQuemadas">
+              <property name="geometry">
+               <rect>
+                <x>80</x>
+                <y>35</y>
+                <width>21</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>kcal</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame">
+         <widget class="QFrame" name="tarjetaMacros">
           <property name="frameShape">
            <enum>QFrame::Shape::StyledPanel</enum>
           </property>
@@ -367,7 +420,7 @@ QStackedWidget QLabel {
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_4">
+      <widget class="QWidget" name="alimentos">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QLineEdit" name="buscadorAlimentos">
@@ -381,7 +434,7 @@ QStackedWidget QLabel {
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page">
+      <widget class="QWidget" name="rutinas">
        <layout class="QGridLayout" name="gridLayout">
         <item row="1" column="0">
          <widget class="QTabWidget" name="TABLA">
@@ -452,7 +505,7 @@ QStackedWidget QLabel {
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_2">
+      <widget class="QWidget" name="perfil">
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -488,7 +541,7 @@ QStackedWidget QLabel {
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="comboActividad">
             <item>
              <property name="text">
               <string>Sedentario</string>
@@ -541,7 +594,7 @@ QStackedWidget QLabel {
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QLineEdit" name="lineEdit_3"/>
+           <widget class="QLineEdit" name="inputAltura"/>
           </item>
           <item row="1" column="0">
            <widget class="QLineEdit" name="inputNombre"/>

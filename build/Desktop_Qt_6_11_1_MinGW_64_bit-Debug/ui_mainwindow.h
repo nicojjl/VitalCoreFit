@@ -35,15 +35,23 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QHBoxLayout *horizontalLayout;
+    QHBoxLayout *horizontalLayout_2;
     QListWidget *listWidget;
     QStackedWidget *stackedWidget;
-    QWidget *page_3;
+    QWidget *dashboard;
     QVBoxLayout *verticalLayout;
-    QFrame *tarjetaCalorias;
+    QFrame *tarjetaConsumidas;
+    QHBoxLayout *horizontalLayout;
     QLabel *label;
-    QLabel *label_2;
-    QFrame *frame;
+    QLabel *lblMetaCalorica;
+    QLabel *lblCaloriasConsumidas;
+    QFrame *tarjetaBalance;
+    QLabel *label_10;
+    QLabel *lblBalanceNeto;
+    QFrame *tarjetaQuemadas;
+    QLabel *label_9;
+    QLabel *lblCaloriasQuemadas;
+    QFrame *tarjetaMacros;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_3;
     QProgressBar *barProteinas;
@@ -51,11 +59,11 @@ public:
     QProgressBar *barCarbos;
     QLabel *label_5;
     QProgressBar *progressBar_3;
-    QWidget *page_4;
+    QWidget *alimentos;
     QVBoxLayout *verticalLayout_3;
     QLineEdit *buscadorAlimentos;
     QListWidget *listaComidasHoy;
-    QWidget *page;
+    QWidget *rutinas;
     QGridLayout *gridLayout;
     QTabWidget *TABLA;
     QWidget *Pesas;
@@ -63,7 +71,7 @@ public:
     QTableWidget *tableWidget;
     QWidget *Cardio;
     QComboBox *comboDiasRutina;
-    QWidget *page_2;
+    QWidget *perfil;
     QVBoxLayout *verticalLayout_5;
     QGridLayout *gridLayout_2;
     QLabel *Peso_2;
@@ -71,12 +79,12 @@ public:
     QLabel *Peso;
     QLabel *label_6;
     QLabel *label_8;
-    QComboBox *comboBox;
+    QComboBox *comboActividad;
     QLabel *nombre;
     QLineEdit *inputEdad;
     QLabel *label_7;
     QLabel *Edad;
-    QLineEdit *lineEdit_3;
+    QLineEdit *inputAltura;
     QLineEdit *inputNombre;
     QComboBox *comboGenero;
     QComboBox *comboObjetivo;
@@ -87,28 +95,36 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(655, 440);
+        MainWindow->resize(655, 487);
         MainWindow->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
-        MainWindow->setStyleSheet(QString::fromUtf8("/* Color de fondo de toda la ventana principal */\n"
+        MainWindow->setStyleSheet(QString::fromUtf8("\n"
+"/* 1FONDOS GENERALES  */\n"
+"\n"
 "QMainWindow {\n"
 "    background-color: #0F1722;\n"
 "}\n"
 "\n"
-"/* LA BARRA LATERAL (List Widget) */\n"
+"/* Forzar el fondo oscuro en las p\303\241ginas internas */\n"
+"QStackedWidget, QStackedWidget > QWidget {\n"
+"    background-color: #0F1722;\n"
+"}\n"
+"\n"
+"\n"
+"/* BARRA DE NAVEGACI\303\223N LATERAL */\n"
+"\n"
 "QListWidget {\n"
 "    background-color: #1E2736;\n"
 "    border: none;\n"
-"    outline: none; /* Quita el borde punteado feo al hacer clic */\n"
+"    outline: none;\n"
 "    padding-top: 20px;\n"
 "}\n"
 "\n"
-"/* LOS BOTONES DE LA BARRA LATERAL */\n"
 "QListWidget::item {\n"
 "    color: #A0AAB5;\n"
 "    min-height: 40px;\n"
 "    padding-left: 15px;\n"
 "    border-radius: 8px;\n"
-"    margin: 5px 10px 5px 10px; /* Margen para que no toque los bordes */\n"
+"    margin: 5px 10px 5px 10px;\n"
 "    font-family: \"Segoe UI\", Arial;\n"
 "    font-size: 14px;\n"
 "}\n"
@@ -118,87 +134,74 @@ public:
 "    color: white;\n"
 "}\n"
 "\n"
-"/* EL BOT\303\223N SELECCIONADO (Efecto Cian) */\n"
 "QListWidget::item:selected {\n"
 "    background-color: #00E5FF;\n"
 "    color: #000000;\n"
 "    font-weight: bold;\n"
 "}\n"
 "\n"
-"/* FONDO DEL \303\201REA DE CONTENIDO (Stacked Widget) */\n"
-"QStackedWidg"
-                        "et {\n"
-"    background-color: #0F1722;\n"
-"}\n"
+"/* DASHBOARD (TARJETAS Y MACROS)*/\n"
 "\n"
-"/* NUEVO: ESTILO PARA LAS TARJETAS (CARDS) */\n"
-"\n"
-"QFrame#tarjetaCalorias {\n"
-"    background-color: #1E2736;\n"
-"    border-radius: 12px;\n"
-"}\n"
-"/* El fondo de la nueva tarjeta */\n"
+"QFrame#tarjetaConsumidas, \n"
+"QFrame#tarjetaQuemadas, \n"
+""
+                        "QFrame#tarjetaBalance, \n"
 "QFrame#tarjetaMacros {\n"
 "    background-color: #1E2736;\n"
 "    border-radius: 12px;\n"
 "}\n"
 "\n"
-"/* ESTILO GENERAL DE LAS BARRAS DE PROGRESO */\n"
-"QProgressBar {\n"
-"    background-color: #2A3648; /* El color del \"camino\" vac\303\255o (Gris oscuro) */\n"
-"    border: none;\n"
-"    border-radius: 5px; /* Bordes redondeados */\n"
-"    height: 8px; /* Hace la barra bien delgada y moderna */\n"
-"    color: transparent; /* Oculta el porcentaje num\303\251rico del centro */\n"
+"/* Letras blancas para los t\303\255tulos de las tarjetas */\n"
+"QFrame#tarjetaConsumidas QLabel, \n"
+"QFrame#tarjetaQuemadas QLabel, \n"
+"QFrame#tarjetaBalance QLabel,\n"
+"QFrame#tarjetaMacros QLabel {\n"
+"    color: #FFFFFF;\n"
+"    font-weight: bold;\n"
+"    font-size: 12px;\n"
 "}\n"
 "\n"
-"/* EL RELLENO DE LAS BARRAS */\n"
+"/* Destacar los n\303\272meros grandes de las tarjetas en Cian */\n"
+"QLabel#lblCaloriasConsumidas, \n"
+"QLabel#lblCaloriasQuemadas, \n"
+"QLabel#lblBalanceNeto {\n"
+"    color: #00E5FF;\n"
+"    font-size: 18px;\n"
+"}\n"
+"\n"
+"/* Barras de Progreso */\n"
+"QProgressBar {\n"
+"    background-color: #2A3648;\n"
+"    border: none;\n"
+"    border-radius: 5px;\n"
+"    height: 8px;\n"
+"    color: transparent;\n"
+"}\n"
 "QProgressBar::chunk {\n"
 "    border-radius: 5px;\n"
 "}\n"
+"QProgressBar#barProteinas::chunk { background-color: #00E676; }\n"
+"QProgressBar#barCarbos::chunk { background-color: #FF9100; "
+                        "}\n"
+"QProgressBar#barGrasas::chunk { background-color: #FF1744; }\n"
 "\n"
-"/* COLORES ESPEC\303\215FICOS SEG\303\232N EL MACRONUTRIENTE */\n"
-"QProgressBar#barProteinas::chunk {\n"
-"    background-color: #00E676; /* Verde ne\303\263n */\n"
-"}\n"
 "\n"
-"QPro"
-                        "gressBar#barCarbos::chunk {\n"
-"    background-color: #FF9100; /* Naranja */\n"
-"}\n"
+"/* M\303\223DULO DE NUTRICI\303\223N*/\n"
 "\n"
-"QProgressBar#barGrasas::chunk {\n"
-"    background-color: #FF1744; /* Rojo */\n"
-"}\n"
-"\n"
-"/* Color para los textos de los labels de esta tarjeta */\n"
-"QFrame#tarjetaMacros QLabel {\n"
-"    color: #FFFFFF;\n"
-"    font-size: 11px;\n"
-"    font-weight: bold;\n"
-"}\n"
-"\n"
-"/* M\303\223DULO DE NUTRICI\303\223N */\n"
-"\n"
-"/* ESTILO DEL BUSCADOR DE ALIMENTOS */\n"
 "QLineEdit#buscadorAlimentos {\n"
 "    background-color: #1E2736;\n"
 "    color: #FFFFFF;\n"
-"    border: 2px solid #2A3648; /* Borde gris oscuro por defecto */\n"
+"    border: 2px solid #2A3648;\n"
 "    border-radius: 8px;\n"
 "    padding: 10px;\n"
 "    font-size: 14px;\n"
 "    font-family: \"Segoe UI\", Arial;\n"
 "}\n"
-"\n"
-"/* EFECTO CUANDO EL USUARIO HACE CLIC PARA ESCRIBIR */\n"
 "QLineEdit#buscadorAlimentos:focus {\n"
-"    border: 2px solid #00E5FF; /* El borde se ilumina en Cian */\n"
-"    background-color: #151D29; /* Se oscurece un poco el fondo */\n"
+"    border: 2px solid #00E5FF;\n"
+"    background-color: #151D29;\n"
 "}\n"
 "\n"
-"/* ESTILO DE LA LISTA D"
-                        "E COMIDAS DEL D\303\215A */\n"
 "QListWidget#listaComidasHoy {\n"
 "    background-color: #1E2736;\n"
 "    border-radius: 12px;\n"
@@ -206,23 +209,21 @@ public:
 "    padding: 10px;\n"
 "    outline: none;\n"
 "}\n"
-"\n"
-"/* Elementos dentro de la lista de comidas */\n"
 "QListWidget#listaComidasHoy::item {\n"
-"    background-color: #0F1722; /* Fondo m\303\241s oscuro para cada comida */\n"
+"    background-color: #0F1722;\n"
 "    border-radius: 6px;\n"
-"    border-left: 4px solid #00E676; /* Una rayita verde a la izquierda como tu prototipo */\n"
+"    border-left: 4px solid #00E676;\n"
 "    color: white;\n"
 "    padding: 10px;\n"
 "    margin-bottom: 5px;\n"
 "}\n"
 "\n"
-"/*M\303\223DULO DE ENTRENAMIENTO */\n"
+"/* M\303\223DULO DE ENTRENAMIENTO*/\n"
 "\n"
-"/* PESTA\303\221AS INTERNAS (Pesas / Cardio) */\n"
 "QTabWidget::pane {\n"
 "    border: none;\n"
-"    background-color: #0F1722;\n"
+"    background-color:"
+                        " #0F1722;\n"
 "}\n"
 "QTabBar::tab {\n"
 "    background-color: #1E2736;\n"
@@ -233,14 +234,12 @@ public:
 "    border-top-right-radius: 6px;\n"
 "}\n"
 "QTabBar::tab:selected {\n"
-""
-                        "    background-color: #2A3648;\n"
+"    background-color: #2A3648;\n"
 "    color: #00E5FF;\n"
 "    font-weight: bold;\n"
 "    border-bottom: 2px solid #00E5FF;\n"
 "}\n"
 "\n"
-"/* COMBO BOX (Selector de d\303\255as) */\n"
 "QComboBox#comboDiasRutina {\n"
 "    background-color: #1E2736;\n"
 "    color: white;\n"
@@ -254,23 +253,20 @@ public:
 "    border: none;\n"
 "}\n"
 "\n"
-"/* LA TABLA DE RUTINAS */\n"
 "QTableWidget#tablaRutina {\n"
 "    background-color: #1E2736;\n"
 "    color: #FFFFFF;\n"
 "    border: 1px solid #2A3648;\n"
 "    border-radius: 8px;\n"
-"    gridline-color: #2A3648; /* Color de las l\303\255neas de la cuadr\303\255cula */\n"
-"    selection-background-color: #00E5FF; /* Celda seleccionada en cian */\n"
+"    gridline-color: #2A3648;\n"
+"    selection-background-color: #00E5FF;\n"
 "    selection-color: #000000;\n"
 "    font-size: 13px;\n"
 "    outline: none;\n"
-"}\n"
-"\n"
-"/* ENCABEZADOS DE LA TABLA */\n"
+""
+                        "}\n"
 "QHeaderView::section {\n"
-"    background-color: "
-                        "#0F1722;\n"
+"    background-color: #0F1722;\n"
 "    color: #A0AAB5;\n"
 "    padding: 6px;\n"
 "    border: none;\n"
@@ -282,13 +278,12 @@ public:
 "    background-color: #0F1722;\n"
 "    border: none;\n"
 "}\n"
-"/*M\303\223DULO DE PERFIL Y BOTONES */\n"
 "\n"
+"/* M\303\223DULO DE PERFIL Y BOTONES  */\n"
 "\n"
-"/* ESTILO DEL BOT\303\223N PRINCIPAL */\n"
 "QPushButton#btnGuardarPerfil {\n"
-"    background-color: #00E5FF; /* El cian caracter\303\255stico de la app */\n"
-"    color: #000000; /* Texto negro para contraste */\n"
+"    background-color: #00E5FF;\n"
+"    color: #000000;\n"
 "    border: none;\n"
 "    border-radius: 8px;\n"
 "    padding: 12px;\n"
@@ -296,27 +291,22 @@ public:
 "    font-size: 14px;\n"
 "    font-family: \"Segoe UI\", Arial;\n"
 "}\n"
-"\n"
-"/* EFECTO HOVER (Al pasar el mouse) */\n"
 "QPushButton#btnGuardarPerfil:hover {\n"
-"    background-color: #33EEFF; /* Un cian un poco m\303\241s claro */\n"
+"    background-color: #33EEFF;\n"
 "}\n"
-"\n"
-"/* EFECTO PRESSED (Al hacer clic) */\n"
 "QPushButton#btnGuardarPerfil:pressed {\n"
-"    background-color: #00B8CC;"
-                        " /* Un cian m\303\241s oscuro */\n"
+"    background-color: #00B8CC;\n"
 "}\n"
 "\n"
-"/* Ajuste de color para las etiquetas del formulario */\n"
-"QStackedWidget QLabel {\n"
+"/* Ajuste sutil para las etiquetas del formulario de perfil */\n"
+"QWidget#perfil QLabel {\n"
 "    color: #A0AAB5;\n"
 "    font-weight: bold;\n"
 "}"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        horizontalLayout = new QHBoxLayout(centralwidget);
-        horizontalLayout->setObjectName("horizontalLayout");
+        horizontalLayout_2 = new QHBoxLayout(centralwidget);
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
         listWidget = new QListWidget(centralwidget);
         new QListWidgetItem(listWidget);
         new QListWidgetItem(listWidget);
@@ -325,90 +315,127 @@ public:
         listWidget->setObjectName("listWidget");
         listWidget->setMaximumSize(QSize(200, 16777215));
 
-        horizontalLayout->addWidget(listWidget);
+        horizontalLayout_2->addWidget(listWidget);
 
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
-        page_3 = new QWidget();
-        page_3->setObjectName("page_3");
-        verticalLayout = new QVBoxLayout(page_3);
+        dashboard = new QWidget();
+        dashboard->setObjectName("dashboard");
+        verticalLayout = new QVBoxLayout(dashboard);
         verticalLayout->setObjectName("verticalLayout");
-        tarjetaCalorias = new QFrame(page_3);
-        tarjetaCalorias->setObjectName("tarjetaCalorias");
-        tarjetaCalorias->setFrameShape(QFrame::Shape::StyledPanel);
-        tarjetaCalorias->setFrameShadow(QFrame::Shadow::Raised);
-        label = new QLabel(tarjetaCalorias);
+        tarjetaConsumidas = new QFrame(dashboard);
+        tarjetaConsumidas->setObjectName("tarjetaConsumidas");
+        tarjetaConsumidas->setFrameShape(QFrame::Shape::StyledPanel);
+        tarjetaConsumidas->setFrameShadow(QFrame::Shadow::Raised);
+        horizontalLayout = new QHBoxLayout(tarjetaConsumidas);
+        horizontalLayout->setObjectName("horizontalLayout");
+        label = new QLabel(tarjetaConsumidas);
         label->setObjectName("label");
-        label->setGeometry(QRect(10, 20, 101, 16));
-        label_2 = new QLabel(tarjetaCalorias);
-        label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(80, 35, 21, 21));
 
-        verticalLayout->addWidget(tarjetaCalorias);
+        horizontalLayout->addWidget(label);
 
-        frame = new QFrame(page_3);
-        frame->setObjectName("frame");
-        frame->setFrameShape(QFrame::Shape::StyledPanel);
-        frame->setFrameShadow(QFrame::Shadow::Raised);
-        verticalLayout_2 = new QVBoxLayout(frame);
+        lblMetaCalorica = new QLabel(tarjetaConsumidas);
+        lblMetaCalorica->setObjectName("lblMetaCalorica");
+
+        horizontalLayout->addWidget(lblMetaCalorica);
+
+        lblCaloriasConsumidas = new QLabel(tarjetaConsumidas);
+        lblCaloriasConsumidas->setObjectName("lblCaloriasConsumidas");
+
+        horizontalLayout->addWidget(lblCaloriasConsumidas);
+
+        tarjetaBalance = new QFrame(tarjetaConsumidas);
+        tarjetaBalance->setObjectName("tarjetaBalance");
+        tarjetaBalance->setFrameShape(QFrame::Shape::StyledPanel);
+        tarjetaBalance->setFrameShadow(QFrame::Shadow::Raised);
+        label_10 = new QLabel(tarjetaBalance);
+        label_10->setObjectName("label_10");
+        label_10->setGeometry(QRect(10, 20, 101, 16));
+        lblBalanceNeto = new QLabel(tarjetaBalance);
+        lblBalanceNeto->setObjectName("lblBalanceNeto");
+        lblBalanceNeto->setGeometry(QRect(80, 35, 21, 21));
+
+        horizontalLayout->addWidget(tarjetaBalance);
+
+        tarjetaQuemadas = new QFrame(tarjetaConsumidas);
+        tarjetaQuemadas->setObjectName("tarjetaQuemadas");
+        tarjetaQuemadas->setFrameShape(QFrame::Shape::StyledPanel);
+        tarjetaQuemadas->setFrameShadow(QFrame::Shadow::Raised);
+        label_9 = new QLabel(tarjetaQuemadas);
+        label_9->setObjectName("label_9");
+        label_9->setGeometry(QRect(10, 20, 101, 16));
+        lblCaloriasQuemadas = new QLabel(tarjetaQuemadas);
+        lblCaloriasQuemadas->setObjectName("lblCaloriasQuemadas");
+        lblCaloriasQuemadas->setGeometry(QRect(80, 35, 21, 21));
+
+        horizontalLayout->addWidget(tarjetaQuemadas);
+
+
+        verticalLayout->addWidget(tarjetaConsumidas);
+
+        tarjetaMacros = new QFrame(dashboard);
+        tarjetaMacros->setObjectName("tarjetaMacros");
+        tarjetaMacros->setFrameShape(QFrame::Shape::StyledPanel);
+        tarjetaMacros->setFrameShadow(QFrame::Shadow::Raised);
+        verticalLayout_2 = new QVBoxLayout(tarjetaMacros);
         verticalLayout_2->setObjectName("verticalLayout_2");
-        label_3 = new QLabel(frame);
+        label_3 = new QLabel(tarjetaMacros);
         label_3->setObjectName("label_3");
 
         verticalLayout_2->addWidget(label_3);
 
-        barProteinas = new QProgressBar(frame);
+        barProteinas = new QProgressBar(tarjetaMacros);
         barProteinas->setObjectName("barProteinas");
         barProteinas->setValue(24);
 
         verticalLayout_2->addWidget(barProteinas);
 
-        label_4 = new QLabel(frame);
+        label_4 = new QLabel(tarjetaMacros);
         label_4->setObjectName("label_4");
 
         verticalLayout_2->addWidget(label_4);
 
-        barCarbos = new QProgressBar(frame);
+        barCarbos = new QProgressBar(tarjetaMacros);
         barCarbos->setObjectName("barCarbos");
         barCarbos->setValue(24);
 
         verticalLayout_2->addWidget(barCarbos);
 
-        label_5 = new QLabel(frame);
+        label_5 = new QLabel(tarjetaMacros);
         label_5->setObjectName("label_5");
 
         verticalLayout_2->addWidget(label_5);
 
-        progressBar_3 = new QProgressBar(frame);
+        progressBar_3 = new QProgressBar(tarjetaMacros);
         progressBar_3->setObjectName("progressBar_3");
         progressBar_3->setValue(24);
 
         verticalLayout_2->addWidget(progressBar_3);
 
 
-        verticalLayout->addWidget(frame);
+        verticalLayout->addWidget(tarjetaMacros);
 
-        stackedWidget->addWidget(page_3);
-        page_4 = new QWidget();
-        page_4->setObjectName("page_4");
-        verticalLayout_3 = new QVBoxLayout(page_4);
+        stackedWidget->addWidget(dashboard);
+        alimentos = new QWidget();
+        alimentos->setObjectName("alimentos");
+        verticalLayout_3 = new QVBoxLayout(alimentos);
         verticalLayout_3->setObjectName("verticalLayout_3");
-        buscadorAlimentos = new QLineEdit(page_4);
+        buscadorAlimentos = new QLineEdit(alimentos);
         buscadorAlimentos->setObjectName("buscadorAlimentos");
 
         verticalLayout_3->addWidget(buscadorAlimentos);
 
-        listaComidasHoy = new QListWidget(page_4);
+        listaComidasHoy = new QListWidget(alimentos);
         listaComidasHoy->setObjectName("listaComidasHoy");
 
         verticalLayout_3->addWidget(listaComidasHoy);
 
-        stackedWidget->addWidget(page_4);
-        page = new QWidget();
-        page->setObjectName("page");
-        gridLayout = new QGridLayout(page);
+        stackedWidget->addWidget(alimentos);
+        rutinas = new QWidget();
+        rutinas->setObjectName("rutinas");
+        gridLayout = new QGridLayout(rutinas);
         gridLayout->setObjectName("gridLayout");
-        TABLA = new QTabWidget(page);
+        TABLA = new QTabWidget(rutinas);
         TABLA->setObjectName("TABLA");
         Pesas = new QWidget();
         Pesas->setObjectName("Pesas");
@@ -436,7 +463,7 @@ public:
 
         gridLayout->addWidget(TABLA, 1, 0, 1, 1);
 
-        comboDiasRutina = new QComboBox(page);
+        comboDiasRutina = new QComboBox(rutinas);
         comboDiasRutina->addItem(QString());
         comboDiasRutina->addItem(QString());
         comboDiasRutina->addItem(QString());
@@ -445,86 +472,86 @@ public:
 
         gridLayout->addWidget(comboDiasRutina, 0, 0, 1, 1);
 
-        stackedWidget->addWidget(page);
-        page_2 = new QWidget();
-        page_2->setObjectName("page_2");
-        verticalLayout_5 = new QVBoxLayout(page_2);
+        stackedWidget->addWidget(rutinas);
+        perfil = new QWidget();
+        perfil->setObjectName("perfil");
+        verticalLayout_5 = new QVBoxLayout(perfil);
         verticalLayout_5->setObjectName("verticalLayout_5");
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setObjectName("gridLayout_2");
-        Peso_2 = new QLabel(page_2);
+        Peso_2 = new QLabel(perfil);
         Peso_2->setObjectName("Peso_2");
 
         gridLayout_2->addWidget(Peso_2, 6, 1, 1, 1);
 
-        inputPeso = new QLineEdit(page_2);
+        inputPeso = new QLineEdit(perfil);
         inputPeso->setObjectName("inputPeso");
 
         gridLayout_2->addWidget(inputPeso, 3, 1, 1, 1);
 
-        Peso = new QLabel(page_2);
+        Peso = new QLabel(perfil);
         Peso->setObjectName("Peso");
 
         gridLayout_2->addWidget(Peso, 2, 1, 1, 1);
 
-        label_6 = new QLabel(page_2);
+        label_6 = new QLabel(perfil);
         label_6->setObjectName("label_6");
 
         gridLayout_2->addWidget(label_6, 2, 0, 1, 1);
 
-        label_8 = new QLabel(page_2);
+        label_8 = new QLabel(perfil);
         label_8->setObjectName("label_8");
 
         gridLayout_2->addWidget(label_8, 0, 2, 1, 1);
 
-        comboBox = new QComboBox(page_2);
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->setObjectName("comboBox");
+        comboActividad = new QComboBox(perfil);
+        comboActividad->addItem(QString());
+        comboActividad->addItem(QString());
+        comboActividad->addItem(QString());
+        comboActividad->addItem(QString());
+        comboActividad->addItem(QString());
+        comboActividad->setObjectName("comboActividad");
 
-        gridLayout_2->addWidget(comboBox, 1, 2, 1, 1);
+        gridLayout_2->addWidget(comboActividad, 1, 2, 1, 1);
 
-        nombre = new QLabel(page_2);
+        nombre = new QLabel(perfil);
         nombre->setObjectName("nombre");
 
         gridLayout_2->addWidget(nombre, 0, 0, 1, 1);
 
-        inputEdad = new QLineEdit(page_2);
+        inputEdad = new QLineEdit(perfil);
         inputEdad->setObjectName("inputEdad");
 
         gridLayout_2->addWidget(inputEdad, 1, 1, 1, 1);
 
-        label_7 = new QLabel(page_2);
+        label_7 = new QLabel(perfil);
         label_7->setObjectName("label_7");
 
         gridLayout_2->addWidget(label_7, 2, 2, 1, 1);
 
-        Edad = new QLabel(page_2);
+        Edad = new QLabel(perfil);
         Edad->setObjectName("Edad");
 
         gridLayout_2->addWidget(Edad, 0, 1, 1, 1);
 
-        lineEdit_3 = new QLineEdit(page_2);
-        lineEdit_3->setObjectName("lineEdit_3");
+        inputAltura = new QLineEdit(perfil);
+        inputAltura->setObjectName("inputAltura");
 
-        gridLayout_2->addWidget(lineEdit_3, 3, 0, 1, 1);
+        gridLayout_2->addWidget(inputAltura, 3, 0, 1, 1);
 
-        inputNombre = new QLineEdit(page_2);
+        inputNombre = new QLineEdit(perfil);
         inputNombre->setObjectName("inputNombre");
 
         gridLayout_2->addWidget(inputNombre, 1, 0, 1, 1);
 
-        comboGenero = new QComboBox(page_2);
+        comboGenero = new QComboBox(perfil);
         comboGenero->addItem(QString());
         comboGenero->addItem(QString());
         comboGenero->setObjectName("comboGenero");
 
         gridLayout_2->addWidget(comboGenero, 3, 2, 1, 1);
 
-        comboObjetivo = new QComboBox(page_2);
+        comboObjetivo = new QComboBox(perfil);
         comboObjetivo->addItem(QString());
         comboObjetivo->addItem(QString());
         comboObjetivo->addItem(QString());
@@ -535,14 +562,14 @@ public:
 
         verticalLayout_5->addLayout(gridLayout_2);
 
-        btnGuardarPerfil = new QPushButton(page_2);
+        btnGuardarPerfil = new QPushButton(perfil);
         btnGuardarPerfil->setObjectName("btnGuardarPerfil");
 
         verticalLayout_5->addWidget(btnGuardarPerfil);
 
-        stackedWidget->addWidget(page_2);
+        stackedWidget->addWidget(perfil);
 
-        horizontalLayout->addWidget(stackedWidget);
+        horizontalLayout_2->addWidget(stackedWidget);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -553,7 +580,7 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(listWidget, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(1);
         TABLA->setCurrentIndex(0);
 
 
@@ -577,7 +604,12 @@ public:
         listWidget->setSortingEnabled(__sortingEnabled);
 
         label->setText(QCoreApplication::translate("MainWindow", "Calorias Consumidas", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
+        lblMetaCalorica->setText(QCoreApplication::translate("MainWindow", "Meta: 0 kcal", nullptr));
+        lblCaloriasConsumidas->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
+        label_10->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as Quemadas", nullptr));
+        lblBalanceNeto->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
+        label_9->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as Quemadas", nullptr));
+        lblCaloriasQuemadas->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Prote\303\255nas", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "Carbohidratos", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "Grasas", nullptr));
@@ -601,11 +633,11 @@ public:
         Peso->setText(QCoreApplication::translate("MainWindow", "Peso (kg):", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "Altura (cm):", nullptr));
         label_8->setText(QCoreApplication::translate("MainWindow", "Nivel de Actividad:", nullptr));
-        comboBox->setItemText(0, QCoreApplication::translate("MainWindow", "Sedentario", nullptr));
-        comboBox->setItemText(1, QCoreApplication::translate("MainWindow", "Ligero", nullptr));
-        comboBox->setItemText(2, QCoreApplication::translate("MainWindow", "Moderado", nullptr));
-        comboBox->setItemText(3, QCoreApplication::translate("MainWindow", "Activo", nullptr));
-        comboBox->setItemText(4, QCoreApplication::translate("MainWindow", "Muy Activo", nullptr));
+        comboActividad->setItemText(0, QCoreApplication::translate("MainWindow", "Sedentario", nullptr));
+        comboActividad->setItemText(1, QCoreApplication::translate("MainWindow", "Ligero", nullptr));
+        comboActividad->setItemText(2, QCoreApplication::translate("MainWindow", "Moderado", nullptr));
+        comboActividad->setItemText(3, QCoreApplication::translate("MainWindow", "Activo", nullptr));
+        comboActividad->setItemText(4, QCoreApplication::translate("MainWindow", "Muy Activo", nullptr));
 
         nombre->setText(QCoreApplication::translate("MainWindow", "Nombre:", nullptr));
         label_7->setText(QCoreApplication::translate("MainWindow", "G\303\251nero:", nullptr));
