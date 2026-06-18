@@ -35,7 +35,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QHBoxLayout *horizontalLayout_2;
+    QHBoxLayout *horizontalLayout;
     QListWidget *listWidget;
     QStackedWidget *stackedWidget;
     QWidget *dashboard;
@@ -70,15 +70,26 @@ public:
     QPushButton *btnAgregarComida;
     QLabel *lblCaloriasNutricion;
     QListWidget *listaComidasHoy;
+    QWidget *page_graficos;
+    QHBoxLayout *horizontalLayout_2;
+    QWidget *lienzoGrafico;
+    QWidget *page_guia;
+    QHBoxLayout *horizontalLayout_3;
+    QListWidget *listaGuia;
     QWidget *rutinas;
     QGridLayout *gridLayout;
-    QComboBox *comboDiasRutina;
+    QPushButton *btnFinalizarRutina;
     QTabWidget *TABLA;
     QWidget *Pesas;
     QVBoxLayout *verticalLayout_4;
     QTableWidget *tableWidget;
     QWidget *Cardio;
-    QPushButton *btnFinalizarRutina;
+    QVBoxLayout *verticalLayout_9;
+    QComboBox *comboCardio;
+    QLineEdit *inputTiempoCardio;
+    QPushButton *btnRegistrarCardio;
+    QListWidget *listaCardioHoy;
+    QComboBox *comboDiasRutina;
     QWidget *perfil;
     QVBoxLayout *verticalLayout_5;
     QGridLayout *gridLayout_2;
@@ -387,9 +398,10 @@ public:
 "}"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        horizontalLayout_2 = new QHBoxLayout(centralwidget);
-        horizontalLayout_2->setObjectName("horizontalLayout_2");
+        horizontalLayout = new QHBoxLayout(centralwidget);
+        horizontalLayout->setObjectName("horizontalLayout");
         listWidget = new QListWidget(centralwidget);
+        new QListWidgetItem(listWidget);
         new QListWidgetItem(listWidget);
         new QListWidgetItem(listWidget);
         new QListWidgetItem(listWidget);
@@ -397,7 +409,7 @@ public:
         listWidget->setObjectName("listWidget");
         listWidget->setMaximumSize(QSize(200, 16777215));
 
-        horizontalLayout_2->addWidget(listWidget);
+        horizontalLayout->addWidget(listWidget);
 
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
@@ -555,18 +567,34 @@ public:
         verticalLayout_3->addWidget(listaComidasHoy);
 
         stackedWidget->addWidget(alimentos);
+        page_graficos = new QWidget();
+        page_graficos->setObjectName("page_graficos");
+        horizontalLayout_2 = new QHBoxLayout(page_graficos);
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
+        lienzoGrafico = new QWidget(page_graficos);
+        lienzoGrafico->setObjectName("lienzoGrafico");
+
+        horizontalLayout_2->addWidget(lienzoGrafico);
+
+        stackedWidget->addWidget(page_graficos);
+        page_guia = new QWidget();
+        page_guia->setObjectName("page_guia");
+        horizontalLayout_3 = new QHBoxLayout(page_guia);
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        listaGuia = new QListWidget(page_guia);
+        listaGuia->setObjectName("listaGuia");
+
+        horizontalLayout_3->addWidget(listaGuia);
+
+        stackedWidget->addWidget(page_guia);
         rutinas = new QWidget();
         rutinas->setObjectName("rutinas");
         gridLayout = new QGridLayout(rutinas);
         gridLayout->setObjectName("gridLayout");
-        comboDiasRutina = new QComboBox(rutinas);
-        comboDiasRutina->addItem(QString());
-        comboDiasRutina->addItem(QString());
-        comboDiasRutina->addItem(QString());
-        comboDiasRutina->addItem(QString());
-        comboDiasRutina->setObjectName("comboDiasRutina");
+        btnFinalizarRutina = new QPushButton(rutinas);
+        btnFinalizarRutina->setObjectName("btnFinalizarRutina");
 
-        gridLayout->addWidget(comboDiasRutina, 0, 0, 1, 1);
+        gridLayout->addWidget(btnFinalizarRutina, 2, 1, 1, 1);
 
         TABLA = new QTabWidget(rutinas);
         TABLA->setObjectName("TABLA");
@@ -592,14 +620,44 @@ public:
         TABLA->addTab(Pesas, QString());
         Cardio = new QWidget();
         Cardio->setObjectName("Cardio");
+        verticalLayout_9 = new QVBoxLayout(Cardio);
+        verticalLayout_9->setObjectName("verticalLayout_9");
+        comboCardio = new QComboBox(Cardio);
+        comboCardio->addItem(QString());
+        comboCardio->addItem(QString());
+        comboCardio->addItem(QString());
+        comboCardio->addItem(QString());
+        comboCardio->setObjectName("comboCardio");
+
+        verticalLayout_9->addWidget(comboCardio);
+
+        inputTiempoCardio = new QLineEdit(Cardio);
+        inputTiempoCardio->setObjectName("inputTiempoCardio");
+
+        verticalLayout_9->addWidget(inputTiempoCardio);
+
+        btnRegistrarCardio = new QPushButton(Cardio);
+        btnRegistrarCardio->setObjectName("btnRegistrarCardio");
+
+        verticalLayout_9->addWidget(btnRegistrarCardio);
+
+        listaCardioHoy = new QListWidget(Cardio);
+        listaCardioHoy->setObjectName("listaCardioHoy");
+
+        verticalLayout_9->addWidget(listaCardioHoy);
+
         TABLA->addTab(Cardio, QString());
 
-        gridLayout->addWidget(TABLA, 1, 0, 1, 1);
+        gridLayout->addWidget(TABLA, 1, 1, 1, 1);
 
-        btnFinalizarRutina = new QPushButton(rutinas);
-        btnFinalizarRutina->setObjectName("btnFinalizarRutina");
+        comboDiasRutina = new QComboBox(rutinas);
+        comboDiasRutina->addItem(QString());
+        comboDiasRutina->addItem(QString());
+        comboDiasRutina->addItem(QString());
+        comboDiasRutina->addItem(QString());
+        comboDiasRutina->setObjectName("comboDiasRutina");
 
-        gridLayout->addWidget(btnFinalizarRutina, 2, 0, 1, 1);
+        gridLayout->addWidget(comboDiasRutina, 0, 1, 1, 1);
 
         stackedWidget->addWidget(rutinas);
         perfil = new QWidget();
@@ -718,7 +776,7 @@ public:
 
         stackedWidget->addWidget(page_buscador);
 
-        horizontalLayout_2->addWidget(stackedWidget);
+        horizontalLayout->addWidget(stackedWidget);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -729,8 +787,8 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(listWidget, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 
-        stackedWidget->setCurrentIndex(0);
-        TABLA->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(3);
+        TABLA->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -750,6 +808,8 @@ public:
         ___qlistwidgetitem2->setText(QCoreApplication::translate("MainWindow", "Rutinas", nullptr));
         QListWidgetItem *___qlistwidgetitem3 = listWidget->item(3);
         ___qlistwidgetitem3->setText(QCoreApplication::translate("MainWindow", "Perfil", nullptr));
+        QListWidgetItem *___qlistwidgetitem4 = listWidget->item(4);
+        ___qlistwidgetitem4->setText(QCoreApplication::translate("MainWindow", "Guia", nullptr));
         listWidget->setSortingEnabled(__sortingEnabled);
 
         label_9->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as Quemadas", nullptr));
@@ -765,11 +825,7 @@ public:
         btnHistorialComidas->setText(QCoreApplication::translate("MainWindow", "Historial de comidas", nullptr));
         btnAgregarComida->setText(QCoreApplication::translate("MainWindow", "Agregar comida", nullptr));
         lblCaloriasNutricion->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as consumidas hoy: 0 kcal", nullptr));
-        comboDiasRutina->setItemText(0, QCoreApplication::translate("MainWindow", "2 D\303\255as", nullptr));
-        comboDiasRutina->setItemText(1, QCoreApplication::translate("MainWindow", "3 D\303\255as", nullptr));
-        comboDiasRutina->setItemText(2, QCoreApplication::translate("MainWindow", "4 D\303\255as", nullptr));
-        comboDiasRutina->setItemText(3, QCoreApplication::translate("MainWindow", "5 D\303\255as", nullptr));
-
+        btnFinalizarRutina->setText(QCoreApplication::translate("MainWindow", "Finalizar Entrenamiento", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Ejercicio", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
@@ -779,8 +835,19 @@ public:
         QTableWidgetItem *___qtablewidgetitem3 = tableWidget->horizontalHeaderItem(3);
         ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "Peso", nullptr));
         TABLA->setTabText(TABLA->indexOf(Pesas), QCoreApplication::translate("MainWindow", "Pesas", nullptr));
+        comboCardio->setItemText(0, QCoreApplication::translate("MainWindow", "Trotadora", nullptr));
+        comboCardio->setItemText(1, QCoreApplication::translate("MainWindow", "Bicicleta Est\303\241tica", nullptr));
+        comboCardio->setItemText(2, QCoreApplication::translate("MainWindow", "Caminata", nullptr));
+        comboCardio->setItemText(3, QCoreApplication::translate("MainWindow", "Escaladora", nullptr));
+
+        inputTiempoCardio->setText(QCoreApplication::translate("MainWindow", "Minutos de duraci\303\263n (ej. 30)", nullptr));
+        btnRegistrarCardio->setText(QCoreApplication::translate("MainWindow", "Registrar Cardio", nullptr));
         TABLA->setTabText(TABLA->indexOf(Cardio), QCoreApplication::translate("MainWindow", "Cardio", nullptr));
-        btnFinalizarRutina->setText(QCoreApplication::translate("MainWindow", "Finalizar Entrenamiento", nullptr));
+        comboDiasRutina->setItemText(0, QCoreApplication::translate("MainWindow", "2 D\303\255as", nullptr));
+        comboDiasRutina->setItemText(1, QCoreApplication::translate("MainWindow", "3 D\303\255as", nullptr));
+        comboDiasRutina->setItemText(2, QCoreApplication::translate("MainWindow", "4 D\303\255as", nullptr));
+        comboDiasRutina->setItemText(3, QCoreApplication::translate("MainWindow", "5 D\303\255as", nullptr));
+
         Peso_2->setText(QCoreApplication::translate("MainWindow", "Objetivo:", nullptr));
         Peso->setText(QCoreApplication::translate("MainWindow", "Peso (kg):", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "Altura (cm):", nullptr));

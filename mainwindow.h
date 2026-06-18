@@ -10,9 +10,7 @@
 #include "ListaComidas.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
+namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -24,13 +22,18 @@ public:
     ~MainWindow() override;
 
 private slots:
-    void on_comboDiasRutina_currentTextChanged(const QString &arg1);
     void on_btnGuardarPerfil_clicked();
     void on_buscadorAlimentos_textChanged(const QString &arg1);
     void on_listaResultadosBusqueda_itemDoubleClicked(QListWidgetItem *item);
+
     void on_btnAgregarComida_clicked();
     void on_btnVolverNutricion_clicked();
+
+    void on_comboDiasRutina_currentTextChanged(const QString &arg1);
     void on_btnFinalizarRutina_clicked();
+    void on_btnRegistrarCardio_clicked();
+
+    void on_listWidget_itemClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
@@ -40,5 +43,8 @@ private:
 
     void actualizarDashboardVisual();
     void configurarTablaRutinas();
+    void cargarDatosUI();
+    void dibujarGrafico();
 };
+
 #endif // MAINWINDOW_H

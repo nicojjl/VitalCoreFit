@@ -288,7 +288,7 @@ QPushButton#btnVolverNutricion:hover {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QListWidget" name="listWidget">
       <property name="maximumSize">
@@ -317,12 +317,17 @@ QPushButton#btnVolverNutricion:hover {
         <string>Perfil</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>Guia</string>
+       </property>
+      </item>
      </widget>
     </item>
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="dashboard">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -551,36 +556,33 @@ QPushButton#btnVolverNutricion:hover {
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_graficos">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QWidget" name="lienzoGrafico" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_guia">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QListWidget" name="listaGuia"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="rutinas">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QComboBox" name="comboDiasRutina">
-          <item>
-           <property name="text">
-            <string>2 Días</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>3 Días</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>4 Días</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>5 Días</string>
-           </property>
-          </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="btnFinalizarRutina">
+          <property name="text">
+           <string>Finalizar Entrenamiento</string>
+          </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="1" column="1">
          <widget class="QTabWidget" name="TABLA">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="Pesas">
            <attribute name="title">
@@ -617,14 +619,74 @@ QPushButton#btnVolverNutricion:hover {
            <attribute name="title">
             <string>Cardio</string>
            </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <widget class="QComboBox" name="comboCardio">
+              <item>
+               <property name="text">
+                <string>Trotadora</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Bicicleta Estática</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Caminata</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Escaladora</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="inputTiempoCardio">
+              <property name="text">
+               <string>Minutos de duración (ej. 30)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnRegistrarCardio">
+              <property name="text">
+               <string>Registrar Cardio</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="listaCardioHoy"/>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QPushButton" name="btnFinalizarRutina">
-          <property name="text">
-           <string>Finalizar Entrenamiento</string>
-          </property>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="comboDiasRutina">
+          <item>
+           <property name="text">
+            <string>2 Días</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>3 Días</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>4 Días</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5 Días</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>

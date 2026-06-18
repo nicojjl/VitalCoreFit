@@ -1,4 +1,4 @@
-QT += widgets
+QT       += core gui charts
 
 CONFIG += c++17
 
