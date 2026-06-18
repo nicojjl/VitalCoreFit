@@ -41,19 +41,24 @@ public:
     QWidget *dashboard;
     QVBoxLayout *verticalLayout;
     QFrame *tarjetaConsumidas;
-    QHBoxLayout *horizontalLayout;
-    QLabel *label;
-    QLabel *lblMetaCalorica;
-    QLabel *lblCaloriasConsumidas;
-    QFrame *tarjetaBalance;
-    QLabel *label_10;
-    QLabel *lblBalanceNeto;
+    QVBoxLayout *verticalLayout_7;
     QFrame *tarjetaQuemadas;
     QLabel *label_9;
     QLabel *lblCaloriasQuemadas;
+    QFrame *tarjetaConsumidas_2;
+    QFrame *tarjetaBalance;
+    QVBoxLayout *verticalLayout_8;
+    QFrame *tarjetaConsumidas_3;
+    QLabel *label_10;
+    QLabel *lblBalanceNeto;
+    QLabel *lblCaloriasConsumidas;
+    QLabel *lblMetaCalorica;
+    QFrame *tarjetaBalance_2;
+    QLabel *label;
     QFrame *tarjetaMacros;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_3;
+    QFrame *tarjetaMacros_2;
     QProgressBar *barProteinas;
     QLabel *label_4;
     QProgressBar *barCarbos;
@@ -61,16 +66,19 @@ public:
     QProgressBar *progressBar_3;
     QWidget *alimentos;
     QVBoxLayout *verticalLayout_3;
-    QLineEdit *buscadorAlimentos;
+    QPushButton *btnHistorialComidas;
+    QPushButton *btnAgregarComida;
+    QLabel *lblCaloriasNutricion;
     QListWidget *listaComidasHoy;
     QWidget *rutinas;
     QGridLayout *gridLayout;
+    QComboBox *comboDiasRutina;
     QTabWidget *TABLA;
     QWidget *Pesas;
     QVBoxLayout *verticalLayout_4;
     QTableWidget *tableWidget;
     QWidget *Cardio;
-    QComboBox *comboDiasRutina;
+    QPushButton *btnFinalizarRutina;
     QWidget *perfil;
     QVBoxLayout *verticalLayout_5;
     QGridLayout *gridLayout_2;
@@ -89,6 +97,11 @@ public:
     QComboBox *comboGenero;
     QComboBox *comboObjetivo;
     QPushButton *btnGuardarPerfil;
+    QWidget *page_buscador;
+    QVBoxLayout *verticalLayout_6;
+    QLineEdit *buscadorAlimentos;
+    QListWidget *listaResultadosBusqueda;
+    QPushButton *btnVolverNutricion;
     QMenuBar *menubar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -302,6 +315,75 @@ public:
 "QWidget#perfil QLabel {\n"
 "    color: #A0AAB5;\n"
 "    font-weight: bold;\n"
+"}\n"
+"/* Botones del m\303\263dulo de"
+                        " nutrici\303\263n */\n"
+"QPushButton#btnAgregarComida, QPushButton#btnHistorialComidas, QPushButton#btnVolverNutricion {\n"
+"    background-color: #1E2736;\n"
+"    color: #FFFFFF;\n"
+"    border: 1px solid #2A3648;\n"
+"    border-radius: 8px;\n"
+"    padding: 10px;\n"
+"    font-size: 14px;\n"
+"    font-weight: bold;\n"
+"}\n"
+"QPushButton#btnAgregarComida:hover, QPushButton#btnHistorialComidas:hover, QPushButton#btnVolverNutricion:hover {\n"
+"    background-color: #2A3648;\n"
+"    border: 1px solid #00E5FF;\n"
+"    color: #00E5FF;\n"
+"}\n"
+"\n"
+"/* Nuevo estilo de la lista de b\303\272squedas */\n"
+"QListWidget#listaResultadosBusqueda {\n"
+"    background-color: #1E2736;\n"
+"    border-radius: 8px;\n"
+"    border: none;\n"
+"    color: white;\n"
+"    padding: 5px;\n"
+"}\n"
+"QListWidget#listaResultadosBusqueda::item {\n"
+"    padding: 10px;\n"
+"    border-bottom: 1px solid #2A3648;\n"
+"}\n"
+"QListWidget#listaResultadosBusqueda::item:hover {\n"
+"    background-color: #2A3648;\n"
+"}\n"
+"\n"
+"/* DISE\303\221O DE LA "
+                        "P\303\201GINA BUSCADOR (FOTO 2)     */\n"
+"\n"
+"\n"
+"/* El Buscador de arriba */\n"
+"QLineEdit#buscadorAlimentos {\n"
+"    background-color: #1E2736;\n"
+"    color: #FFFFFF;\n"
+"    border: 1px solid #2A3648;\n"
+"    border-radius: 6px;\n"
+"    padding: 12px;\n"
+"    font-size: 14px;\n"
+"}\n"
+"\n"
+"\n"
+"/* El efecto Cian al pasar el mouse o seleccionar (Como en tu foto) */\n"
+"QListWidget#listaResultadosBusqueda::item:hover, \n"
+"QListWidget#listaResultadosBusqueda::item:selected {\n"
+"    background-color: #00E5FF;\n"
+"    color: #000000;\n"
+"    border-radius: 6px;\n"
+"    font-weight: bold;\n"
+"}\n"
+"\n"
+"/* El bot\303\263n Volver alargado de abajo */\n"
+"QPushButton#btnVolverNutricion {\n"
+"    background-color: #D3D3D3; \n"
+"    color: #000000;\n"
+"    border: none;\n"
+"    border-radius: 6px;\n"
+"    padding: 10px;\n"
+"    font-weight: bold;\n"
+"}\n"
+"QPushButton#btnVolverNutricion:hover {\n"
+"    background-color: #B0B0B0;\n"
 "}"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
@@ -327,48 +409,73 @@ public:
         tarjetaConsumidas->setObjectName("tarjetaConsumidas");
         tarjetaConsumidas->setFrameShape(QFrame::Shape::StyledPanel);
         tarjetaConsumidas->setFrameShadow(QFrame::Shadow::Raised);
-        horizontalLayout = new QHBoxLayout(tarjetaConsumidas);
-        horizontalLayout->setObjectName("horizontalLayout");
-        label = new QLabel(tarjetaConsumidas);
-        label->setObjectName("label");
-
-        horizontalLayout->addWidget(label);
-
-        lblMetaCalorica = new QLabel(tarjetaConsumidas);
-        lblMetaCalorica->setObjectName("lblMetaCalorica");
-
-        horizontalLayout->addWidget(lblMetaCalorica);
-
-        lblCaloriasConsumidas = new QLabel(tarjetaConsumidas);
-        lblCaloriasConsumidas->setObjectName("lblCaloriasConsumidas");
-
-        horizontalLayout->addWidget(lblCaloriasConsumidas);
-
-        tarjetaBalance = new QFrame(tarjetaConsumidas);
-        tarjetaBalance->setObjectName("tarjetaBalance");
-        tarjetaBalance->setFrameShape(QFrame::Shape::StyledPanel);
-        tarjetaBalance->setFrameShadow(QFrame::Shadow::Raised);
-        label_10 = new QLabel(tarjetaBalance);
-        label_10->setObjectName("label_10");
-        label_10->setGeometry(QRect(10, 20, 101, 16));
-        lblBalanceNeto = new QLabel(tarjetaBalance);
-        lblBalanceNeto->setObjectName("lblBalanceNeto");
-        lblBalanceNeto->setGeometry(QRect(80, 35, 21, 21));
-
-        horizontalLayout->addWidget(tarjetaBalance);
-
+        verticalLayout_7 = new QVBoxLayout(tarjetaConsumidas);
+        verticalLayout_7->setObjectName("verticalLayout_7");
         tarjetaQuemadas = new QFrame(tarjetaConsumidas);
         tarjetaQuemadas->setObjectName("tarjetaQuemadas");
         tarjetaQuemadas->setFrameShape(QFrame::Shape::StyledPanel);
         tarjetaQuemadas->setFrameShadow(QFrame::Shadow::Raised);
         label_9 = new QLabel(tarjetaQuemadas);
         label_9->setObjectName("label_9");
-        label_9->setGeometry(QRect(10, 20, 101, 16));
+        label_9->setGeometry(QRect(10, 20, 251, 16));
         lblCaloriasQuemadas = new QLabel(tarjetaQuemadas);
         lblCaloriasQuemadas->setObjectName("lblCaloriasQuemadas");
         lblCaloriasQuemadas->setGeometry(QRect(80, 35, 21, 21));
+        tarjetaConsumidas_2 = new QFrame(tarjetaQuemadas);
+        tarjetaConsumidas_2->setObjectName("tarjetaConsumidas_2");
+        tarjetaConsumidas_2->setGeometry(QRect(9, 9, 171, 21));
+        tarjetaConsumidas_2->setFrameShape(QFrame::Shape::StyledPanel);
+        tarjetaConsumidas_2->setFrameShadow(QFrame::Shadow::Raised);
 
-        horizontalLayout->addWidget(tarjetaQuemadas);
+        verticalLayout_7->addWidget(tarjetaQuemadas);
+
+        tarjetaBalance = new QFrame(tarjetaConsumidas);
+        tarjetaBalance->setObjectName("tarjetaBalance");
+        tarjetaBalance->setFrameShape(QFrame::Shape::StyledPanel);
+        tarjetaBalance->setFrameShadow(QFrame::Shadow::Raised);
+        verticalLayout_8 = new QVBoxLayout(tarjetaBalance);
+        verticalLayout_8->setObjectName("verticalLayout_8");
+        tarjetaConsumidas_3 = new QFrame(tarjetaBalance);
+        tarjetaConsumidas_3->setObjectName("tarjetaConsumidas_3");
+        tarjetaConsumidas_3->setFrameShape(QFrame::Shape::StyledPanel);
+        tarjetaConsumidas_3->setFrameShadow(QFrame::Shadow::Raised);
+
+        verticalLayout_8->addWidget(tarjetaConsumidas_3);
+
+        label_10 = new QLabel(tarjetaBalance);
+        label_10->setObjectName("label_10");
+
+        verticalLayout_8->addWidget(label_10);
+
+        lblBalanceNeto = new QLabel(tarjetaBalance);
+        lblBalanceNeto->setObjectName("lblBalanceNeto");
+
+        verticalLayout_8->addWidget(lblBalanceNeto);
+
+
+        verticalLayout_7->addWidget(tarjetaBalance);
+
+        lblCaloriasConsumidas = new QLabel(tarjetaConsumidas);
+        lblCaloriasConsumidas->setObjectName("lblCaloriasConsumidas");
+
+        verticalLayout_7->addWidget(lblCaloriasConsumidas);
+
+        lblMetaCalorica = new QLabel(tarjetaConsumidas);
+        lblMetaCalorica->setObjectName("lblMetaCalorica");
+
+        verticalLayout_7->addWidget(lblMetaCalorica);
+
+        tarjetaBalance_2 = new QFrame(tarjetaConsumidas);
+        tarjetaBalance_2->setObjectName("tarjetaBalance_2");
+        tarjetaBalance_2->setFrameShape(QFrame::Shape::StyledPanel);
+        tarjetaBalance_2->setFrameShadow(QFrame::Shadow::Raised);
+
+        verticalLayout_7->addWidget(tarjetaBalance_2);
+
+        label = new QLabel(tarjetaConsumidas);
+        label->setObjectName("label");
+
+        verticalLayout_7->addWidget(label);
 
 
         verticalLayout->addWidget(tarjetaConsumidas);
@@ -383,6 +490,13 @@ public:
         label_3->setObjectName("label_3");
 
         verticalLayout_2->addWidget(label_3);
+
+        tarjetaMacros_2 = new QFrame(tarjetaMacros);
+        tarjetaMacros_2->setObjectName("tarjetaMacros_2");
+        tarjetaMacros_2->setFrameShape(QFrame::Shape::StyledPanel);
+        tarjetaMacros_2->setFrameShadow(QFrame::Shadow::Raised);
+
+        verticalLayout_2->addWidget(tarjetaMacros_2);
 
         barProteinas = new QProgressBar(tarjetaMacros);
         barProteinas->setObjectName("barProteinas");
@@ -420,10 +534,20 @@ public:
         alimentos->setObjectName("alimentos");
         verticalLayout_3 = new QVBoxLayout(alimentos);
         verticalLayout_3->setObjectName("verticalLayout_3");
-        buscadorAlimentos = new QLineEdit(alimentos);
-        buscadorAlimentos->setObjectName("buscadorAlimentos");
+        btnHistorialComidas = new QPushButton(alimentos);
+        btnHistorialComidas->setObjectName("btnHistorialComidas");
 
-        verticalLayout_3->addWidget(buscadorAlimentos);
+        verticalLayout_3->addWidget(btnHistorialComidas);
+
+        btnAgregarComida = new QPushButton(alimentos);
+        btnAgregarComida->setObjectName("btnAgregarComida");
+
+        verticalLayout_3->addWidget(btnAgregarComida);
+
+        lblCaloriasNutricion = new QLabel(alimentos);
+        lblCaloriasNutricion->setObjectName("lblCaloriasNutricion");
+
+        verticalLayout_3->addWidget(lblCaloriasNutricion);
 
         listaComidasHoy = new QListWidget(alimentos);
         listaComidasHoy->setObjectName("listaComidasHoy");
@@ -435,6 +559,15 @@ public:
         rutinas->setObjectName("rutinas");
         gridLayout = new QGridLayout(rutinas);
         gridLayout->setObjectName("gridLayout");
+        comboDiasRutina = new QComboBox(rutinas);
+        comboDiasRutina->addItem(QString());
+        comboDiasRutina->addItem(QString());
+        comboDiasRutina->addItem(QString());
+        comboDiasRutina->addItem(QString());
+        comboDiasRutina->setObjectName("comboDiasRutina");
+
+        gridLayout->addWidget(comboDiasRutina, 0, 0, 1, 1);
+
         TABLA = new QTabWidget(rutinas);
         TABLA->setObjectName("TABLA");
         Pesas = new QWidget();
@@ -463,14 +596,10 @@ public:
 
         gridLayout->addWidget(TABLA, 1, 0, 1, 1);
 
-        comboDiasRutina = new QComboBox(rutinas);
-        comboDiasRutina->addItem(QString());
-        comboDiasRutina->addItem(QString());
-        comboDiasRutina->addItem(QString());
-        comboDiasRutina->addItem(QString());
-        comboDiasRutina->setObjectName("comboDiasRutina");
+        btnFinalizarRutina = new QPushButton(rutinas);
+        btnFinalizarRutina->setObjectName("btnFinalizarRutina");
 
-        gridLayout->addWidget(comboDiasRutina, 0, 0, 1, 1);
+        gridLayout->addWidget(btnFinalizarRutina, 2, 0, 1, 1);
 
         stackedWidget->addWidget(rutinas);
         perfil = new QWidget();
@@ -568,6 +697,26 @@ public:
         verticalLayout_5->addWidget(btnGuardarPerfil);
 
         stackedWidget->addWidget(perfil);
+        page_buscador = new QWidget();
+        page_buscador->setObjectName("page_buscador");
+        verticalLayout_6 = new QVBoxLayout(page_buscador);
+        verticalLayout_6->setObjectName("verticalLayout_6");
+        buscadorAlimentos = new QLineEdit(page_buscador);
+        buscadorAlimentos->setObjectName("buscadorAlimentos");
+
+        verticalLayout_6->addWidget(buscadorAlimentos);
+
+        listaResultadosBusqueda = new QListWidget(page_buscador);
+        listaResultadosBusqueda->setObjectName("listaResultadosBusqueda");
+
+        verticalLayout_6->addWidget(listaResultadosBusqueda);
+
+        btnVolverNutricion = new QPushButton(page_buscador);
+        btnVolverNutricion->setObjectName("btnVolverNutricion");
+
+        verticalLayout_6->addWidget(btnVolverNutricion);
+
+        stackedWidget->addWidget(page_buscador);
 
         horizontalLayout_2->addWidget(stackedWidget);
 
@@ -580,7 +729,7 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(listWidget, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
         TABLA->setCurrentIndex(0);
 
 
@@ -603,17 +752,24 @@ public:
         ___qlistwidgetitem3->setText(QCoreApplication::translate("MainWindow", "Perfil", nullptr));
         listWidget->setSortingEnabled(__sortingEnabled);
 
-        label->setText(QCoreApplication::translate("MainWindow", "Calorias Consumidas", nullptr));
-        lblMetaCalorica->setText(QCoreApplication::translate("MainWindow", "Meta: 0 kcal", nullptr));
-        lblCaloriasConsumidas->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
-        label_10->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as Quemadas", nullptr));
-        lblBalanceNeto->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
         label_9->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as Quemadas", nullptr));
         lblCaloriasQuemadas->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
+        label_10->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as Quemadas", nullptr));
+        lblBalanceNeto->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
+        lblCaloriasConsumidas->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
+        lblMetaCalorica->setText(QCoreApplication::translate("MainWindow", "Meta: 0 kcal", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Calorias Consumidas", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Prote\303\255nas", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "Carbohidratos", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "Grasas", nullptr));
-        buscadorAlimentos->setPlaceholderText(QCoreApplication::translate("MainWindow", "Buscar alimento en cat\303\241logo...", nullptr));
+        btnHistorialComidas->setText(QCoreApplication::translate("MainWindow", "Historial de comidas", nullptr));
+        btnAgregarComida->setText(QCoreApplication::translate("MainWindow", "Agregar comida", nullptr));
+        lblCaloriasNutricion->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as consumidas hoy: 0 kcal", nullptr));
+        comboDiasRutina->setItemText(0, QCoreApplication::translate("MainWindow", "2 D\303\255as", nullptr));
+        comboDiasRutina->setItemText(1, QCoreApplication::translate("MainWindow", "3 D\303\255as", nullptr));
+        comboDiasRutina->setItemText(2, QCoreApplication::translate("MainWindow", "4 D\303\255as", nullptr));
+        comboDiasRutina->setItemText(3, QCoreApplication::translate("MainWindow", "5 D\303\255as", nullptr));
+
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Ejercicio", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
@@ -624,11 +780,7 @@ public:
         ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "Peso", nullptr));
         TABLA->setTabText(TABLA->indexOf(Pesas), QCoreApplication::translate("MainWindow", "Pesas", nullptr));
         TABLA->setTabText(TABLA->indexOf(Cardio), QCoreApplication::translate("MainWindow", "Cardio", nullptr));
-        comboDiasRutina->setItemText(0, QCoreApplication::translate("MainWindow", "2 D\303\255as", nullptr));
-        comboDiasRutina->setItemText(1, QCoreApplication::translate("MainWindow", "3 D\303\255as", nullptr));
-        comboDiasRutina->setItemText(2, QCoreApplication::translate("MainWindow", "4 D\303\255as", nullptr));
-        comboDiasRutina->setItemText(3, QCoreApplication::translate("MainWindow", "5 D\303\255as", nullptr));
-
+        btnFinalizarRutina->setText(QCoreApplication::translate("MainWindow", "Finalizar Entrenamiento", nullptr));
         Peso_2->setText(QCoreApplication::translate("MainWindow", "Objetivo:", nullptr));
         Peso->setText(QCoreApplication::translate("MainWindow", "Peso (kg):", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "Altura (cm):", nullptr));
@@ -650,6 +802,8 @@ public:
         comboObjetivo->setItemText(2, QCoreApplication::translate("MainWindow", "Subir", nullptr));
 
         btnGuardarPerfil->setText(QCoreApplication::translate("MainWindow", "Guardar Perfil", nullptr));
+        buscadorAlimentos->setPlaceholderText(QCoreApplication::translate("MainWindow", "Buscar alimento en cat\303\241logo...", nullptr));
+        btnVolverNutricion->setText(QCoreApplication::translate("MainWindow", "Volver", nullptr));
     } // retranslateUi
 
 };

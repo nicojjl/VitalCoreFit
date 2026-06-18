@@ -1,16 +1,16 @@
 {
-    "actividad": 2,
-    "altura": 175.0,
-    "edad": 19,
+    "actividad": 4,
+    "altura": 170.0,
+    "edad": 18,
     "genero": 0,
-    "imc": 22.857142857142858,
-    "macroCarbos": 264.08125,
-    "macroGrasas": 88.02708333333332,
-    "macroProteinas": 198.0609375,
-    "metaCalorica": 2640.8125,
-    "nombre": "Nicolas",
-    "objetivo": 1,
+    "imc": 24.221453287197235,
+    "macroCarbos": 348.725,
+    "macroGrasas": 116.24166666666666,
+    "macroProteinas": 261.54375,
+    "metaCalorica": 3487.25,
+    "nombre": "nicolas silva",
+    "objetivo": 2,
     "peso": 70.0,
-    "tdee": 2640.8125,
-    "tmb": 1703.75
+    "tdee": 3187.25,
+    "tmb": 1677.5
 }

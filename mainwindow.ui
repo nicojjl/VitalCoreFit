@@ -218,6 +218,73 @@ QPushButton#btnGuardarPerfil:pressed {
 QWidget#perfil QLabel {
     color: #A0AAB5;
     font-weight: bold;
+}
+/* Botones del módulo de nutrición */
+QPushButton#btnAgregarComida, QPushButton#btnHistorialComidas, QPushButton#btnVolverNutricion {
+    background-color: #1E2736;
+    color: #FFFFFF;
+    border: 1px solid #2A3648;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+QPushButton#btnAgregarComida:hover, QPushButton#btnHistorialComidas:hover, QPushButton#btnVolverNutricion:hover {
+    background-color: #2A3648;
+    border: 1px solid #00E5FF;
+    color: #00E5FF;
+}
+
+/* Nuevo estilo de la lista de búsquedas */
+QListWidget#listaResultadosBusqueda {
+    background-color: #1E2736;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    padding: 5px;
+}
+QListWidget#listaResultadosBusqueda::item {
+    padding: 10px;
+    border-bottom: 1px solid #2A3648;
+}
+QListWidget#listaResultadosBusqueda::item:hover {
+    background-color: #2A3648;
+}
+
+/* DISEÑO DE LA PÁGINA BUSCADOR (FOTO 2)     */
+
+
+/* El Buscador de arriba */
+QLineEdit#buscadorAlimentos {
+    background-color: #1E2736;
+    color: #FFFFFF;
+    border: 1px solid #2A3648;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+
+/* El efecto Cian al pasar el mouse o seleccionar (Como en tu foto) */
+QListWidget#listaResultadosBusqueda::item:hover, 
+QListWidget#listaResultadosBusqueda::item:selected {
+    background-color: #00E5FF;
+    color: #000000;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* El botón Volver alargado de abajo */
+QPushButton#btnVolverNutricion {
+    background-color: #D3D3D3; 
+    color: #000000;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    font-weight: bold;
+}
+QPushButton#btnVolverNutricion:hover {
+    background-color: #B0B0B0;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -255,7 +322,7 @@ QWidget#perfil QLabel {
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="dashboard">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -267,64 +334,7 @@ QWidget#perfil QLabel {
           <property name="frameShadow">
            <enum>QFrame::Shadow::Raised</enum>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Calorias Consumidas</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblMetaCalorica">
-             <property name="text">
-              <string>Meta: 0 kcal</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblCaloriasConsumidas">
-             <property name="text">
-              <string>kcal</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="tarjetaBalance">
-             <property name="frameShape">
-              <enum>QFrame::Shape::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Shadow::Raised</enum>
-             </property>
-             <widget class="QLabel" name="label_10">
-              <property name="geometry">
-               <rect>
-                <x>10</x>
-                <y>20</y>
-                <width>101</width>
-                <height>16</height>
-               </rect>
-              </property>
-              <property name="text">
-               <string>Calorías Quemadas</string>
-              </property>
-             </widget>
-             <widget class="QLabel" name="lblBalanceNeto">
-              <property name="geometry">
-               <rect>
-                <x>80</x>
-                <y>35</y>
-                <width>21</width>
-                <height>21</height>
-               </rect>
-              </property>
-              <property name="text">
-               <string>kcal</string>
-              </property>
-             </widget>
-            </widget>
-           </item>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
            <item>
             <widget class="QFrame" name="tarjetaQuemadas">
              <property name="frameShape">
@@ -338,7 +348,7 @@ QWidget#perfil QLabel {
                <rect>
                 <x>10</x>
                 <y>20</y>
-                <width>101</width>
+                <width>251</width>
                 <height>16</height>
                </rect>
               </property>
@@ -359,6 +369,89 @@ QWidget#perfil QLabel {
                <string>kcal</string>
               </property>
              </widget>
+             <widget class="QFrame" name="tarjetaConsumidas_2">
+              <property name="geometry">
+               <rect>
+                <x>9</x>
+                <y>9</y>
+                <width>171</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::Shape::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Shadow::Raised</enum>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="tarjetaBalance">
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <item>
+               <widget class="QFrame" name="tarjetaConsumidas_3">
+                <property name="frameShape">
+                 <enum>QFrame::Shape::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Shadow::Raised</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_10">
+                <property name="text">
+                 <string>Calorías Quemadas</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lblBalanceNeto">
+                <property name="text">
+                 <string>kcal</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblCaloriasConsumidas">
+             <property name="text">
+              <string>kcal</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblMetaCalorica">
+             <property name="text">
+              <string>Meta: 0 kcal</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="tarjetaBalance_2">
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Raised</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Calorias Consumidas</string>
+             </property>
             </widget>
            </item>
           </layout>
@@ -377,6 +470,16 @@ QWidget#perfil QLabel {
             <widget class="QLabel" name="label_3">
              <property name="text">
               <string>Proteínas</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="tarjetaMacros_2">
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
             </widget>
            </item>
@@ -423,9 +526,23 @@ QWidget#perfil QLabel {
       <widget class="QWidget" name="alimentos">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QLineEdit" name="buscadorAlimentos">
-          <property name="placeholderText">
-           <string>Buscar alimento en catálogo...</string>
+         <widget class="QPushButton" name="btnHistorialComidas">
+          <property name="text">
+           <string>Historial de comidas</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnAgregarComida">
+          <property name="text">
+           <string>Agregar comida</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblCaloriasNutricion">
+          <property name="text">
+           <string>Calorías consumidas hoy: 0 kcal</string>
           </property>
          </widget>
         </item>
@@ -436,6 +553,30 @@ QWidget#perfil QLabel {
       </widget>
       <widget class="QWidget" name="rutinas">
        <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QComboBox" name="comboDiasRutina">
+          <item>
+           <property name="text">
+            <string>2 Días</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>3 Días</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>4 Días</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5 Días</string>
+           </property>
+          </item>
+         </widget>
+        </item>
         <item row="1" column="0">
          <widget class="QTabWidget" name="TABLA">
           <property name="currentIndex">
@@ -479,28 +620,11 @@ QWidget#perfil QLabel {
           </widget>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QComboBox" name="comboDiasRutina">
-          <item>
-           <property name="text">
-            <string>2 Días</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>3 Días</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>4 Días</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>5 Días</string>
-           </property>
-          </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="btnFinalizarRutina">
+          <property name="text">
+           <string>Finalizar Entrenamiento</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -638,6 +762,27 @@ QWidget#perfil QLabel {
          <widget class="QPushButton" name="btnGuardarPerfil">
           <property name="text">
            <string>Guardar Perfil</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_buscador">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QLineEdit" name="buscadorAlimentos">
+          <property name="placeholderText">
+           <string>Buscar alimento en catálogo...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="listaResultadosBusqueda"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnVolverNutricion">
+          <property name="text">
+           <string>Volver</string>
           </property>
          </widget>
         </item>
