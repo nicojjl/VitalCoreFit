@@ -76,6 +76,7 @@ public:
     QWidget *page_guia;
     QHBoxLayout *horizontalLayout_3;
     QListWidget *listaGuia;
+    QWidget *Estadistica;
     QWidget *rutinas;
     QGridLayout *gridLayout;
     QPushButton *btnFinalizarRutina;
@@ -406,6 +407,7 @@ public:
         new QListWidgetItem(listWidget);
         new QListWidgetItem(listWidget);
         new QListWidgetItem(listWidget);
+        new QListWidgetItem(listWidget);
         listWidget->setObjectName("listWidget");
         listWidget->setMaximumSize(QSize(200, 16777215));
 
@@ -587,6 +589,9 @@ public:
         horizontalLayout_3->addWidget(listaGuia);
 
         stackedWidget->addWidget(page_guia);
+        Estadistica = new QWidget();
+        Estadistica->setObjectName("Estadistica");
+        stackedWidget->addWidget(Estadistica);
         rutinas = new QWidget();
         rutinas->setObjectName("rutinas");
         gridLayout = new QGridLayout(rutinas);
@@ -787,7 +792,7 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(listWidget, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(4);
         TABLA->setCurrentIndex(1);
 
 
@@ -803,13 +808,15 @@ public:
         QListWidgetItem *___qlistwidgetitem = listWidget->item(0);
         ___qlistwidgetitem->setText(QCoreApplication::translate("MainWindow", "Dashboard", nullptr));
         QListWidgetItem *___qlistwidgetitem1 = listWidget->item(1);
-        ___qlistwidgetitem1->setText(QCoreApplication::translate("MainWindow", "Nutricion", nullptr));
+        ___qlistwidgetitem1->setText(QCoreApplication::translate("MainWindow", "Estad\303\255sticas", nullptr));
         QListWidgetItem *___qlistwidgetitem2 = listWidget->item(2);
-        ___qlistwidgetitem2->setText(QCoreApplication::translate("MainWindow", "Rutinas", nullptr));
+        ___qlistwidgetitem2->setText(QCoreApplication::translate("MainWindow", "Nutricion", nullptr));
         QListWidgetItem *___qlistwidgetitem3 = listWidget->item(3);
-        ___qlistwidgetitem3->setText(QCoreApplication::translate("MainWindow", "Perfil", nullptr));
+        ___qlistwidgetitem3->setText(QCoreApplication::translate("MainWindow", "Rutinas", nullptr));
         QListWidgetItem *___qlistwidgetitem4 = listWidget->item(4);
-        ___qlistwidgetitem4->setText(QCoreApplication::translate("MainWindow", "Guia", nullptr));
+        ___qlistwidgetitem4->setText(QCoreApplication::translate("MainWindow", "Perfil", nullptr));
+        QListWidgetItem *___qlistwidgetitem5 = listWidget->item(5);
+        ___qlistwidgetitem5->setText(QCoreApplication::translate("MainWindow", "Guia", nullptr));
         listWidget->setSortingEnabled(__sortingEnabled);
 
         label_9->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as Quemadas", nullptr));

@@ -35,6 +35,9 @@ private slots:
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
+    // EL MOTOR EN VIVO DE LA CLASE 22
+    void calcularVolumenEnVivo();
+
 private:
     Ui::MainWindow *ui;
     Usuario perfilUsuario;

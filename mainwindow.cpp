@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QSize>
 #include <QMessageBox>
+#include <QLineEdit>
 
 // Librerías de Gráficos
 #include <QtCharts/QChartView>
@@ -17,19 +18,21 @@
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    if (cargarPerfil(perfilUsuario)) {
-        actualizarDashboardVisual();
-    }
     catalogoAlimentos = cargarAlimentos("data/foods.json");
     listaDelDia.cabeza = nullptr;
     listaDelDia.cantidad = 0;
+
+
+    if (cargarPerfil(perfilUsuario)) {
+        cargarDatosUI();
+        actualizarDashboardVisual();
+    }
 
     ui->listaComidasHoy->setStyleSheet(
         "QListWidget { background-color: #1E2736; border-radius: 12px; border: 1px solid #2A3648; outline: none; }"
@@ -52,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->inputTiempoCardio->setText("");
     ui->inputTiempoCardio->setPlaceholderText("Minutos de duración (ej. 30)");
 
+    // Configuración del Manual
     ui->listaGuia->setStyleSheet(
         "QListWidget { background-color: transparent; border: none; outline: none; }"
         "QListWidget::item { padding: 10px; }"
@@ -263,12 +267,16 @@ void MainWindow::on_comboDiasRutina_currentTextChanged(const QString &arg1)
 {
     ui->tableWidget->setRowCount(0);
 
-    auto crearInputRecomendado = [](QString recomendacion) {
+    auto crearInputRecomendado = [this](QString recomendacion) {
         QLineEdit *input = new QLineEdit();
         input->setPlaceholderText(recomendacion);
         input->setAlignment(Qt::AlignCenter);
         input->setStyleSheet("QLineEdit { background: transparent; color: #000000; border: 1px solid #CCC; border-radius: 4px; font-size: 13px; }"
                              "QLineEdit:focus { border: 2px solid #00E5FF; background: #FFFFFF; color: #000000; }");
+
+        // CONEXIÓN EN TIEMPO REAL: Se enlaza cada caja al cálculo
+        connect(input, &QLineEdit::textChanged, this, &MainWindow::calcularVolumenEnVivo);
+
         return input;
     };
 
@@ -305,31 +313,14 @@ void MainWindow::on_comboDiasRutina_currentTextChanged(const QString &arg1)
 
 void MainWindow::on_btnFinalizarRutina_clicked()
 {
-    double volumenTotalLibras = 0;
+    // Ya no hacemos el cálculo desde cero porque 'calcularVolumenEnVivo' lo hace.
+    // Solo forzamos un recálculo final por si acaso y mostramos el resumen.
+    calcularVolumenEnVivo();
 
-    for (int fila = 0; fila < ui->tableWidget->rowCount(); ++fila) {
-        QLineEdit *inputSeries = qobject_cast<QLineEdit*>(ui->tableWidget->cellWidget(fila, 1));
-        QLineEdit *inputReps = qobject_cast<QLineEdit*>(ui->tableWidget->cellWidget(fila, 2));
-        QLineEdit *inputPeso = qobject_cast<QLineEdit*>(ui->tableWidget->cellWidget(fila, 3));
+    QString txtQuemadas = ui->lblCaloriasQuemadas->text();
+    txtQuemadas.replace(" kcal", "");
 
-        if (inputSeries && inputReps && inputPeso) {
-            QString txtSeries = inputSeries->text().isEmpty() ? inputSeries->placeholderText() : inputSeries->text();
-            QString txtReps = inputReps->text().isEmpty() ? inputReps->placeholderText() : inputReps->text();
-            QString txtPeso = inputPeso->text().isEmpty() ? inputPeso->placeholderText() : inputPeso->text();
-
-            int series = txtSeries.toInt();
-            int reps = txtReps.section("-", 0, 0).toInt();
-            double peso = txtPeso.toDouble();
-
-            volumenTotalLibras += (series * reps * peso);
-        }
-    }
-
-    double caloriasQuemadas = volumenTotalLibras * 0.005;
-    ui->lblCaloriasQuemadas->setText(QString::number(caloriasQuemadas, 'f', 0) + " kcal");
-    actualizarDashboardVisual();
-
-    QString resumen = "¡Excelente entrenamiento!\n\nVolumen total movido: " + QString::number(volumenTotalLibras) + " lb\nCalorías estimadas quemadas: " + QString::number(caloriasQuemadas, 'f', 0) + " kcal";
+    QString resumen = "¡Excelente entrenamiento!\n\nCalorías estimadas quemadas en esta sesión: " + txtQuemadas + " kcal";
     QMessageBox::information(this, "Entrenamiento Finalizado", resumen);
 }
 
@@ -490,9 +481,9 @@ void MainWindow::dibujarGrafico()
     *setQuemadas << quemadas;
     *setMeta << meta;
 
-    setConsumidas->setColor(QColor("#00E676"));
-    setQuemadas->setColor(QColor("#FF1744"));
-    setMeta->setColor(QColor("#00E5FF"));
+    setConsumidas->setColor(QColor(0x00E676));
+    setQuemadas->setColor(QColor(0xFF1744));
+    setMeta->setColor(QColor(0x00E5FF));
 
     QBarSeries *series = new QBarSeries();
     series->append(setConsumidas);
@@ -504,7 +495,7 @@ void MainWindow::dibujarGrafico()
     chart->setTitle("Balance Energético del Día");
     chart->setAnimationOptions(QChart::SeriesAnimations);
 
-    chart->setBackgroundBrush(QBrush(QColor("#1E2736")));
+    chart->setBackgroundBrush(QBrush(QColor(0x1E2736)));
     chart->setTitleBrush(QBrush(Qt::white));
     chart->legend()->setLabelColor(Qt::white);
 
@@ -523,10 +514,48 @@ void MainWindow::dibujarGrafico()
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setBackgroundBrush(QBrush(QColor("#1E2736")));
+    chartView->setBackgroundBrush(QBrush(QColor(0x1E2736)));
 
     QVBoxLayout *layout = new QVBoxLayout(ui->lienzoGrafico);
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(chartView);
     ui->lienzoGrafico->setLayout(layout);
+}
+
+void MainWindow::calcularVolumenEnVivo()
+{
+    double volumenTotalLibras = 0;
+
+    for (int fila = 0; fila < ui->tableWidget->rowCount(); ++fila) {
+
+        QLineEdit *inputSeries = qobject_cast<QLineEdit*>(ui->tableWidget->cellWidget(fila, 1));
+        QLineEdit *inputReps = qobject_cast<QLineEdit*>(ui->tableWidget->cellWidget(fila, 2));
+        QLineEdit *inputPeso = qobject_cast<QLineEdit*>(ui->tableWidget->cellWidget(fila, 3));
+
+        if (inputSeries && inputReps && inputPeso) {
+            QString txtSeries = inputSeries->text().isEmpty() ? inputSeries->placeholderText() : inputSeries->text();
+            QString txtReps = inputReps->text().isEmpty() ? inputReps->placeholderText() : inputReps->text();
+            QString txtPeso = inputPeso->text().isEmpty() ? inputPeso->placeholderText() : inputPeso->text();
+
+            int series = txtSeries.toInt();
+            int reps = txtReps.section("-", 0, 0).toInt();
+            double peso = txtPeso.toDouble();
+
+            volumenTotalLibras += (series * reps * peso);
+        }
+    }
+
+    double caloriasQuemadas = volumenTotalLibras * 0.005;
+    ui->lblCaloriasQuemadas->setText(QString::number(caloriasQuemadas, 'f', 0) + " kcal");
+
+    QString txtConsumidas = ui->lblCaloriasConsumidas->text();
+    txtConsumidas.replace(" kcal", "");
+    double consumidas = txtConsumidas.toDouble();
+
+    double balance = consumidas - caloriasQuemadas;
+    ui->lblBalanceNeto->setText(QString::number(balance, 'f', 0) + " kcal");
+
+    if (ui->stackedWidget->currentWidget() == ui->page_graficos) {
+        dibujarGrafico();
+    }
 }

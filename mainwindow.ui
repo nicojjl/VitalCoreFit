@@ -304,6 +304,11 @@ QPushButton#btnVolverNutricion:hover {
       </item>
       <item>
        <property name="text">
+        <string>Estadísticas</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
         <string>Nutricion</string>
        </property>
       </item>
@@ -327,7 +332,7 @@ QPushButton#btnVolverNutricion:hover {
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="dashboard">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -570,6 +575,7 @@ QPushButton#btnVolverNutricion:hover {
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="Estadistica"/>
       <widget class="QWidget" name="rutinas">
        <layout class="QGridLayout" name="gridLayout">
         <item row="2" column="1">
