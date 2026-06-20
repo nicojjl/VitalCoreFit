@@ -87,13 +87,24 @@ MainWindow::MainWindow(QWidget *parent)
                      "• Pushdown: Si usas bandas elásticas, empuja hacia abajo suavemente para fortalecer los brazos.\n", 14, "#FFFFFF", false);
     agregarTextoGuia("* Recuerda: Consulta siempre con tu médico antes de realizar esfuerzos físicos.", 14, "#FF1744", true);
 
-    // Forzar Inicio
     ui->stackedWidget->setCurrentWidget(ui->dashboard);
     ui->listWidget->setCurrentRow(0);
+
+    QSettings settings("VitalCoreFit", "App");
+    ui->lblCaloriasQuemadas->setText(settings.value("quemadasHoy", "0 kcal").toString());
+    ui->comboDiasRutina->setCurrentText(settings.value("ultimaRutina", "Lunes (Push)").toString());
+    cargarDiarioAlimentosJson();
+    actualizarDashboardVisual();
 }
 
 MainWindow::~MainWindow()
 {
+    QSettings settings("VitalCoreFit", "App");
+    settings.setValue("quemadasHoy", ui->lblCaloriasQuemadas->text());
+    settings.setValue("ultimaRutina", ui->comboDiasRutina->currentText());
+
+    guardarDiarioAlimentosJson();
+
     delete ui;
 }
 
@@ -117,11 +128,11 @@ void MainWindow::actualizarDashboardVisual()
 
     ui->barProteinas->setMaximum(metaProtes);
     ui->barCarbos->setMaximum(metaCarbos);
-    ui->progressBar_3->setMaximum(metaGrasas);
+    ui->barGrasas->setMaximum(metaGrasas);
 
     ui->barProteinas->setValue(metaProtes * 0.5);
     ui->barCarbos->setValue(metaCarbos * 0.8);
-    ui->progressBar_3->setValue(metaGrasas * 0.3);
+    ui->barGrasas->setValue(metaGrasas * 0.3);
 }
 
 void MainWindow::on_btnGuardarPerfil_clicked()
@@ -190,6 +201,45 @@ void MainWindow::on_buscadorAlimentos_textChanged(const QString &arg1)
     }
 }
 
+void MainWindow::agregarComidaInterfazVisual(const Alimento& alimento)
+{
+    QString textoDiario = QString::fromStdString(alimento.nombre) + " 100g  +" + QString::number(alimento.calorias) + " kcal";
+
+    QListWidgetItem *itemVisual = new QListWidgetItem(ui->listaComidasHoy);
+    itemVisual->setSizeHint(QSize(0, 45));
+
+    QWidget *filaWidget = new QWidget();
+    filaWidget->setStyleSheet("background-color: transparent;");
+
+    QHBoxLayout *layoutFila = new QHBoxLayout(filaWidget);
+    layoutFila->setContentsMargins(10, 0, 10, 0);
+
+    QLabel *lblComida = new QLabel(textoDiario);
+    lblComida->setStyleSheet("color: white; font-family: 'Segoe UI'; font-size: 14px; font-weight: bold; background: transparent; border: none;");
+
+    QPushButton *btnBorrar = new QPushButton(QString::fromUtf8("\u2716"));
+    btnBorrar->setFixedSize(26, 26);
+    btnBorrar->setCursor(Qt::PointingHandCursor);
+    btnBorrar->setStyleSheet(
+        "QPushButton { background-color: #FF1744; color: white; border-radius: 13px; font-size: 12px; border: none; padding-bottom: 1px; }"
+        "QPushButton:hover { background-color: #D50000; }"
+        );
+
+    layoutFila->addWidget(lblComida);
+    layoutFila->addStretch();
+    layoutFila->addWidget(btnBorrar);
+
+    ui->listaComidasHoy->setItemWidget(itemVisual, filaWidget);
+
+    connect(btnBorrar, &QPushButton::clicked, [this, itemVisual]() {
+        int fila = ui->listaComidasHoy->row(itemVisual);
+        delete ui->listaComidasHoy->takeItem(fila);
+        double caloriasActualizadas = calcularCaloriasDelDia(listaDelDia);
+        ui->lblCaloriasNutricion->setText("Calorías consumidas hoy: " + QString::number(caloriasActualizadas) + " kcal");
+        actualizarDashboardVisual();
+    });
+}
+
 void MainWindow::on_listaResultadosBusqueda_itemDoubleClicked(QListWidgetItem *item)
 {
     QString textoItem = item->text();
@@ -208,48 +258,13 @@ void MainWindow::on_listaResultadosBusqueda_itemDoubleClicked(QListWidgetItem *i
 
     if (encontrado) {
         agregarComida(listaDelDia, alimentoEncontrado, 100.0);
-        QString textoDiario = QString::fromStdString(alimentoEncontrado.nombre) + " 100g  +" + QString::number(alimentoEncontrado.calorias) + " kcal";
-
-        QListWidgetItem *itemVisual = new QListWidgetItem(ui->listaComidasHoy);
-        itemVisual->setSizeHint(QSize(0, 45));
-
-        QWidget *filaWidget = new QWidget();
-        filaWidget->setStyleSheet("background-color: transparent;");
-
-        QHBoxLayout *layoutFila = new QHBoxLayout(filaWidget);
-        layoutFila->setContentsMargins(10, 0, 10, 0);
-
-        QLabel *lblComida = new QLabel(textoDiario);
-        lblComida->setStyleSheet("color: white; font-family: 'Segoe UI'; font-size: 14px; font-weight: bold; background: transparent; border: none;");
-
-        QPushButton *btnBorrar = new QPushButton(QString::fromUtf8("\u2716"));
-        btnBorrar->setFixedSize(26, 26);
-        btnBorrar->setCursor(Qt::PointingHandCursor);
-        btnBorrar->setStyleSheet(
-            "QPushButton { background-color: #FF1744; color: white; border-radius: 13px; font-size: 12px; border: none; padding-bottom: 1px; }"
-            "QPushButton:hover { background-color: #D50000; }"
-            );
-
-        layoutFila->addWidget(lblComida);
-        layoutFila->addStretch();
-        layoutFila->addWidget(btnBorrar);
-
-        ui->listaComidasHoy->setItemWidget(itemVisual, filaWidget);
-
-        connect(btnBorrar, &QPushButton::clicked, [this, itemVisual]() {
-            int fila = ui->listaComidasHoy->row(itemVisual);
-            delete ui->listaComidasHoy->takeItem(fila);
-            double caloriasActualizadas = calcularCaloriasDelDia(listaDelDia);
-            ui->lblCaloriasNutricion->setText("Calorías consumidas hoy: " + QString::number(caloriasActualizadas) + " kcal");
-            actualizarDashboardVisual();
-        });
+        agregarComidaInterfazVisual(alimentoEncontrado);
 
         double caloriasTotalesHoy = calcularCaloriasDelDia(listaDelDia);
         ui->lblCaloriasNutricion->setText("Calorías consumidas hoy: " + QString::number(caloriasTotalesHoy) + " kcal");
     }
     actualizarDashboardVisual();
 }
-
 void MainWindow::configurarTablaRutinas()
 {
     ui->tableWidget->setColumnCount(4);
@@ -559,3 +574,87 @@ void MainWindow::calcularVolumenEnVivo()
         dibujarGrafico();
     }
 }
+void MainWindow::on_btnResetDia_clicked()
+{
+    QMessageBox::StandardButton respuesta;
+    respuesta = QMessageBox::question(this, "Finalizar Día",
+                                      "¿Terminaste por hoy? Esto reiniciará todos tus contadores a cero para empezar un nuevo día de entrenamiento.",
+                                      QMessageBox::Yes | QMessageBox::No);
+
+    if (respuesta == QMessageBox::Yes) {
+
+        ui->listaComidasHoy->clear();
+        ui->listaCardioHoy->clear();
+        ui->lblCaloriasQuemadas->setText("0 kcal");
+        ui->inputTiempoCardio->clear();
+
+
+
+        NodoComida* actual = listaDelDia.cabeza;
+        while (actual != nullptr) {
+            NodoComida* siguiente = actual->siguiente;
+            delete actual;
+            actual = siguiente;
+        }
+        listaDelDia.cabeza = nullptr;
+        listaDelDia.cantidad = 0;
+        QFile::remove("data/diario.json");
+
+
+        QSettings settings("VitalCoreFit", "App");
+        settings.setValue("quemadasHoy", "0 kcal");
+
+
+        actualizarDashboardVisual();
+        if (ui->stackedWidget->currentWidget() == ui->page_graficos) {
+            dibujarGrafico();
+        }
+    }
+}
+
+void MainWindow::guardarDiarioAlimentosJson()
+{
+    QJsonArray arrayComidas;
+    NodoComida* actual = listaDelDia.cabeza;
+
+    while (actual != nullptr) {
+        QJsonObject objetoAlimento;
+        objetoAlimento["nombre"] = QString::fromStdString(actual->alimento.nombre);
+        objetoAlimento["calorias"] = actual->alimento.calorias;
+        arrayComidas.append(objetoAlimento);
+        actual = actual->siguiente;
+    }
+
+    QJsonDocument documento(arrayComidas);
+    QFile archivo("data/diario.json");
+    if (archivo.open(QIODevice::WriteOnly)) {
+        archivo.write(documento.toJson());
+        archivo.close();
+    }
+}
+
+void MainWindow::cargarDiarioAlimentosJson()
+{
+    QFile archivo("data/diario.json");
+    if (!archivo.open(QIODevice::ReadOnly)) return;
+
+    QByteArray datos = archivo.readAll();
+    archivo.close();
+
+    QJsonDocument documento = QJsonDocument::fromJson(datos);
+    QJsonArray arrayComidas = documento.array();
+
+    for (int i = 0; i < arrayComidas.size(); ++i) {
+        QJsonObject objetoAlimento = arrayComidas[i].toObject();
+        Alimento alimento;
+        alimento.nombre = objetoAlimento["nombre"].toString().toStdString();
+        alimento.calorias = objetoAlimento["calorias"].toDouble();
+
+        agregarComida(listaDelDia, alimento, 100.0);
+        agregarComidaInterfazVisual(alimento);
+    }
+
+    double caloriasTotalesHoy = calcularCaloriasDelDia(listaDelDia);
+    ui->lblCaloriasNutricion->setText("Calorías consumidas hoy: " + QString::number(caloriasTotalesHoy) + " kcal");
+}
+

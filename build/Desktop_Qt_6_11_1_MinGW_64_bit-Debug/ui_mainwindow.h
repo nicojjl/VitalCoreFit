@@ -48,22 +48,20 @@ public:
     QFrame *tarjetaConsumidas_2;
     QFrame *tarjetaBalance;
     QVBoxLayout *verticalLayout_8;
-    QFrame *tarjetaConsumidas_3;
     QLabel *label_10;
     QLabel *lblBalanceNeto;
     QLabel *lblCaloriasConsumidas;
     QLabel *lblMetaCalorica;
-    QFrame *tarjetaBalance_2;
     QLabel *label;
     QFrame *tarjetaMacros;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_3;
-    QFrame *tarjetaMacros_2;
     QProgressBar *barProteinas;
     QLabel *label_4;
     QProgressBar *barCarbos;
     QLabel *label_5;
-    QProgressBar *progressBar_3;
+    QProgressBar *barGrasas;
+    QPushButton *btnResetDia;
     QWidget *alimentos;
     QVBoxLayout *verticalLayout_3;
     QPushButton *btnHistorialComidas;
@@ -437,7 +435,7 @@ public:
         lblCaloriasQuemadas->setGeometry(QRect(80, 35, 21, 21));
         tarjetaConsumidas_2 = new QFrame(tarjetaQuemadas);
         tarjetaConsumidas_2->setObjectName("tarjetaConsumidas_2");
-        tarjetaConsumidas_2->setGeometry(QRect(9, 9, 171, 21));
+        tarjetaConsumidas_2->setGeometry(QRect(140, 20, 191, 121));
         tarjetaConsumidas_2->setFrameShape(QFrame::Shape::StyledPanel);
         tarjetaConsumidas_2->setFrameShadow(QFrame::Shadow::Raised);
 
@@ -449,13 +447,6 @@ public:
         tarjetaBalance->setFrameShadow(QFrame::Shadow::Raised);
         verticalLayout_8 = new QVBoxLayout(tarjetaBalance);
         verticalLayout_8->setObjectName("verticalLayout_8");
-        tarjetaConsumidas_3 = new QFrame(tarjetaBalance);
-        tarjetaConsumidas_3->setObjectName("tarjetaConsumidas_3");
-        tarjetaConsumidas_3->setFrameShape(QFrame::Shape::StyledPanel);
-        tarjetaConsumidas_3->setFrameShadow(QFrame::Shadow::Raised);
-
-        verticalLayout_8->addWidget(tarjetaConsumidas_3);
-
         label_10 = new QLabel(tarjetaBalance);
         label_10->setObjectName("label_10");
 
@@ -479,13 +470,6 @@ public:
 
         verticalLayout_7->addWidget(lblMetaCalorica);
 
-        tarjetaBalance_2 = new QFrame(tarjetaConsumidas);
-        tarjetaBalance_2->setObjectName("tarjetaBalance_2");
-        tarjetaBalance_2->setFrameShape(QFrame::Shape::StyledPanel);
-        tarjetaBalance_2->setFrameShadow(QFrame::Shadow::Raised);
-
-        verticalLayout_7->addWidget(tarjetaBalance_2);
-
         label = new QLabel(tarjetaConsumidas);
         label->setObjectName("label");
 
@@ -504,13 +488,6 @@ public:
         label_3->setObjectName("label_3");
 
         verticalLayout_2->addWidget(label_3);
-
-        tarjetaMacros_2 = new QFrame(tarjetaMacros);
-        tarjetaMacros_2->setObjectName("tarjetaMacros_2");
-        tarjetaMacros_2->setFrameShape(QFrame::Shape::StyledPanel);
-        tarjetaMacros_2->setFrameShadow(QFrame::Shadow::Raised);
-
-        verticalLayout_2->addWidget(tarjetaMacros_2);
 
         barProteinas = new QProgressBar(tarjetaMacros);
         barProteinas->setObjectName("barProteinas");
@@ -534,11 +511,16 @@ public:
 
         verticalLayout_2->addWidget(label_5);
 
-        progressBar_3 = new QProgressBar(tarjetaMacros);
-        progressBar_3->setObjectName("progressBar_3");
-        progressBar_3->setValue(24);
+        barGrasas = new QProgressBar(tarjetaMacros);
+        barGrasas->setObjectName("barGrasas");
+        barGrasas->setValue(24);
 
-        verticalLayout_2->addWidget(progressBar_3);
+        verticalLayout_2->addWidget(barGrasas);
+
+        btnResetDia = new QPushButton(tarjetaMacros);
+        btnResetDia->setObjectName("btnResetDia");
+
+        verticalLayout_2->addWidget(btnResetDia);
 
 
         verticalLayout->addWidget(tarjetaMacros);
@@ -792,7 +774,7 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(listWidget, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 
-        stackedWidget->setCurrentIndex(4);
+        stackedWidget->setCurrentIndex(0);
         TABLA->setCurrentIndex(1);
 
 
@@ -829,6 +811,7 @@ public:
         label_3->setText(QCoreApplication::translate("MainWindow", "Prote\303\255nas", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "Carbohidratos", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "Grasas", nullptr));
+        btnResetDia->setText(QCoreApplication::translate("MainWindow", "Finalizar D\303\255a / Reiniciar", nullptr));
         btnHistorialComidas->setText(QCoreApplication::translate("MainWindow", "Historial de comidas", nullptr));
         btnAgregarComida->setText(QCoreApplication::translate("MainWindow", "Agregar comida", nullptr));
         lblCaloriasNutricion->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as consumidas hoy: 0 kcal", nullptr));

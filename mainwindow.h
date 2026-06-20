@@ -2,12 +2,17 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSettings>
 #include <vector>
 #include <QListWidgetItem>
 #include "Usuario.h"
 #include "PersistenciaUsuario.h"
 #include "Nutricion.h"
 #include "ListaComidas.h"
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QFile>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -37,6 +42,7 @@ private slots:
 
     // EL MOTOR EN VIVO DE LA CLASE 22
     void calcularVolumenEnVivo();
+    void on_btnResetDia_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -48,6 +54,9 @@ private:
     void configurarTablaRutinas();
     void cargarDatosUI();
     void dibujarGrafico();
+    void guardarDiarioAlimentosJson();
+    void cargarDiarioAlimentosJson();
+    void agregarComidaInterfazVisual(const Alimento& alimento);
 };
 
 #endif // MAINWINDOW_H

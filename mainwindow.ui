@@ -332,7 +332,7 @@ QPushButton#btnVolverNutricion:hover {
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="dashboard">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -382,10 +382,10 @@ QPushButton#btnVolverNutricion:hover {
              <widget class="QFrame" name="tarjetaConsumidas_2">
               <property name="geometry">
                <rect>
-                <x>9</x>
-                <y>9</y>
-                <width>171</width>
-                <height>21</height>
+                <x>140</x>
+                <y>20</y>
+                <width>191</width>
+                <height>121</height>
                </rect>
               </property>
               <property name="frameShape">
@@ -406,16 +406,6 @@ QPushButton#btnVolverNutricion:hover {
               <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
-              <item>
-               <widget class="QFrame" name="tarjetaConsumidas_3">
-                <property name="frameShape">
-                 <enum>QFrame::Shape::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Shadow::Raised</enum>
-                </property>
-               </widget>
-              </item>
               <item>
                <widget class="QLabel" name="label_10">
                 <property name="text">
@@ -448,16 +438,6 @@ QPushButton#btnVolverNutricion:hover {
             </widget>
            </item>
            <item>
-            <widget class="QFrame" name="tarjetaBalance_2">
-             <property name="frameShape">
-              <enum>QFrame::Shape::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Shadow::Raised</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QLabel" name="label">
              <property name="text">
               <string>Calorias Consumidas</string>
@@ -480,16 +460,6 @@ QPushButton#btnVolverNutricion:hover {
             <widget class="QLabel" name="label_3">
              <property name="text">
               <string>Proteínas</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="tarjetaMacros_2">
-             <property name="frameShape">
-              <enum>QFrame::Shape::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Shadow::Raised</enum>
              </property>
             </widget>
            </item>
@@ -522,9 +492,16 @@ QPushButton#btnVolverNutricion:hover {
             </widget>
            </item>
            <item>
-            <widget class="QProgressBar" name="progressBar_3">
+            <widget class="QProgressBar" name="barGrasas">
              <property name="value">
               <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnResetDia">
+             <property name="text">
+              <string>Finalizar Día / Reiniciar</string>
              </property>
             </widget>
            </item>
