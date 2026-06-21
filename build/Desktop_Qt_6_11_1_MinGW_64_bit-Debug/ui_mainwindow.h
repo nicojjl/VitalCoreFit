@@ -15,7 +15,6 @@
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
@@ -23,9 +22,8 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStackedWidget>
-#include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -76,19 +74,12 @@ public:
     QListWidget *listaGuia;
     QWidget *Estadistica;
     QWidget *rutinas;
-    QGridLayout *gridLayout;
-    QPushButton *btnFinalizarRutina;
-    QTabWidget *TABLA;
-    QWidget *Pesas;
-    QVBoxLayout *verticalLayout_4;
-    QTableWidget *tableWidget;
-    QWidget *Cardio;
-    QVBoxLayout *verticalLayout_9;
-    QComboBox *comboCardio;
-    QLineEdit *inputTiempoCardio;
-    QPushButton *btnRegistrarCardio;
-    QListWidget *listaCardioHoy;
+    QVBoxLayout *verticalLayout_10;
     QComboBox *comboDiasRutina;
+    QPushButton *btnDescanso;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QLabel *lblCronometro;
     QWidget *perfil;
     QVBoxLayout *verticalLayout_5;
     QGridLayout *gridLayout_2;
@@ -576,67 +567,8 @@ public:
         stackedWidget->addWidget(Estadistica);
         rutinas = new QWidget();
         rutinas->setObjectName("rutinas");
-        gridLayout = new QGridLayout(rutinas);
-        gridLayout->setObjectName("gridLayout");
-        btnFinalizarRutina = new QPushButton(rutinas);
-        btnFinalizarRutina->setObjectName("btnFinalizarRutina");
-
-        gridLayout->addWidget(btnFinalizarRutina, 2, 1, 1, 1);
-
-        TABLA = new QTabWidget(rutinas);
-        TABLA->setObjectName("TABLA");
-        Pesas = new QWidget();
-        Pesas->setObjectName("Pesas");
-        verticalLayout_4 = new QVBoxLayout(Pesas);
-        verticalLayout_4->setObjectName("verticalLayout_4");
-        tableWidget = new QTableWidget(Pesas);
-        if (tableWidget->columnCount() < 4)
-            tableWidget->setColumnCount(4);
-        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
-        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
-        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
-        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem3);
-        tableWidget->setObjectName("tableWidget");
-
-        verticalLayout_4->addWidget(tableWidget);
-
-        TABLA->addTab(Pesas, QString());
-        Cardio = new QWidget();
-        Cardio->setObjectName("Cardio");
-        verticalLayout_9 = new QVBoxLayout(Cardio);
-        verticalLayout_9->setObjectName("verticalLayout_9");
-        comboCardio = new QComboBox(Cardio);
-        comboCardio->addItem(QString());
-        comboCardio->addItem(QString());
-        comboCardio->addItem(QString());
-        comboCardio->addItem(QString());
-        comboCardio->setObjectName("comboCardio");
-
-        verticalLayout_9->addWidget(comboCardio);
-
-        inputTiempoCardio = new QLineEdit(Cardio);
-        inputTiempoCardio->setObjectName("inputTiempoCardio");
-
-        verticalLayout_9->addWidget(inputTiempoCardio);
-
-        btnRegistrarCardio = new QPushButton(Cardio);
-        btnRegistrarCardio->setObjectName("btnRegistrarCardio");
-
-        verticalLayout_9->addWidget(btnRegistrarCardio);
-
-        listaCardioHoy = new QListWidget(Cardio);
-        listaCardioHoy->setObjectName("listaCardioHoy");
-
-        verticalLayout_9->addWidget(listaCardioHoy);
-
-        TABLA->addTab(Cardio, QString());
-
-        gridLayout->addWidget(TABLA, 1, 1, 1, 1);
-
+        verticalLayout_10 = new QVBoxLayout(rutinas);
+        verticalLayout_10->setObjectName("verticalLayout_10");
         comboDiasRutina = new QComboBox(rutinas);
         comboDiasRutina->addItem(QString());
         comboDiasRutina->addItem(QString());
@@ -644,7 +576,27 @@ public:
         comboDiasRutina->addItem(QString());
         comboDiasRutina->setObjectName("comboDiasRutina");
 
-        gridLayout->addWidget(comboDiasRutina, 0, 1, 1, 1);
+        verticalLayout_10->addWidget(comboDiasRutina);
+
+        btnDescanso = new QPushButton(rutinas);
+        btnDescanso->setObjectName("btnDescanso");
+
+        verticalLayout_10->addWidget(btnDescanso);
+
+        scrollArea = new QScrollArea(rutinas);
+        scrollArea->setObjectName("scrollArea");
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 411, 334));
+        scrollArea->setWidget(scrollAreaWidgetContents);
+
+        verticalLayout_10->addWidget(scrollArea);
+
+        lblCronometro = new QLabel(rutinas);
+        lblCronometro->setObjectName("lblCronometro");
+
+        verticalLayout_10->addWidget(lblCronometro);
 
         stackedWidget->addWidget(rutinas);
         perfil = new QWidget();
@@ -774,8 +726,7 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(listWidget, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 
-        stackedWidget->setCurrentIndex(0);
-        TABLA->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(5);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -815,29 +766,13 @@ public:
         btnHistorialComidas->setText(QCoreApplication::translate("MainWindow", "Historial de comidas", nullptr));
         btnAgregarComida->setText(QCoreApplication::translate("MainWindow", "Agregar comida", nullptr));
         lblCaloriasNutricion->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as consumidas hoy: 0 kcal", nullptr));
-        btnFinalizarRutina->setText(QCoreApplication::translate("MainWindow", "Finalizar Entrenamiento", nullptr));
-        QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Ejercicio", nullptr));
-        QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "M\303\272sculo", nullptr));
-        QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
-        ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Series x Reps", nullptr));
-        QTableWidgetItem *___qtablewidgetitem3 = tableWidget->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "Peso", nullptr));
-        TABLA->setTabText(TABLA->indexOf(Pesas), QCoreApplication::translate("MainWindow", "Pesas", nullptr));
-        comboCardio->setItemText(0, QCoreApplication::translate("MainWindow", "Trotadora", nullptr));
-        comboCardio->setItemText(1, QCoreApplication::translate("MainWindow", "Bicicleta Est\303\241tica", nullptr));
-        comboCardio->setItemText(2, QCoreApplication::translate("MainWindow", "Caminata", nullptr));
-        comboCardio->setItemText(3, QCoreApplication::translate("MainWindow", "Escaladora", nullptr));
-
-        inputTiempoCardio->setText(QCoreApplication::translate("MainWindow", "Minutos de duraci\303\263n (ej. 30)", nullptr));
-        btnRegistrarCardio->setText(QCoreApplication::translate("MainWindow", "Registrar Cardio", nullptr));
-        TABLA->setTabText(TABLA->indexOf(Cardio), QCoreApplication::translate("MainWindow", "Cardio", nullptr));
         comboDiasRutina->setItemText(0, QCoreApplication::translate("MainWindow", "2 D\303\255as", nullptr));
         comboDiasRutina->setItemText(1, QCoreApplication::translate("MainWindow", "3 D\303\255as", nullptr));
         comboDiasRutina->setItemText(2, QCoreApplication::translate("MainWindow", "4 D\303\255as", nullptr));
         comboDiasRutina->setItemText(3, QCoreApplication::translate("MainWindow", "5 D\303\255as", nullptr));
 
+        btnDescanso->setText(QCoreApplication::translate("MainWindow", "Descanso (90s)", nullptr));
+        lblCronometro->setText(QCoreApplication::translate("MainWindow", "00:00", nullptr));
         Peso_2->setText(QCoreApplication::translate("MainWindow", "Objetivo:", nullptr));
         Peso->setText(QCoreApplication::translate("MainWindow", "Peso (kg):", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "Altura (cm):", nullptr));
