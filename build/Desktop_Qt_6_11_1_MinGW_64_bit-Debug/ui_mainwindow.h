@@ -40,17 +40,12 @@ public:
     QVBoxLayout *verticalLayout;
     QFrame *tarjetaConsumidas;
     QVBoxLayout *verticalLayout_7;
-    QFrame *tarjetaQuemadas;
-    QLabel *label_9;
-    QLabel *lblCaloriasQuemadas;
-    QFrame *tarjetaConsumidas_2;
     QFrame *tarjetaBalance;
     QVBoxLayout *verticalLayout_8;
-    QLabel *label_10;
-    QLabel *lblBalanceNeto;
+    QLabel *lblCaloriasQuemadas;
     QLabel *lblCaloriasConsumidas;
     QLabel *lblMetaCalorica;
-    QLabel *label;
+    QLabel *lblBalanceNeto;
     QFrame *tarjetaMacros;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_3;
@@ -414,34 +409,26 @@ public:
         tarjetaConsumidas->setFrameShadow(QFrame::Shadow::Raised);
         verticalLayout_7 = new QVBoxLayout(tarjetaConsumidas);
         verticalLayout_7->setObjectName("verticalLayout_7");
-        tarjetaQuemadas = new QFrame(tarjetaConsumidas);
-        tarjetaQuemadas->setObjectName("tarjetaQuemadas");
-        tarjetaQuemadas->setFrameShape(QFrame::Shape::StyledPanel);
-        tarjetaQuemadas->setFrameShadow(QFrame::Shadow::Raised);
-        label_9 = new QLabel(tarjetaQuemadas);
-        label_9->setObjectName("label_9");
-        label_9->setGeometry(QRect(10, 20, 251, 16));
-        lblCaloriasQuemadas = new QLabel(tarjetaQuemadas);
-        lblCaloriasQuemadas->setObjectName("lblCaloriasQuemadas");
-        lblCaloriasQuemadas->setGeometry(QRect(80, 35, 21, 21));
-        tarjetaConsumidas_2 = new QFrame(tarjetaQuemadas);
-        tarjetaConsumidas_2->setObjectName("tarjetaConsumidas_2");
-        tarjetaConsumidas_2->setGeometry(QRect(140, 20, 191, 121));
-        tarjetaConsumidas_2->setFrameShape(QFrame::Shape::StyledPanel);
-        tarjetaConsumidas_2->setFrameShadow(QFrame::Shadow::Raised);
-
-        verticalLayout_7->addWidget(tarjetaQuemadas);
-
         tarjetaBalance = new QFrame(tarjetaConsumidas);
         tarjetaBalance->setObjectName("tarjetaBalance");
         tarjetaBalance->setFrameShape(QFrame::Shape::StyledPanel);
         tarjetaBalance->setFrameShadow(QFrame::Shadow::Raised);
         verticalLayout_8 = new QVBoxLayout(tarjetaBalance);
         verticalLayout_8->setObjectName("verticalLayout_8");
-        label_10 = new QLabel(tarjetaBalance);
-        label_10->setObjectName("label_10");
+        lblCaloriasQuemadas = new QLabel(tarjetaBalance);
+        lblCaloriasQuemadas->setObjectName("lblCaloriasQuemadas");
 
-        verticalLayout_8->addWidget(label_10);
+        verticalLayout_8->addWidget(lblCaloriasQuemadas);
+
+        lblCaloriasConsumidas = new QLabel(tarjetaBalance);
+        lblCaloriasConsumidas->setObjectName("lblCaloriasConsumidas");
+
+        verticalLayout_8->addWidget(lblCaloriasConsumidas);
+
+        lblMetaCalorica = new QLabel(tarjetaBalance);
+        lblMetaCalorica->setObjectName("lblMetaCalorica");
+
+        verticalLayout_8->addWidget(lblMetaCalorica);
 
         lblBalanceNeto = new QLabel(tarjetaBalance);
         lblBalanceNeto->setObjectName("lblBalanceNeto");
@@ -450,21 +437,6 @@ public:
 
 
         verticalLayout_7->addWidget(tarjetaBalance);
-
-        lblCaloriasConsumidas = new QLabel(tarjetaConsumidas);
-        lblCaloriasConsumidas->setObjectName("lblCaloriasConsumidas");
-
-        verticalLayout_7->addWidget(lblCaloriasConsumidas);
-
-        lblMetaCalorica = new QLabel(tarjetaConsumidas);
-        lblMetaCalorica->setObjectName("lblMetaCalorica");
-
-        verticalLayout_7->addWidget(lblMetaCalorica);
-
-        label = new QLabel(tarjetaConsumidas);
-        label->setObjectName("label");
-
-        verticalLayout_7->addWidget(label);
 
 
         verticalLayout->addWidget(tarjetaConsumidas);
@@ -726,7 +698,7 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(listWidget, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 
-        stackedWidget->setCurrentIndex(5);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -752,13 +724,10 @@ public:
         ___qlistwidgetitem5->setText(QCoreApplication::translate("MainWindow", "Guia", nullptr));
         listWidget->setSortingEnabled(__sortingEnabled);
 
-        label_9->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as Quemadas", nullptr));
-        lblCaloriasQuemadas->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
-        label_10->setText(QCoreApplication::translate("MainWindow", "Calor\303\255as Quemadas", nullptr));
-        lblBalanceNeto->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
-        lblCaloriasConsumidas->setText(QCoreApplication::translate("MainWindow", "kcal", nullptr));
-        lblMetaCalorica->setText(QCoreApplication::translate("MainWindow", "Meta: 0 kcal", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "Calorias Consumidas", nullptr));
+        lblCaloriasQuemadas->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        lblCaloriasConsumidas->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        lblMetaCalorica->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        lblBalanceNeto->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Prote\303\255nas", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "Carbohidratos", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "Grasas", nullptr));

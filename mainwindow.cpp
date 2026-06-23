@@ -28,22 +28,18 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // 1. Inicializar el temporizador de descanso
     timerDescanso = new QTimer(this);
     connect(timerDescanso, &QTimer::timeout, this, &MainWindow::actualizarCronometro);
 
-    // 2. Inicializar estructuras de datos de nutrición
     catalogoAlimentos = cargarAlimentos("data/foods.json");
     listaDelDia.cabeza = nullptr;
     listaDelDia.cantidad = 0;
 
-    // 3. Cargar datos de usuario guardados
     if (cargarPerfil(perfilUsuario)) {
         cargarDatosUI();
         actualizarDashboardVisual();
     }
 
-    // 4. Configurar estilos visuales de listas
     if (ui->listaComidasHoy) {
         ui->listaComidasHoy->setStyleSheet(
             "QListWidget { background-color: #1E2736; border-radius: 12px; border: 1px solid #2A3648; outline: none; }"
@@ -52,13 +48,11 @@ MainWindow::MainWindow(QWidget *parent)
             );
     }
 
-    // 5. Configurar opciones del selector de rutinas
     if (ui->comboDiasRutina) {
         ui->comboDiasRutina->clear();
         ui->comboDiasRutina->addItems({"Lunes (Push)", "Martes (Pull)", "Miércoles (Legs)", "Jueves (Push)", "Viernes (Pull)", "Sábado (Legs)"});
     }
 
-    // 6. Configurar la guía del manual de usuario
     if (ui->listaGuia) {
         ui->listaGuia->setStyleSheet(
             "QListWidget { background-color: transparent; border: none; outline: none; }"
@@ -92,7 +86,6 @@ MainWindow::MainWindow(QWidget *parent)
         agregarTextoGuia("* Recuerda: Consulta siempre con tu médico antes de realizar esfuerzos físicos.", 14, "#FF1744", true);
     }
 
-    // 7. Forzar pantalla inicial en el Dashboard
     if (ui->stackedWidget) {
         ui->stackedWidget->setCurrentWidget(ui->dashboard);
     }
@@ -100,10 +93,11 @@ MainWindow::MainWindow(QWidget *parent)
         ui->listWidget->setCurrentRow(0);
     }
 
-    // 8. Recuperar configuraciones y diarios previos
     QSettings settings("VitalCoreFit", "App");
     if (ui->lblCaloriasQuemadas) {
-        ui->lblCaloriasQuemadas->setText(settings.value("quemadasHoy", "0 kcal").toString());
+        QString qm = settings.value("quemadasHoy", "0").toString();
+        qm.replace("🔥 Quemadas: ", "").replace(" kcal", "");
+        ui->lblCaloriasQuemadas->setText("🔥 Quemadas: " + qm + " kcal");
     }
     if (ui->comboDiasRutina) {
         ui->comboDiasRutina->setCurrentText(settings.value("ultimaRutina", "Lunes (Push)").toString());
@@ -111,6 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     cargarDiarioAlimentosJson();
     actualizarDashboardVisual();
+
     if (ui->btnDescanso) {
         ui->btnDescanso->setStyleSheet(
             "QPushButton { "
@@ -133,8 +128,8 @@ MainWindow::MainWindow(QWidget *parent)
     if (ui->lblCronometro) {
         ui->lblCronometro->setStyleSheet(
             "QLabel { "
-            "color: #00E676; "         // Verde neón
-            "font-size: 42px; "        // Tamaño gigante
+            "color: #00E676; "
+            "font-size: 42px; "
             "font-weight: bold; "
             "font-family: 'Segoe UI', monospace; "
             "background-color: transparent; "
@@ -142,13 +137,71 @@ MainWindow::MainWindow(QWidget *parent)
             );
         ui->lblCronometro->setAlignment(Qt::AlignCenter);
     }
+
+    // ========================================================
+    // MAGIA C++: REDISEÑO AUTOMÁTICO (DASHBOARD Y PERFIL)
+    // ========================================================
+    QString estiloTarjeta = "QFrame { background-color: #121A25; border-radius: 12px; border: 1px solid #2A3648; }";
+    if (ui->tarjetaBalance) ui->tarjetaBalance->setStyleSheet(estiloTarjeta);
+    if (ui->tarjetaConsumidas) ui->tarjetaConsumidas->setStyleSheet(estiloTarjeta);
+    if (ui->tarjetaMacros) ui->tarjetaMacros->setStyleSheet(estiloTarjeta);
+
+    QString estiloTitulo = "QLabel { color: #8E9BAE; font-size: 14px; font-weight: bold; background: transparent; border: none; }";
+    // Tamaño de letra ajustado a 20px para que el texto descriptivo quepa bien en pantalla
+    QString estiloNumero = "QLabel { color: #FFFFFF; font-size: 20px; font-weight: bold; background: transparent; border: none; }";
+
+    if (ui->dashboard) {
+        QList<QLabel*> etiquetasDash = ui->dashboard->findChildren<QLabel*>();
+        for (QLabel* lbl : etiquetasDash) {
+            if (lbl->objectName().contains("lblCalorias") || lbl->objectName().contains("lblBalance") || lbl->objectName().contains("lblMeta")) {
+                lbl->setStyleSheet(estiloNumero);
+                lbl->setAlignment(Qt::AlignCenter);
+            } else {
+                lbl->setStyleSheet(estiloTitulo);
+            }
+        }
+    }
+
+    // Estilo para que el buscador de alimentos se vea con texto blanco
+    if (ui->buscadorAlimentos) {
+        ui->buscadorAlimentos->setStyleSheet("QLineEdit { background-color: #1E2736; color: white; border: 2px solid #2A3648; border-radius: 8px; padding: 8px; font-size: 16px; } QLineEdit:focus { border: 2px solid #00E5FF; }");
+    }
+
+    QString estiloBarra = "QProgressBar { border: none; background-color: #1E2736; border-radius: 8px; text-align: center; color: white; font-weight: bold; } QProgressBar::chunk { border-radius: 8px; }";
+    if (ui->barProteinas) ui->barProteinas->setStyleSheet(estiloBarra + "QProgressBar::chunk { background-color: #00E676; }");
+    if (ui->barCarbos) ui->barCarbos->setStyleSheet(estiloBarra + "QProgressBar::chunk { background-color: #FF9100; }");
+    if (ui->barGrasas) ui->barGrasas->setStyleSheet(estiloBarra + "QProgressBar::chunk { background-color: #FF1744; }");
+
+    if (ui->btnResetDia) {
+        ui->btnResetDia->setStyleSheet("QPushButton { background-color: #FF1744; color: white; border-radius: 8px; padding: 10px; font-weight: bold; font-size: 14px; } QPushButton:hover { background-color: #D50000; }");
+        ui->btnResetDia->setCursor(Qt::PointingHandCursor);
+    }
+
+    QString estiloInputs = "QLineEdit, QComboBox { background-color: #1E2736; color: white; border: 2px solid #2A3648; border-radius: 8px; padding: 8px; font-size: 14px; } QLineEdit:focus, QComboBox:focus { border: 2px solid #00E5FF; background-color: #121A25; }";
+    if (ui->perfil) {
+        QList<QWidget*> inputsPerfil = ui->perfil->findChildren<QWidget*>();
+        for (QWidget* w : inputsPerfil) {
+            if (qobject_cast<QLineEdit*>(w) || qobject_cast<QComboBox*>(w)) {
+                w->setStyleSheet(estiloInputs);
+            } else if (qobject_cast<QLabel*>(w)) {
+                w->setStyleSheet(estiloTitulo);
+            }
+        }
+    }
+
+    if (ui->btnGuardarPerfil) {
+        ui->btnGuardarPerfil->setStyleSheet("QPushButton { background-color: #00E5FF; color: #121A25; border-radius: 10px; padding: 12px; font-size: 16px; font-weight: bold; } QPushButton:hover { background-color: #00B8D4; }");
+        ui->btnGuardarPerfil->setCursor(Qt::PointingHandCursor);
+    }
 }
 
 MainWindow::~MainWindow()
 {
     QSettings settings("VitalCoreFit", "App");
     if (ui->lblCaloriasQuemadas) {
-        settings.setValue("quemadasHoy", ui->lblCaloriasQuemadas->text());
+        QString qm = ui->lblCaloriasQuemadas->text();
+        qm.replace("🔥 Quemadas: ", "").replace(" kcal", "");
+        settings.setValue("quemadasHoy", qm);
     }
     if (ui->comboDiasRutina) {
         settings.setValue("ultimaRutina", ui->comboDiasRutina->currentText());
@@ -161,24 +214,24 @@ MainWindow::~MainWindow()
 void MainWindow::actualizarDashboardVisual()
 {
     if (ui->lblMetaCalorica) {
-        ui->lblMetaCalorica->setText("Meta: " + QString::number(perfilUsuario.metaCalorica) + " kcal");
+        ui->lblMetaCalorica->setText("🎯 Meta Diaria: " + QString::number(perfilUsuario.metaCalorica) + " kcal");
     }
 
     double consumidas = calcularCaloriasDelDia(listaDelDia);
     if (ui->lblCaloriasConsumidas) {
-        ui->lblCaloriasConsumidas->setText(QString::number(consumidas, 'f', 0) + " kcal");
+        ui->lblCaloriasConsumidas->setText("🍔 Consumidas: " + QString::number(consumidas, 'f', 0) + " kcal");
     }
 
     double quemadas = 0;
     if (ui->lblCaloriasQuemadas) {
         QString txtQuemadas = ui->lblCaloriasQuemadas->text();
-        txtQuemadas.replace(" kcal", "");
+        txtQuemadas.replace("🔥 Quemadas: ", "").replace(" kcal", "");
         quemadas = txtQuemadas.toDouble();
     }
 
     double balance = consumidas - quemadas;
     if (ui->lblBalanceNeto) {
-        ui->lblBalanceNeto->setText(QString::number(balance, 'f', 0) + " kcal");
+        ui->lblBalanceNeto->setText("⚖️ Balance Neto: " + QString::number(balance, 'f', 0) + " kcal");
     }
 
     int metaProtes = (perfilUsuario.tdee * 0.30) / 4;
@@ -332,6 +385,11 @@ void MainWindow::on_listaResultadosBusqueda_itemDoubleClicked(QListWidgetItem *i
         if (ui->lblCaloriasNutricion) {
             ui->lblCaloriasNutricion->setText("Calorías consumidas hoy: " + QString::number(caloriasTotalesHoy) + " kcal");
         }
+
+        // --- UX: VOLVER AUTOMÁTICAMENTE A LA PANTALLA ANTERIOR ---
+        if (ui->stackedWidget && ui->alimentos) {
+            ui->stackedWidget->setCurrentWidget(ui->alimentos);
+        }
     }
     actualizarDashboardVisual();
 }
@@ -350,6 +408,7 @@ void MainWindow::cargarRutinaEstiloHevy(const QString &diaRutina)
 
     QVBoxLayout *layoutPrincipal = new QVBoxLayout(contenedorPrincipal);
     layoutPrincipal->setSpacing(15);
+
     struct EjercicioSetup { QString nombre; int series; QString reps; QString pesoBase; };
     std::vector<EjercicioSetup> ejerciciosHoy;
 
@@ -360,6 +419,8 @@ void MainWindow::cargarRutinaEstiloHevy(const QString &diaRutina)
     } else if (diaRutina.contains("Legs")) {
         ejerciciosHoy = { {"Sentadilla Libre (Squat)", 4, "8", "185"} };
     }
+
+    QSettings memoriaMuscular("VitalCoreFit", "Pesos");
 
     for (const auto& ej : ejerciciosHoy) {
         QGroupBox *tarjetaEjercicio = new QGroupBox(ej.nombre);
@@ -389,6 +450,9 @@ void MainWindow::cargarRutinaEstiloHevy(const QString &diaRutina)
 
         layoutTarjeta->addWidget(filaHeader);
 
+        QString repsGuardadas = memoriaMuscular.value(ej.nombre + "_reps", ej.reps).toString();
+        QString pesoGuardado = memoriaMuscular.value(ej.nombre + "_peso", ej.pesoBase).toString();
+
         for (int i = 1; i <= ej.series; ++i) {
             QWidget *filaSerie = new QWidget();
             QHBoxLayout *layoutSerie = new QHBoxLayout(filaSerie);
@@ -398,19 +462,15 @@ void MainWindow::cargarRutinaEstiloHevy(const QString &diaRutina)
             lblNumSerie->setStyleSheet("color: white; font-weight: bold; font-size: 14px;");
 
             QLineEdit *inputReps = new QLineEdit();
-            inputReps->setPlaceholderText(ej.reps);
+            inputReps->setPlaceholderText(repsGuardadas);
             inputReps->setAlignment(Qt::AlignCenter);
             inputReps->setStyleSheet("QLineEdit { background: #1E2736; color: white; border: none; border-radius: 4px; font-size: 14px; padding: 5px; } QLineEdit:focus { border: 1px solid #00E5FF; }");
-
-            // --- BLOQUEO DE TECLADO PARA REPETICIONES (Solo números enteros) ---
             inputReps->setValidator(new QIntValidator(0, 999, this));
 
             QLineEdit *inputPeso = new QLineEdit();
-            inputPeso->setPlaceholderText(ej.pesoBase);
+            inputPeso->setPlaceholderText(pesoGuardado);
             inputPeso->setAlignment(Qt::AlignCenter);
             inputPeso->setStyleSheet(inputReps->styleSheet());
-
-            // --- BLOQUEO DE TECLADO PARA PESO EN LIBRAS (Números y decimales) ---
             QDoubleValidator *pesoValidator = new QDoubleValidator(0.0, 2000.0, 2, this);
             pesoValidator->setNotation(QDoubleValidator::StandardNotation);
             inputPeso->setValidator(pesoValidator);
@@ -447,8 +507,17 @@ void MainWindow::cargarRutinaEstiloHevy(const QString &diaRutina)
         layoutPrincipal->addWidget(tarjetaEjercicio);
     }
 
+    QPushButton *btnFinalizar = new QPushButton("Finalizar Entrenamiento");
+    btnFinalizar->setCursor(Qt::PointingHandCursor);
+    btnFinalizar->setStyleSheet(
+        "QPushButton { background-color: #00E676; color: #121A25; font-size: 18px; font-weight: bold; border-radius: 10px; padding: 15px; margin-top: 20px; }"
+        "QPushButton:hover { background-color: #00C853; }"
+        );
+    connect(btnFinalizar, &QPushButton::clicked, this, &MainWindow::on_btnFinalizarRutina_clicked);
+    layoutPrincipal->addWidget(btnFinalizar);
+
     layoutPrincipal->addStretch();
-    // AHORA INYECTA EL DISEÑO EN TU SCROLL AREA REAL
+
     ui->scrollArea->setWidget(contenedorPrincipal);
     ui->scrollArea->setWidgetResizable(true);
     ui->scrollArea->setStyleSheet("QScrollArea { border: none; background: transparent; } QWidget#qt_scrollarea_viewport { background: transparent; }");
@@ -457,8 +526,19 @@ void MainWindow::cargarRutinaEstiloHevy(const QString &diaRutina)
 void MainWindow::on_btnFinalizarRutina_clicked()
 {
     calcularVolumenEnVivo();
+    guardarHistorialRutina();
+
     QString txtQuemadas = ui->lblCaloriasQuemadas ? ui->lblCaloriasQuemadas->text() : "0";
-    QString resumen = "¡Excelente entrenamiento!\n\nCalorías estimadas quemadas en esta sesión: " + txtQuemadas;
+    txtQuemadas.replace("🔥 Quemadas: ", ""); // Limpiamos el prefijo para el resumen
+
+    QString nombreRutina = ui->comboDiasRutina ? ui->comboDiasRutina->currentText() : "Desconocida";
+
+    QString resumen = "¡Entrenamiento Registrado con Éxito!\n\n"
+                      "Rutina: " + nombreRutina + "\n"
+                                       "Volumen total movido: " + QString::number(ultimoVolumenCalculado, 'f', 1) + " lbs\n"
+                                                                          "Calorías quemadas: " + txtQuemadas + "\n\n"
+                                      "Tus datos han sido guardados en tu historial.";
+
     QMessageBox::information(this, "Entrenamiento Finalizado", resumen);
 }
 
@@ -527,11 +607,9 @@ void MainWindow::dibujarGrafico()
     }
 
     double consumidas = calcularCaloriasDelDia(listaDelDia);
-
     QString txtQuemadas = ui->lblCaloriasQuemadas ? ui->lblCaloriasQuemadas->text() : "0";
-    txtQuemadas.replace(" kcal", "");
+    txtQuemadas.replace("🔥 Quemadas: ", "").replace(" kcal", "");
     double quemadas = txtQuemadas.toDouble();
-
     double meta = perfilUsuario.metaCalorica > 0 ? perfilUsuario.metaCalorica : 2000;
 
     QBarSet *setConsumidas = new QBarSet("Consumidas");
@@ -546,17 +624,17 @@ void MainWindow::dibujarGrafico()
     setQuemadas->setColor(QColor(0xFF1744));
     setMeta->setColor(QColor(0x00E5FF));
 
-    QBarSeries *series = new QBarSeries();
-    series->append(setConsumidas);
-    series->append(setQuemadas);
-    series->append(setMeta);
+    QBarSeries *seriesBarras = new QBarSeries();
+    seriesBarras->append(setConsumidas);
+    seriesBarras->append(setQuemadas);
+    seriesBarras->append(setMeta);
 
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Balance Energético del Día");
-    chart->setAnimationOptions(QChart::SeriesAnimations);
+    QChart *chartBarras = new QChart();
+    chartBarras->addSeries(seriesBarras);
+    chartBarras->setTitle("Balance Energético del Día");
+    chartBarras->setAnimationOptions(QChart::SeriesAnimations);
 
-    connect(series, &QBarSeries::hovered, this, [](bool status, int index, QBarSet *barset) {
+    connect(seriesBarras, &QBarSeries::hovered, this, [](bool status, int index, QBarSet *barset) {
         if (status) {
             double valor = barset->at(index);
             QString texto = barset->label() + ": " + QString::number(valor, 'f', 0) + " kcal";
@@ -566,39 +644,123 @@ void MainWindow::dibujarGrafico()
         }
     });
 
-    chart->setBackgroundBrush(QBrush(QColor(0x1E2736)));
-    chart->setTitleBrush(QBrush(Qt::white));
-    chart->legend()->setLabelColor(Qt::white);
+    chartBarras->setBackgroundBrush(QBrush(QColor(0x1E2736)));
+    chartBarras->setTitleBrush(QBrush(Qt::white));
+    chartBarras->legend()->setLabelColor(Qt::white);
 
     QStringList categories;
     categories << "Hoy";
-    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    axisX->append(categories);
-    axisX->setLabelsColor(Qt::white);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    series->attachAxis(axisX);
+    QBarCategoryAxis *axisXB = new QBarCategoryAxis();
+    axisXB->append(categories);
+    axisXB->setLabelsColor(Qt::white);
+    chartBarras->addAxis(axisXB, Qt::AlignBottom);
+    seriesBarras->attachAxis(axisXB);
 
-    QValueAxis *axisY = new QValueAxis();
-    axisY->setLabelsColor(Qt::white);
-    chart->addAxis(axisY, Qt::AlignLeft);
-    series->attachAxis(axisY);
+    QValueAxis *axisYB = new QValueAxis();
+    axisYB->setLabelsColor(Qt::white);
+    chartBarras->addAxis(axisYB, Qt::AlignLeft);
+    seriesBarras->attachAxis(axisYB);
 
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setBackgroundBrush(QBrush(QColor(0x1E2736)));
+    QChartView *viewBarras = new QChartView(chartBarras);
+    viewBarras->setRenderHint(QPainter::Antialiasing);
+    viewBarras->setBackgroundBrush(QBrush(QColor(0x1E2736)));
 
-    QVBoxLayout *layout = new QVBoxLayout(ui->lienzoGrafico);
-    layout->setContentsMargins(0,0,0,0);
-    layout->addWidget(chartView);
-    ui->lienzoGrafico->setLayout(layout);
+    QLineSeries *serieVolumen = new QLineSeries();
+    serieVolumen->setName("Volumen Total Movido (lbs)");
+    serieVolumen->setColor(QColor(0x00E5FF));
+    QPen pen = serieVolumen->pen();
+    pen.setWidth(4);
+    serieVolumen->setPen(pen);
+
+    QStringList fechasHistorial;
+    double maxVolumen = 1000;
+
+    QFile archivoLectura("data/historial_rutinas.json");
+    if (archivoLectura.open(QIODevice::ReadOnly)) {
+        QJsonArray arrayHistorial = QJsonDocument::fromJson(archivoLectura.readAll()).array();
+        for (int i = 0; i < arrayHistorial.size(); ++i) {
+            QJsonObject rutina = arrayHistorial[i].toObject();
+            double vol = rutina["volumen_lbs"].toDouble();
+            QString fecha = rutina["fecha"].toString().section(" ", 0, 0);
+
+            serieVolumen->append(i, vol);
+            fechasHistorial << fecha;
+            if (vol > maxVolumen) maxVolumen = vol;
+        }
+        archivoLectura.close();
+    }
+
+    if (fechasHistorial.isEmpty()) {
+        serieVolumen->append(0, 0);
+        fechasHistorial << "Sin datos";
+    }
+
+    connect(serieVolumen, &QLineSeries::hovered, this, [](const QPointF &point, bool state) {
+        if (state) {
+            QString texto = "Volumen: " + QString::number(point.y(), 'f', 1) + " lbs";
+            QToolTip::showText(QCursor::pos(), texto);
+        } else {
+            QToolTip::hideText();
+        }
+    });
+
+    QChart *chartLineas = new QChart();
+    chartLineas->addSeries(serieVolumen);
+    chartLineas->setTitle("Sobrecarga Progresiva (Progreso en el Tiempo)");
+    chartLineas->setAnimationOptions(QChart::SeriesAnimations);
+    chartLineas->setBackgroundBrush(QBrush(QColor(0x1E2736)));
+    chartLineas->setTitleBrush(QBrush(Qt::white));
+    chartLineas->legend()->setLabelColor(Qt::white);
+
+    QBarCategoryAxis *axisXL = new QBarCategoryAxis();
+    axisXL->append(fechasHistorial);
+    axisXL->setLabelsColor(Qt::white);
+    chartLineas->addAxis(axisXL, Qt::AlignBottom);
+    serieVolumen->attachAxis(axisXL);
+
+    QValueAxis *axisYL = new QValueAxis();
+    axisYL->setRange(0, maxVolumen + 500);
+    axisYL->setLabelsColor(Qt::white);
+    chartLineas->addAxis(axisYL, Qt::AlignLeft);
+    serieVolumen->attachAxis(axisYL);
+
+    QChartView *viewLineas = new QChartView(chartLineas);
+    viewLineas->setRenderHint(QPainter::Antialiasing);
+    viewLineas->setBackgroundBrush(QBrush(QColor(0x1E2736)));
+
+    QTabWidget *tabsGraficos = new QTabWidget();
+    tabsGraficos->setStyleSheet(
+        "QTabWidget::pane { border: 1px solid #2A3648; background: #1E2736; border-radius: 8px; }"
+        "QTabBar::tab { background: #121A25; color: #8E9BAE; padding: 10px 20px; border-top-left-radius: 6px; border-top-right-radius: 6px; margin-right: 2px; }"
+        "QTabBar::tab:selected { background: #00E5FF; color: #121A25; font-weight: bold; }"
+        );
+
+    QWidget *tab1 = new QWidget();
+    QVBoxLayout *lay1 = new QVBoxLayout(tab1);
+    lay1->setContentsMargins(0,0,0,0);
+    lay1->addWidget(viewBarras);
+
+    QWidget *tab2 = new QWidget();
+    QVBoxLayout *lay2 = new QVBoxLayout(tab2);
+    lay2->setContentsMargins(0,0,0,0);
+    lay2->addWidget(viewLineas);
+
+    tabsGraficos->addTab(tab1, "Balance Diario");
+    tabsGraficos->addTab(tab2, "Progreso Histórico");
+
+    QVBoxLayout *layoutPrincipal = new QVBoxLayout(ui->lienzoGrafico);
+    layoutPrincipal->setContentsMargins(0,0,0,0);
+    layoutPrincipal->addWidget(tabsGraficos);
+    ui->lienzoGrafico->setLayout(layoutPrincipal);
 }
 
 void MainWindow::calcularVolumenEnVivo()
 {
     double volumenTotalLibras = 0;
 
-    // AHORA LEE DIRECTAMENTE DE scrollArea
     if (!ui->scrollArea || !ui->scrollArea->widget()) return;
+
+    QSettings memoriaMuscular("VitalCoreFit", "Pesos");
 
     QList<QGroupBox*> tarjetas = ui->scrollArea->widget()->findChildren<QGroupBox*>();
     for (QGroupBox* tarjeta : tarjetas) {
@@ -619,6 +781,9 @@ void MainWindow::calcularVolumenEnVivo()
                 QString txtReps = inputReps->text().isEmpty() ? inputReps->placeholderText() : inputReps->text();
                 QString txtPeso = inputPeso->text().isEmpty() ? inputPeso->placeholderText() : inputPeso->text();
 
+                memoriaMuscular.setValue(tarjeta->title() + "_reps", txtReps);
+                memoriaMuscular.setValue(tarjeta->title() + "_peso", txtPeso);
+
                 int reps = txtReps.section("-", 0, 0).toInt();
                 double peso = txtPeso.toDouble();
 
@@ -628,19 +793,20 @@ void MainWindow::calcularVolumenEnVivo()
             }
         }
     }
+    ultimoVolumenCalculado = volumenTotalLibras;
 
     double caloriasQuemadas = volumenTotalLibras * 0.005;
     if (ui->lblCaloriasQuemadas) {
-        ui->lblCaloriasQuemadas->setText(QString::number(caloriasQuemadas, 'f', 0) + " kcal");
+        ui->lblCaloriasQuemadas->setText("🔥 Quemadas: " + QString::number(caloriasQuemadas, 'f', 0) + " kcal");
     }
 
     if (ui->lblCaloriasConsumidas) {
         QString txtConsumidas = ui->lblCaloriasConsumidas->text();
-        txtConsumidas.replace(" kcal", "");
+        txtConsumidas.replace("🍔 Consumidas: ", "").replace(" kcal", "");
         double consumidas = txtConsumidas.toDouble();
         double balance = consumidas - caloriasQuemadas;
         if (ui->lblBalanceNeto) {
-            ui->lblBalanceNeto->setText(QString::number(balance, 'f', 0) + " kcal");
+            ui->lblBalanceNeto->setText("⚖️ Balance Neto: " + QString::number(balance, 'f', 0) + " kcal");
         }
     }
 
@@ -658,7 +824,7 @@ void MainWindow::on_btnResetDia_clicked()
 
     if (respuesta == QMessageBox::Yes) {
         if (ui->listaComidasHoy) ui->listaComidasHoy->clear();
-        if (ui->lblCaloriasQuemadas) ui->lblCaloriasQuemadas->setText("0 kcal");
+        if (ui->lblCaloriasQuemadas) ui->lblCaloriasQuemadas->setText("🔥 Quemadas: 0 kcal");
 
         NodoComida* actual = listaDelDia.cabeza;
         while (actual != nullptr) {
@@ -671,7 +837,7 @@ void MainWindow::on_btnResetDia_clicked()
         QFile::remove("data/diario.json");
 
         QSettings settings("VitalCoreFit", "App");
-        settings.setValue("quemadasHoy", "0 kcal");
+        settings.setValue("quemadasHoy", "0");
 
         actualizarDashboardVisual();
         if (ui->stackedWidget && ui->stackedWidget->currentWidget() == ui->page_graficos) {
@@ -764,4 +930,44 @@ void MainWindow::actualizarCronometro()
         ui->lblCronometro->setStyleSheet("QLabel { color: #FF1744; font-size: 42px; font-weight: bold; background-color: transparent; }");
         QMessageBox::information(this, "¡Descanso Terminado!", "¡A darle a la siguiente serie con todo el peso!");
     }
+}
+
+void MainWindow::guardarHistorialRutina(){
+    QString rutaArchivo = "data/historial_rutinas.json";
+    QJsonArray arrayHistorial;
+
+    QFile archivoLectura(rutaArchivo);
+    if (archivoLectura.open(QIODevice::ReadOnly)) {
+        QByteArray datos = archivoLectura.readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(datos);
+        arrayHistorial = doc.array();
+        archivoLectura.close();
+    }
+
+    QJsonObject nuevaRutina;
+    nuevaRutina["fecha"] = QDateTime::currentDateTime().toString("dd/MM/yyyy HH:mm");
+
+    if (ui->comboDiasRutina) {
+        nuevaRutina["rutina"] = ui->comboDiasRutina->currentText();
+    }
+
+    nuevaRutina["volumen_lbs"] = ultimoVolumenCalculado;
+
+    QString txtQuemadas = ui->lblCaloriasQuemadas ? ui->lblCaloriasQuemadas->text() : "0 kcal";
+    txtQuemadas.replace("🔥 Quemadas: ", "").replace(" kcal", "");
+    nuevaRutina["calorias"] = txtQuemadas.toDouble();
+
+    arrayHistorial.append(nuevaRutina);
+
+    QFile archivoEscritura(rutaArchivo);
+    if (archivoEscritura.open(QIODevice::WriteOnly)) {
+        QJsonDocument docGuardar(arrayHistorial);
+        archivoEscritura.write(docGuardar.toJson());
+        archivoEscritura.close();
+    }
+}
+
+void MainWindow::on_btnHistorialComidas_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->alimentos);
 }

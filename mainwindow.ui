@@ -332,7 +332,7 @@ QPushButton#btnVolverNutricion:hover {
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>5</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="dashboard">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -346,58 +346,6 @@ QPushButton#btnVolverNutricion:hover {
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_7">
            <item>
-            <widget class="QFrame" name="tarjetaQuemadas">
-             <property name="frameShape">
-              <enum>QFrame::Shape::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Shadow::Raised</enum>
-             </property>
-             <widget class="QLabel" name="label_9">
-              <property name="geometry">
-               <rect>
-                <x>10</x>
-                <y>20</y>
-                <width>251</width>
-                <height>16</height>
-               </rect>
-              </property>
-              <property name="text">
-               <string>Calorías Quemadas</string>
-              </property>
-             </widget>
-             <widget class="QLabel" name="lblCaloriasQuemadas">
-              <property name="geometry">
-               <rect>
-                <x>80</x>
-                <y>35</y>
-                <width>21</width>
-                <height>21</height>
-               </rect>
-              </property>
-              <property name="text">
-               <string>kcal</string>
-              </property>
-             </widget>
-             <widget class="QFrame" name="tarjetaConsumidas_2">
-              <property name="geometry">
-               <rect>
-                <x>140</x>
-                <y>20</y>
-                <width>191</width>
-                <height>121</height>
-               </rect>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::Shape::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Shadow::Raised</enum>
-              </property>
-             </widget>
-            </widget>
-           </item>
-           <item>
             <widget class="QFrame" name="tarjetaBalance">
              <property name="frameShape">
               <enum>QFrame::Shape::StyledPanel</enum>
@@ -407,41 +355,34 @@ QPushButton#btnVolverNutricion:hover {
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <item>
-               <widget class="QLabel" name="label_10">
+               <widget class="QLabel" name="lblCaloriasQuemadas">
                 <property name="text">
-                 <string>Calorías Quemadas</string>
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lblCaloriasConsumidas">
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lblMetaCalorica">
+                <property name="text">
+                 <string>TextLabel</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="lblBalanceNeto">
                 <property name="text">
-                 <string>kcal</string>
+                 <string>TextLabel</string>
                 </property>
                </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblCaloriasConsumidas">
-             <property name="text">
-              <string>kcal</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblMetaCalorica">
-             <property name="text">
-              <string>Meta: 0 kcal</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Calorias Consumidas</string>
-             </property>
             </widget>
            </item>
           </layout>

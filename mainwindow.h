@@ -18,6 +18,9 @@
 #include <QGroupBox>
 #include <QCheckBox>
 #include <QFrame>
+#include <QDateTime>
+#include <QtCharts/QLineSeries>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,6 +51,8 @@ private slots:
     void actualizarCronometro();
     void cargarRutinaEstiloHevy(const QString &diaRutina);
 
+    void on_btnHistorialComidas_clicked();
+
 private:
     Ui::MainWindow *ui;
     Usuario perfilUsuario;
@@ -55,7 +60,8 @@ private:
     ListaComidas listaDelDia;
     QTimer *timerDescanso;
     int tiempoRestante;
-
+    double ultimoVolumenCalculado = 0.0;
+    void guardarHistorialRutina();
     void actualizarDashboardVisual();
     void cargarDatosUI();
     void dibujarGrafico();
