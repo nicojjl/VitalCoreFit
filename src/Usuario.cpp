@@ -1,5 +1,11 @@
 #include "../../include/models/Usuario.h"
+// Aplica la fórmula internacional estándar utilizando el peso corporal y la altura en metros para calcular e identificar el Índice de Masa Corporal.
 
+// Utiliza la ecuación de Mifflin-St Jeor ajustada por género para calcular con precisión el metabolismo basal o gasto energético en completo reposo.
+
+// Multiplica la Tasa Metabólica Basal por un factor multiplicador definido por el nivel de actividad física diaria para obtener el gasto calórico total.
+
+// Ajusta el objetivo calórico final (déficit, mantenimiento o superávit) y distribuye dinámicamente los macronutrientes en base al gasto energético total calculado.
 double calcularIMC(const Usuario& datousuario) {
     if (datousuario.altura <= 0) return 0.0;
     double alturaEnMetros = datousuario.altura / 100.0;

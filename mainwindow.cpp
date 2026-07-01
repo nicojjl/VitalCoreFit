@@ -29,7 +29,7 @@ const QString ESTILO_TITULO = "QLabel { color: #8E9BAE; font-size: 14px; font-we
 const QString ESTILO_NUMERO = "QLabel { color: #FFFFFF; font-size: 20px; font-weight: bold; background: transparent; border: none; }";
 const QString ESTILO_INPUT = "QLineEdit, QComboBox { background-color: #1E2736; color: white; border: 2px solid #2A3648; border-radius: 8px; padding: 8px; font-size: 14px; } QLineEdit:focus, QComboBox:focus { border: 2px solid #00E5FF; background-color: #121A25; } QComboBox QAbstractItemView { background-color: #1E2736; color: white; selection-background-color: #2A3648; }";
 const QString ESTILO_BTN_BASE = "QPushButton { border-radius: 8px; font-weight: bold; }";
-
+// Constructor principal. Inicializa la interfaz gráfica, configura temporizadores, carga el catálogo de alimentos, el perfil biométrico, el diario local y aplica los estilos visuales del programa.
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     actualizarDashboardVisual();
     aplicarEstilosCyberpunk();
 }
-
+// Destructor de la ventana. Guarda automáticamente el progreso diario, las calorías quemadas, la rutina actual y el diario de alimentos en memoria antes de cerrar la aplicación.
 MainWindow::~MainWindow()
 {
     QSettings settings("VitalCoreFit", "App");
@@ -84,7 +84,7 @@ MainWindow::~MainWindow()
     guardarDiarioAlimentosJson();
     delete ui;
 }
-
+// Configura la estructura base del menú lateral y construye dinámicamente la página de "Guía", cargando la lista interactiva de ejercicios, sus descripciones de técnica y animaciones GIF.
 void MainWindow::configurarEstilosBasicos()
 {
     if (ui->listWidget) {
@@ -204,7 +204,7 @@ void MainWindow::configurarEstilosBasicos()
         listaEjercicios->setCurrentRow(0);
     }
 }
-
+// Construye dinámicamente la página informativa "¿Cómo Funciona?" utilizando widgets nativos de Qt para renderizar texto enriquecido con el pitch del proyecto y las explicaciones matemáticas.
 void MainWindow::crearPaginaInfoNativa()
 {
     page_info = new QWidget();
@@ -272,6 +272,7 @@ void MainWindow::crearPaginaInfoNativa()
 
     ui->stackedWidget->addWidget(page_info);
 }
+// Genera la interfaz gráfica del módulo de Cardio mediante código, instanciando los campos de entrada para minutos, el selector de intensidad y el botón de registro.
 void MainWindow::crearPaginaCardioNativa()
 {
     page_cardio = new QWidget();
@@ -320,7 +321,7 @@ void MainWindow::crearPaginaCardioNativa()
 
     connect(btnGuardarCardio, &QPushButton::clicked, this, &MainWindow::on_btnRegistrarCardio_clicked);
 }
-
+// Inserta dinámicamente el selector de disponibilidad (días por semana) en la vista de rutinas, conectando su cambio para actualizar los días de entrenamiento correspondientes en pantalla.
 void MainWindow::inyectarSelectorDisponibilidad()
 {
     if (ui->comboDiasRutina && ui->comboDiasRutina->parentWidget() && ui->comboDiasRutina->parentWidget()->layout()) {
@@ -365,7 +366,7 @@ void MainWindow::inyectarSelectorDisponibilidad()
         }
     }
 }
-
+// Aplica hojas de estilo CSS (QSS) a los widgets de la aplicación, unificando la estética moderna, oscura y con acentos de color neón en todos los módulos.*le pusimos estilo "cyberpunk" por el juego q utiliza mucho los colores llamativos que salen en el programa.
 void MainWindow::aplicarEstilosCyberpunk()
 {
     if (ui->btnDescanso) {
@@ -440,7 +441,7 @@ void MainWindow::aplicarEstilosCyberpunk()
         ui->btnGuardarPerfil->setCursor(Qt::PointingHandCursor);
     }
 }
-
+// Sincroniza los datos matemáticos en memoria con la interfaz. Actualiza las etiquetas calóricas y ajusta dinámicamente las barras de progreso de macronutrientes en el Dashboard central.
 void MainWindow::actualizarDashboardVisual()
 {
     if (ui->lblMetaCalorica) {
@@ -496,7 +497,7 @@ void MainWindow::actualizarDashboardVisual()
         ui->barGrasas->setStyleSheet(baseBar + "background-color: #FF1744; }");
     }
 }
-
+// Captura los datos biométricos ingresados, ejecuta los algoritmos fisiológicos (IMC, TMB, TDEE), guarda el perfil en almacenamiento local y actualiza las metas calóricas del usuario.
 void MainWindow::on_btnGuardarPerfil_clicked()
 {
     if (ui->inputNombre->text().isEmpty() || ui->inputEdad->text().isEmpty() || ui->inputPeso->text().isEmpty() || ui->inputAltura->text().isEmpty()) {
@@ -528,22 +529,22 @@ void MainWindow::on_btnGuardarPerfil_clicked()
     QMessageBox::information(this, "Perfil Actualizado", mensajeExito);
     ui->stackedWidget->setCurrentWidget(ui->dashboard);
 }
-
+// Cambia la vista activa del contenedor multipantalla hacia la página del buscador interactivo de alimentos para permitir al usuario agregar nuevas porciones a su día.
 void MainWindow::on_btnAgregarComida_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->page_buscador);
 }
-
+// Retorna la vista activa del usuario desde el buscador de alimentos de vuelta hacia el resumen principal diario del módulo de Nutrición.
 void MainWindow::on_btnVolverNutricion_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->alimentos);
 }
-
+// Navega desde las vistas secundarias de regreso a la pantalla principal de registro para visualizar el historial de comidas ingresadas durante el día en curso.
 void MainWindow::on_btnHistorialComidas_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->alimentos);
 }
-
+// Verifica si la lista diaria de alimentos está vacía. Si es así, inyecta un indicador visual estilizado para notificar que aún no se han registrado comidas.
 void MainWindow::actualizarEstadoVacioNutricion()
 {
     if (listaDelDia.cantidad == 0) {
@@ -555,7 +556,7 @@ void MainWindow::actualizarEstadoVacioNutricion()
         ui->listaComidasHoy->addItem(itemVacio);
     }
 }
-
+// Captura el texto ingresado en tiempo real, ejecuta el algoritmo de búsqueda sobre el catálogo de alimentos y actualiza dinámicamente la lista visual de resultados.
 void MainWindow::on_buscadorAlimentos_textChanged(const QString &arg1)
 {
     ui->listaResultadosBusqueda->clear();
@@ -573,7 +574,7 @@ void MainWindow::on_buscadorAlimentos_textChanged(const QString &arg1)
         ui->listaResultadosBusqueda->addItem(nombreItem + " (" + kcalItem + " kcal)");
     }
 }
-
+// Instancia e inserta un nuevo widget visual en la lista de consumos diarios, mostrando el nombre, las calorías y conectando un botón interactivo para eliminar la porción.
 void MainWindow::agregarComidaInterfazVisual(const Alimento& alimento)
 {
     if (!ui->listaComidasHoy) return;
@@ -621,7 +622,7 @@ void MainWindow::agregarComidaInterfazVisual(const Alimento& alimento)
         actualizarEstadoVacioNutricion();
     });
 }
-
+// Detecta la selección mediante doble clic de un alimento, lo busca en el catálogo, lo agrega a la memoria del día y actualiza las estadísticas calóricas visuales.
 void MainWindow::on_listaResultadosBusqueda_itemDoubleClicked(QListWidgetItem *item)
 {
     QString textoItem = item->text();
@@ -654,7 +655,7 @@ void MainWindow::on_listaResultadosBusqueda_itemDoubleClicked(QListWidgetItem *i
 
     actualizarDashboardVisual();
 }
-
+// Recorre la lista enlazada de alimentos consumidos, los serializa a formato JSON y los guarda en el disco local para evitar pérdidas al cerrar el programa.
 void MainWindow::guardarDiarioAlimentosJson()
 {
     QJsonArray arrayComidas;
@@ -676,7 +677,7 @@ void MainWindow::guardarDiarioAlimentosJson()
         archivo.close();
     }
 }
-
+// Lee el archivo JSON del diario local, reconstruye la lista enlazada de consumos previos y restaura la interfaz gráfica del módulo de Nutrición al iniciar.
 void MainWindow::cargarDiarioAlimentosJson()
 {
     QFile archivo("data/diario.json");
@@ -705,12 +706,12 @@ void MainWindow::cargarDiarioAlimentosJson()
         ui->lblCaloriasNutricion->setText("Calorías consumidas hoy: " + QString::number(caloriasTotalesHoy) + " kcal");
     }
 }
-
+// Escucha los cambios en el menú desplegable de días de entrenamiento y dispara la reconstrucción visual de la rutina que corresponde exactamente al día seleccionado.
 void MainWindow::on_comboDiasRutina_currentTextChanged(const QString &arg1)
 {
     cargarRutinaEstiloHevy(arg1);
 }
-
+// Genera dinámicamente la interfaz interactiva de la rutina. Crea tarjetas por ejercicio, filas de series, inputs para peso y botones de completado con guardado automático. usamos el estilo hevy de una aplicacion de entrenamiento q utiliza el mismo estilo de diseño en rutinas, por eso el nombre.
 void MainWindow::cargarRutinaEstiloHevy(const QString &diaRutina)
 {
     if (!ui->scrollArea) return;
@@ -894,7 +895,7 @@ void MainWindow::cargarRutinaEstiloHevy(const QString &diaRutina)
         "QWidget#qt_scrollarea_viewport { background: transparent; }"
         );
 }
-
+// Recorre iterativamente los ejercicios marcados como completados, multiplica el peso por las repeticiones para obtener el volumen de carga total y estima las calorías quemadas.
 void MainWindow::calcularVolumenEnVivo()
 {
     if (!ui->scrollArea || !ui->scrollArea->widget()) {
@@ -955,7 +956,7 @@ void MainWindow::calcularVolumenEnVivo()
         dibujarGrafico();
     }
 }
-
+// Ejecuta el cálculo final del volumen movido, guarda la sesión de entrenamiento en el historial JSON y despliega una ventana emergente resumiendo el esfuerzo del usuario.
 void MainWindow::on_btnFinalizarRutina_clicked()
 {
     calcularVolumenEnVivo();
@@ -974,7 +975,7 @@ void MainWindow::on_btnFinalizarRutina_clicked()
 
     QMessageBox::information(this, "Éxito", resumen);
 }
-
+// Estructura las métricas de la rutina finalizada (fecha, volumen en libras, calorías) en un objeto JSON y lo anexa al archivo histórico para alimentar los gráficos.
 void MainWindow::guardarHistorialRutina()
 {
     QString rutaArchivo = "data/historial_rutinas.json";
@@ -1010,7 +1011,7 @@ void MainWindow::guardarHistorialRutina()
         archivoEscritura.close();
     }
 }
-
+// Extrae los atributos biológicos guardados en el objeto de perfil del usuario y los proyecta automáticamente en los campos de texto y selectores de la pestaña Perfil.
 void MainWindow::cargarDatosUI()
 {
     if (!perfilUsuario.nombre.empty()) {
@@ -1033,12 +1034,12 @@ void MainWindow::cargarDatosUI()
         else if (perfilUsuario.NivelActividadUsuario == NivelActividad::MuyActivo) ui->comboActividad->setCurrentText("Muy Activo");
     }
 }
-
+// Función reservada para futuras implementaciones. Estará destinada a compilar, generar y exportar un reporte detallado del progreso físico y calórico en un formato externo. no nos alcanzo el tiempo para implementarlo, para futuras versiones seria ideal pero creemos que no era 100% prioritario
 void MainWindow::on_btnExportarReporte_clicked()
 {
 
 }
-
+// Reinicia el temporizador de descanso a 90 segundos, actualiza la visualización del reloj con un color distintivo y arranca la cuenta regresiva automática.
 void MainWindow::on_btnDescanso_clicked()
 {
     tiempoRestante = 90;
@@ -1050,7 +1051,7 @@ void MainWindow::on_btnDescanso_clicked()
 
     timerDescanso->start(1000);
 }
-
+// Descuenta un segundo del temporizador en cada ciclo, formatea el texto del reloj (MM:SS) y alerta al usuario visualmente cuando el tiempo de recuperación concluye.
 void MainWindow::actualizarCronometro()
 {
     tiempoRestante--;
@@ -1074,7 +1075,7 @@ void MainWindow::actualizarCronometro()
         QMessageBox::information(this, "¡Tiempo!", "¡A darle a la siguiente serie!");
     }
 }
-
+// Limpia completamente la memoria dinámica y los archivos locales correspondientes al día en curso (comidas y quema calórica) permitiendo iniciar un nuevo ciclo desde cero.
 void MainWindow::on_btnResetDia_clicked()
 {
     QMessageBox::StandardButton respuesta;
@@ -1113,7 +1114,7 @@ void MainWindow::on_btnResetDia_clicked()
         }
     }
 }
-
+// Gestiona la navegación principal de la aplicación. Evalúa el elemento seleccionado en la barra lateral y cambia instantáneamente la página activa del contenedor multipantalla.
 void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {
     QString menuSeleccionado = item->text();
@@ -1144,7 +1145,7 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
         ui->stackedWidget->setCurrentWidget(page_info);
     }
 }
-
+// Valida los datos ingresados, calcula el gasto energético de la sesión aeróbica usando factores metabólicos y lo suma al registro total de calorías quemadas del día.
 void MainWindow::on_btnRegistrarCardio_clicked()
 {
     if (inputMinutosCardio->text().isEmpty()) {
@@ -1188,7 +1189,7 @@ void MainWindow::on_btnRegistrarCardio_clicked()
     ui->listWidget->setCurrentRow(0);
     ui->stackedWidget->setCurrentWidget(ui->dashboard);
 }
-
+// Construye dinámicamente los gráficos interactivos usando QtCharts. Renderiza las barras del balance calórico y grafica la curva histórica del volumen movido para evaluar la progresión.
 void MainWindow::dibujarGrafico()
 {
     if (ui->lienzoGrafico->layout() != nullptr) {
@@ -1349,3 +1350,4 @@ void MainWindow::dibujarGrafico()
     layoutPrincipal->addWidget(tabsGraficos);
     ui->lienzoGrafico->setLayout(layoutPrincipal);
 }
+// como ultimo comentario de todo el proyecto, agradacemos al profesor por realizar este tipos de evaluaciones que nos sirven a entender como es organizar un proyecto, crear un proyecto a traves del tiempo, poder documentarlo, organizar una bitacora que sirve para el desarrollo en equipo. Nicolas Silva, Martin Perez, Alvaro Machuca.

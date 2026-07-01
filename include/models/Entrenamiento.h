@@ -36,3 +36,4 @@ double calcularFCMax(int edad);
 int calcularZonaCardiaca(double bpmActual, double fcMax);
 void agregarEjercicio(ListaEjercicio& lista, Ejercicio ejercicio);
 void liberarListaEjercicios(ListaEjercicio& lista);
+// Maneja la lógica física. Contiene las estructuras para pesas y cardio, listas enlazadas de ejercicios, y cálculos matemáticos avanzados como 1RM, volumen de carga y zonas cardíacas.

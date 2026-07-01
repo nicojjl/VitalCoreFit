@@ -26,3 +26,4 @@ double calcularIMC(const Usuario& datousuario);
 double calcularTMB(const Usuario& datousuario);
 double calcularTDEE(const Usuario& datousuario, double tmb);
 void   calcularMetas(Usuario& datousuario, double tdee);
+// Núcleo del programa. Define las características personales e integra los algoritmos fisiológicos (IMC, TMB, TDEE) necesarios para calcular automáticamente las metas calóricas y distribución de macros.

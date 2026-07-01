@@ -3,7 +3,9 @@
 #include <fstream>
 #include <iostream>
 using namespace std;
+// Lee la base de datos JSON local de alimentos y reconstruye un catálogo completo de objetos de tipo Alimento en un vector para uso interno.
 
+// Filtra el catálogo de alimentos comparando las cadenas de texto en minúsculas, retornando coincidencias parciales o exactas según los parámetros de búsqueda del usuario.
 vector<Alimento> cargarAlimentos(const string& rutaArchivo) {
     vector<Alimento> lista;
     ifstream archivo(rutaArchivo);

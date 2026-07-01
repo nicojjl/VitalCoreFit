@@ -80,3 +80,4 @@ private:
 };
 
 #endif
+// Controlador central de la interfaz gráfica Qt. Conecta todos los eventos de la ventana con la lógica interna, administrando cronómetros, actualización de gráficos, persistencia JSON y renderizado visual.

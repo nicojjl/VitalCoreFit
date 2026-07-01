@@ -2,7 +2,11 @@
 #include "../../include/models/Entrenamiento.h"
 #include <iostream>
 using namespace std;
+// Recorre la lista enlazada de ejercicios para sumar y retornar el total exacto de calorías quemadas durante la sesión de entrenamiento actual.
 
+// Evalúa las calorías consumidas y quemadas frente a la meta diaria, determinando matemáticamente si el usuario está en déficit, superávit o balance ideal.
+
+// Muestra por consola un resumen detallado de las métricas diarias y el estado calórico actual del usuario para fines de depuración e información.
 double calcularTotalQuemado(const ListaEjercicio& listaEjercicios) {
     double total = 0.0;
     NodoEjercicio* actual = listaEjercicios.cabeza;

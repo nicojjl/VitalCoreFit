@@ -3,7 +3,9 @@
 #include "../../include/json.hpp" 
 #include <fstream>
 #include <iostream>
+// Convierte las métricas y datos biológicos del perfil del usuario a formato JSON y los escribe de manera persistente en el almacenamiento local.
 
+// Recupera y decodifica el archivo JSON local para poblar los atributos del perfil biológico al iniciar la aplicación. Retorna falso si el archivo no existe.
 void guardarPerfil(const Usuario& u) {
     nlohmann::json json;
     json["nombre"]   = u.nombre;

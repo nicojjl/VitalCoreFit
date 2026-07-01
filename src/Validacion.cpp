@@ -1,5 +1,11 @@
 #include "../../include/models/Validacion.h"
+// Comprueba que los datos biológicos ingresados (edad, peso, altura) se encuentren dentro de rangos humanos lógicos y seguros para evitar cálculos metabólicos erróneos.
 
+// Asegura que el peso y las repeticiones ingresadas para el cálculo de 1RM sean valores positivos y no excedan el límite matemático de la fórmula.
+
+// Verifica que la duración del ejercicio y las pulsaciones registradas durante la sesión de cardio se mantengan dentro de parámetros fisiológicamente realistas y seguros.
+
+// Restringe el factor de equivalente metabólico a un rango numérico válido para evitar estimaciones exageradas, nulas o negativas en la quema calórica.
 bool validarUsuario(const Usuario& u, std::string& mensajeError) {
     if (u.nombre.empty()) {
         mensajeError = "El nombre no puede estar vacio";

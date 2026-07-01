@@ -1,7 +1,13 @@
 #include "../../include/models/ListaComidas.h"
 #include <iostream>
 using namespace std;
+// Asigna memoria dinámica e inserta un nuevo alimento con su respectiva porción al final de la lista enlazada de comidas consumidas en el día.
 
+// Busca y remueve un nodo específico de la lista de comidas basándose en su índice, reconectando los punteros y liberando la memoria asociada.
+
+// Itera sobre todos los alimentos consumidos, ajustando las calorías según la porción ingerida (en gramos) para obtener el total calórico diario.
+
+// Elimina secuencialmente todos los nodos de la lista de comidas para limpiar la memoria dinámica asignada durante la sesión actual y evitar fugas.
 void agregarComida(ListaComidas& lista, Alimento alimento, double cantidad){
     NodoComida* nuevo = new NodoComida();
     nuevo->alimento = alimento;

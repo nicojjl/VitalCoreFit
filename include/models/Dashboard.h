@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "Entrenamiento.h"
 
 struct ResultadoDash {
@@ -14,3 +13,4 @@ struct ResultadoDash {
 double calcularTotalQuemado(const ListaEjercicio& listaEjercicios);
 ResultadoDash calcularDashboard(double caloriasConsumidas, double caloriasQuemadas, double metaCalorica);
 void imprimirEstadoDash(const ResultadoDash& dash);
+// se define la estructura y funciones del panel principal. Calcula y agrupa el balance neto, las calorías consumidas y las quemadas para evaluar el estado diario del usuario.

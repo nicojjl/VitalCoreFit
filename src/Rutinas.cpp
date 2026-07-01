@@ -2,7 +2,19 @@
 #include <iostream>
 
 using namespace std;
+// Determina el peso ideal a levantar calculando el porcentaje especificado respecto al peso máximo estimado (1RM) para un ejercicio en particular.
 
+// Estructura un plan de entrenamiento de cuerpo completo dividido en dos días, asignando ejercicios compuestos, series, repeticiones e intensidades sugeridas.
+
+// Construye una rutina de cuerpo completo de tres días enfocada en la progresión secuencial de ejercicios multiarticulares y trabajo de aislamiento básico.
+
+// Diseña un esquema de cuatro días dividiendo el trabajo biomecánico entre el tren superior (torso) y el inferior (pierna) para optimizar la recuperación.
+
+// Genera un programa Push/Pull/Legs de cinco días de alta frecuencia, agrupando los patrones de movimiento por cadenas biomecánicas y grupos musculares específicos.
+
+// Función fábrica que selecciona, instancia y devuelve la estructura de entrenamiento más adecuada basándose estrictamente en la cantidad de días disponibles del usuario.
+
+// Muestra por consola la planificación detallada de la rutina seleccionada, iterando sobre cada día y desglosando los ejercicios con su respectiva carga porcentual.
 double calcularPesoSugerido(double unRM, double porcentaje) {
     return unRM * porcentaje;
 }

@@ -3,7 +3,11 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+// Obtiene la fecha actual del sistema operativo y la formatea como una cadena de texto (YYYY-MM-DD) para usarla como identificador único del día.
 
+// Serializa y almacena en formato JSON el resumen calórico, comidas consumidas y ejercicios realizados, actualizando o creando el registro diario en el almacenamiento local.
+
+// Lee el archivo JSON local y despliega en la consola un resumen histórico estructurado de los balances calóricos de días anteriores registrados.
 std::string obtenerFechaHoy() {
     time_t ahora = time(nullptr);
     tm* fecha = localtime(&ahora);
