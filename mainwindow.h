@@ -5,22 +5,19 @@
 #include <QSettings>
 #include <vector>
 #include <QListWidgetItem>
-#include "Usuario.h"
-#include "PersistenciaUsuario.h"
-#include "Nutricion.h"
-#include "ListaComidas.h"
+#include <QTimer>
+#include <QLineEdit>
+#include <QComboBox>
+#include <QWidget>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QFile>
-#include <QTimer>
-#include <QScrollArea>
-#include <QGroupBox>
-#include <QCheckBox>
-#include <QFrame>
 #include <QDateTime>
-#include <QtCharts/QLineSeries>
-
+#include "Usuario.h"
+#include "PersistenciaUsuario.h"
+#include "Nutricion.h"
+#include "ListaComidas.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -50,7 +47,6 @@ private slots:
     void on_btnDescanso_clicked();
     void actualizarCronometro();
     void cargarRutinaEstiloHevy(const QString &diaRutina);
-
     void on_btnHistorialComidas_clicked();
 
 private:
@@ -61,6 +57,12 @@ private:
     QTimer *timerDescanso;
     int tiempoRestante;
     double ultimoVolumenCalculado = 0.0;
+    QWidget *page_cardio;
+    QLineEdit *inputMinutosCardio;
+    QComboBox *comboIntensidadCardio;
+
+    QWidget *page_info;
+
     void guardarHistorialRutina();
     void actualizarDashboardVisual();
     void cargarDatosUI();
@@ -68,6 +70,13 @@ private:
     void guardarDiarioAlimentosJson();
     void cargarDiarioAlimentosJson();
     void agregarComidaInterfazVisual(const Alimento& alimento);
+
+    void configurarEstilosBasicos();
+    void crearPaginaCardioNativa();
+    void crearPaginaInfoNativa();
+    void inyectarSelectorDisponibilidad();
+    void aplicarEstilosCyberpunk();
+    void actualizarEstadoVacioNutricion();
 };
 
-#endif // MAINWINDOW_H
+#endif

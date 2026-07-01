@@ -332,7 +332,7 @@ QPushButton#btnVolverNutricion:hover {
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="dashboard">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -537,8 +537,8 @@ QPushButton#btnVolverNutricion:hover {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>411</width>
-             <height>334</height>
+             <width>98</width>
+             <height>28</height>
             </rect>
            </property>
           </widget>

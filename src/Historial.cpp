@@ -58,7 +58,7 @@ void guardarDiaEnHistorial(const ListaComidas& listaDia, const ListaEjercicio& l
     bool diaEncontrado = false;
     for (auto& registro : historial["registros"]) {
         if (registro["fecha"] == registroHoy["fecha"]) {
-            registro = registroHoy; // Sobrescribe el registro si la fecha ya existe
+            registro = registroHoy;
             diaEncontrado = true;
             break;
         }
@@ -72,7 +72,6 @@ void guardarDiaEnHistorial(const ListaComidas& listaDia, const ListaEjercicio& l
     salida << historial.dump(4);
     salida.close();
 }
-
 void mostrarHistorial() {
     std::ifstream archivo("data/historial.json");
     if (!archivo.is_open()) {
@@ -82,7 +81,7 @@ void mostrarHistorial() {
     nlohmann::json historial;
     archivo >> historial;
     archivo.close();
-    
+
     std::cout << "\n=== HISTORIAL DE DIAS ANTERIORES ===" << std::endl;
     for (const auto& registro : historial["registros"]) {
         std::cout << "Fecha: " << registro["fecha"] << std::endl;
