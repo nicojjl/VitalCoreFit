@@ -13,3 +13,10 @@ Si deseas probar la aplicación final compilada para Windows (sin necesidad de c
 5. ¡Disfruta del programa!
 
 *(El código fuente de este proyecto se encuentra en la rama `master`)*. 
+
+## Equipo
+| Nombre | Módulo principal |
+|--------|-----------------|
+| Nicolás Silva | Perfil de usuario, Gráficos Qt |
+| Martín Pérez | Módulo de Nutrición |
+| Álvaro Machuca | Módulo de Entrenamiento |
